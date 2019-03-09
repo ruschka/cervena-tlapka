@@ -10,9 +10,11 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2017,
+        "sourceType": "module"
     },
     "rules": {
-        "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
+        "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
+        "no-console": "off"
     }
 }
