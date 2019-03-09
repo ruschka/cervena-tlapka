@@ -1,11 +1,19 @@
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
+const views = require('koa-views');
 
 const app = new Koa();
 const router = new KoaRouter();
 
-router.get('/', (ctx, next) => {
-    ctx.body = 'Hello world';
+app.use(views(__dirname + '/../views', {
+    map: {
+        html: 'nunjucks'
+    }
+}));
+
+router.get('/', async (ctx, next) => {
+    ctx.state = { name: 'Vojtech' };
+    await ctx.render('homepage.html');
 });
 
 app.use(router.routes());
