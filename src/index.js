@@ -7,13 +7,13 @@ const router = new KoaRouter();
 
 app.use(views(__dirname + '/../views', {
     map: {
-        html: 'nunjucks'
+        pug: 'pug'
     }
 }));
 
 router.get('/', async (ctx, next) => {
     ctx.state = { name: 'Vojtech' };
-    await ctx.render('homepage.html');
+    await ctx.render('homepage.pug');
 });
 
 app.use(router.routes());
