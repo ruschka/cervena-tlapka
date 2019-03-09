@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "koa": "2.7.0",
+    "koa-body": "4.1.0",
     "koa-router": "7.4.0",
     "koa-views": "6.1.5",
     "pug": "2.0.3"

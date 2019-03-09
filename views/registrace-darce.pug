@@ -1,0 +1,28 @@
+extends main-template
+
+block content
+    p Pro registraci psího dárce o něm potřebujeme následující informace:
+    form(method='post', action='./register-donor')
+        div
+            label(for='donor-name') Jméno:
+            input#donor-name(type=text, name='donor-name')
+        div
+            label(for='donor-weight') Hmotnost:
+            input#donor-weight(type='number', name='donor-weight', min=1, max=150, step=1)
+        div
+            - var n = 0
+            label(for='donor-birth-year') Rok narození:
+            select#donor-birth-year(name='donor-birth-year')
+                while n < 30
+                    - var year = actualYear - n++
+                    option(label=year, value=year)
+        div
+            label(for='donor-sex') Pes/fena:
+            select#donor-sex(name='donor-sex')
+                option(label='Pes', value='M')
+                option(label='Fena', value='F')
+        div
+            label(for='donor-breed') Plemeno:
+            input#donor-breed(type=text, name='donor-breed')
+        div
+            input(type='submit', value='Odeslat')
