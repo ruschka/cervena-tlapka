@@ -1,0 +1,16 @@
+{
+  "name": "cervena-tlapka",
+  "version": "1.0.0",
+  "description": "Cervena tlapka",
+  "main": "src/index.js",
+  "repository": "https://github.com/ruschka/cervena-tlapka.git",
+  "author": "Vojtěch Ruschka <vojta.ruschka@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "koa": "2.7.0",
+    "koa-router": "^7.4.0"
+  }
+}
