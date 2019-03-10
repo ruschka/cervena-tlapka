@@ -1,3 +1,19 @@
 extends main-template
 
 block content
+    p Na této stránce najdete všechny zaregistrovné dárce.
+    p Nového hrdinu, který by byl ochotný darovat krev, můžete zaregistrovat #[a(href='./register-donor') zde].
+    table
+        tr
+            th Jméno
+            th Hmotnost
+            th Rok narození
+            th Pohlaví
+            th Plemeno
+        for registration in registrations
+            tr
+                td= registration.name
+                td= registration.weight
+                td= registration.birthYear
+                td= registration.sex
+                td= registration.breed

@@ -34,6 +34,8 @@ router.get("/", async (ctx, next) => {
 });
 
 router.get("/find-donor", async (ctx, next) => {
+    const registrations = await DonorRegistration.find();
+    ctx.state = { registrations: registrations };
     await ctx.render("find-donor.pug");
 });
 
