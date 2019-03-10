@@ -38,12 +38,17 @@ router.get('/registrace-darce', async (ctx, next) => {
     await ctx.render('registrace-darce.pug');
 });
 
-// FIXME validation
-router.post('/register-donor', async (ctx, next) => {
+router.post('/registrace-darce', async (ctx, next) => {
     const data = ctx.request.body;
     const registration = new DonorRegistration({name: data.name, weight: data.weight, birthYear: data.birthYear, sex: data.sex, breed: data.breed});
-    await registration.save();
-    ctx.redirect('podekovani-za-registraci-darce');
+    const validation = registration.validateSync();
+    if (validation) {
+        ctx.state = { actualYear: new Date().getFullYear(), data: data, errors: validation.errors };
+        await ctx.render('registrace-darce.pug');
+    } else {
+        await registration.save();
+        ctx.redirect('podekovani-za-registraci-darce');
+    }
 });
 
 router.get('/podekovani-za-registraci-darce', async (ctx, next) => {

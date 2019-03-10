@@ -5,27 +5,27 @@ import mongoose from 'mongoose';
 const donorRegistrationSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, 'Jméno je povinné.'],
         trim: true
     },
     weight: {
         type: Number,
-        required: true,
-        min: 1,
-        max: 150
+        required: [true, 'Hmotnost je povinná.'],
+        min: [1, 'Minimální hmotnost je 1 kg.'],
+        max: [150, 'Maximální hmotnost je 150 kg.']
     },
     birthYear: {
         type: Number,
-        required: true
+        required: [true, 'Rok narození je povinný.']
     },
     sex: {
         type: String,
-        required: true,
+        required: [true, 'Pohlaví je povinné.'],
         match: /[MF]/
     },
     breed: {
         type: String,
-        required: true
+        required: [true, 'Plemeno je povinné.']
     }
 });
 
