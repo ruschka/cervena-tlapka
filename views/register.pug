@@ -1,0 +1,14 @@
+extends main-template
+
+block content
+    - var data = templateData.data;
+    p Registrace
+    form(method='post', action='/register')
+        div
+            label(for='email') Email:
+            input#email(type='text', name='email', value=data ? data.email : '')
+        div
+            label(for='password') Heslo:
+            input#password(type='password', name='password')
+        div
+            input(type='submit', value='Odeslat')

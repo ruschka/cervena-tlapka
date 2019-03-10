@@ -1,8 +1,11 @@
 extends main-template
 
 block content
+    - var data = templateData.data
+    - var errors = templateData.errors
+    - var actualYear = templateData.actualYear
     p Pro registraci psího dárce o něm potřebujeme následující informace:
-    form(method='post', action='./register-donor')
+    form(method='post', action='/register-donor')
         div
             label(for='name') Jméno:
             input#name(type='text', name='name', value=data ? data.name : '')
