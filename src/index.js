@@ -19,6 +19,7 @@ import { isUserLogged, loggedUserId } from "./core/user";
 // FIXME configuration
 const jwtSecret = "asdfghjkl";
 const saltRounds = 10;
+const tokenCookie = "token";
 
 const app = new Koa();
 const router = new KoaRouter();
@@ -44,7 +45,7 @@ app.use((ctx, next) => {
     });
 });
 
-app.use(KoaJwt({ secret: jwtSecret, cookie: "token", passthrough: true }));
+app.use(KoaJwt({ secret: jwtSecret, cookie: tokenCookie, passthrough: true }));
 
 app.use(
     KoaBody({
@@ -124,7 +125,7 @@ router.post("/login", async (ctx, next) => {
                 }
             );
         });
-        ctx.cookies.set("token", token, { overwrite: true });
+        ctx.cookies.set(tokenCookie, token, { overwrite: true });
         ctx.redirect("/");
     } else {
         setTemplateData(ctx, { data: data });
@@ -133,7 +134,7 @@ router.post("/login", async (ctx, next) => {
 });
 
 router.get("/logout", async (ctx, next) => {
-    ctx.cookies.set("token");
+    ctx.cookies.set(tokenCookie);
     ctx.redirect("/");
 });
 
