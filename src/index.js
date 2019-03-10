@@ -1,3 +1,5 @@
+'use strict';
+
 const MongoProvider = require('./core/mongo/MongoProvider');
 const DonorRegistration = require('./donor/DonorRegistration');
 
@@ -42,7 +44,7 @@ router.post('/register-donor', async (ctx, next) => {
     const registration = new DonorRegistration({name: data.name, weight: data.weight, birthYear: data.birthYear, sex: data.sex, breed: data.breed});
     await registration.save();
     ctx.redirect('podekovani-za-registraci-darce');
-})
+});
 
 router.get('/podekovani-za-registraci-darce', async (ctx, next) => {
     await ctx.render('podekovani-za-registraci-darce.pug');
@@ -50,6 +52,10 @@ router.get('/podekovani-za-registraci-darce', async (ctx, next) => {
 
 app.use(router.routes());
 app.use(router.allowedMethods());
+
+app.on('error', (err, ctx) => {
+    console.error('App error', err);
+});
 
 mongoProvider.connect().then(() => {
     app.listen(3000);
