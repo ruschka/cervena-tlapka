@@ -12,7 +12,7 @@ block content
         div
             - var n = 0
             label(for='birth-year') Rok narození:
-            select#birth-year(name='birth-year')
+            select#birth-year(name='birthYear')
                 while n < 30
                     - var year = actualYear - n++
                     option(label=year, value=year)
