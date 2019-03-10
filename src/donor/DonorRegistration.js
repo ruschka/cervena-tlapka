@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const donorRegistrationSchema = new mongoose.Schema({
     name: {
@@ -29,6 +29,4 @@ const donorRegistrationSchema = new mongoose.Schema({
     }
 });
 
-const DonorRegistration = mongoose.model('DonorRegistration', donorRegistrationSchema, 'donor-registration');
-
-module.exports = DonorRegistration;
+export const DonorRegistration = mongoose.model('DonorRegistration', donorRegistrationSchema, 'donor-registration');

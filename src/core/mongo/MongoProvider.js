@@ -1,8 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-class MongoProvider {
+export class MongoProvider {
     constructor() {}
 
     // FIXME handle disconnect event
@@ -27,5 +27,3 @@ class MongoProvider {
         });
     }
 }
-
-module.exports = MongoProvider;

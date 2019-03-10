@@ -1,12 +1,12 @@
 'use strict';
 
-const MongoProvider = require('./core/mongo/MongoProvider');
-const DonorRegistration = require('./donor/DonorRegistration');
+import { MongoProvider } from './core/mongo/MongoProvider';
+import { DonorRegistration } from './donor/DonorRegistration';
 
-const Koa = require('koa');
-const KoaRouter = require('koa-router');
-const views = require('koa-views');
-const bodyParser = require('koa-body');
+import Koa from 'koa';
+import KoaRouter from 'koa-router';
+import views from 'koa-views';
+import bodyParser from 'koa-body';
 
 const app = new Koa();
 const router = new KoaRouter();
