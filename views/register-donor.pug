@@ -2,7 +2,7 @@ extends main-template
 
 block content
     p Pro registraci psího dárce o něm potřebujeme následující informace:
-    form(method='post', action='./registrace-darce')
+    form(method='post', action='./register-donor')
         div
             label(for='name') Jméno:
             input#name(type='text', name='name', value=data ? data.name : '')

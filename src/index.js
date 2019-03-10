@@ -29,30 +29,30 @@ router.get('/', async (ctx, next) => {
     await ctx.render('homepage.pug');
 });
 
-router.get('/hledej-darce', async (ctx, next) => {
-    await ctx.render('hledej-darce.pug');
+router.get('/find-donor', async (ctx, next) => {
+    await ctx.render('find-donor.pug');
 });
 
-router.get('/registrace-darce', async (ctx, next) => {
+router.get('/register-donor', async (ctx, next) => {
     ctx.state = { actualYear: new Date().getFullYear()};
-    await ctx.render('registrace-darce.pug');
+    await ctx.render('register-donor.pug');
 });
 
-router.post('/registrace-darce', async (ctx, next) => {
+router.post('/register-donor', async (ctx, next) => {
     const data = ctx.request.body;
     const registration = new DonorRegistration({name: data.name, weight: data.weight, birthYear: data.birthYear, sex: data.sex, breed: data.breed});
     const validation = registration.validateSync();
     if (validation) {
         ctx.state = { actualYear: new Date().getFullYear(), data: data, errors: validation.errors };
-        await ctx.render('registrace-darce.pug');
+        await ctx.render('register-donor.pug');
     } else {
         await registration.save();
-        ctx.redirect('podekovani-za-registraci-darce');
+        ctx.redirect('/register-donor-thanks');
     }
 });
 
-router.get('/podekovani-za-registraci-darce', async (ctx, next) => {
-    await ctx.render('podekovani-za-registraci-darce.pug');
+router.get('/register-donor-thanks', async (ctx, next) => {
+    await ctx.render('register-donor-thanks.pug');
 });
 
 app.use(router.routes());
