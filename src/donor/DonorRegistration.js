@@ -26,6 +26,10 @@ const donorRegistrationSchema = new mongoose.Schema({
     breed: {
         type: String,
         required: [true, "Plemeno je povinné."]
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, "Uživatel je povinný."]
     }
 });
 

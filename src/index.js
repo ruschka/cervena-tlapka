@@ -5,6 +5,7 @@ import { DonorRegistration } from "./donor/DonorRegistration";
 import { User } from "./user/User";
 import { validateAsync } from "./core/mongo";
 import { setTemplateData } from "./core/template";
+import mongoose from "mongoose";
 
 import Koa from "koa";
 import KoaBody from "koa-body";
@@ -13,6 +14,7 @@ import KoaRouter from "koa-router";
 import KoaViews from "koa-views";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { isUserLogged, loggedUserId } from "./core/user";
 
 // FIXME configuration
 const jwtSecret = "asdfghjkl";
@@ -147,13 +149,18 @@ router.get("/register-donor", async (ctx, next) => {
 });
 
 router.post("/register-donor", async (ctx, next) => {
+    if (!isUserLogged(ctx)) {
+        ctx.throw(401);
+        return;
+    }
     const data = ctx.request.body;
     const registration = new DonorRegistration({
         name: data.name,
         weight: data.weight,
         birthYear: data.birthYear,
         sex: data.sex,
-        breed: data.breed
+        breed: data.breed,
+        userId: mongoose.mongo.ObjectId(loggedUserId(ctx))
     });
     const validation = await validateAsync(registration);
     if (validation) {

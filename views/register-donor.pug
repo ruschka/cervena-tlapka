@@ -1,42 +1,45 @@
 extends main-template
 
 block content
-    - var data = templateData.data
-    - var errors = templateData.errors
-    - var actualYear = templateData.actualYear
-    p Pro registraci psího dárce o něm potřebujeme následující informace:
-    form(method='post', action='/register-donor')
-        div
-            label(for='name') Jméno:
-            input#name(type='text', name='name', value=data ? data.name : '')
-            if errors && errors.name
-                span= errors.name
-        div
-            label(for='weight') Hmotnost (kg):
-            input#weight(type='number', name='weight', value=data ? data.weight : '', step=1)
-            if errors && errors.weight
-                span= errors.weight
-        div
-            - var n = 0
-            label(for='birth-year') Rok narození:
-            select#birth-year(name='birthYear')
-                - var selectedYear = data ? parseFloat(data.birthYear) : actualYear
-                while n < 30
-                    - var year = actualYear - n++
-                    option(value=year, selected=selectedYear === year)= year
-            if errors && errors.birthYear
-                span= errors.birthYear
-        div
-            label(for='sex') Pohlaví:
-            select#sex(name='sex')
-                option(label='Pes', value='M', selected=data ? data.sex === 'M' : false)
-                option(label='Fena', value='F', selected=data ? data.sex === 'F' : false)
-            if errors && errors.sex
-                span= errors.sex
-        div
-            label(for='breed') Plemeno:
-            input#breed(type='text', name='breed', value=data ? data.breed : '')
-            if errors && errors.breed
-                span= errors.breed
-        div
-            input(type='submit', value='Odeslat')
+    if user
+        - var data = templateData.data
+        - var errors = templateData.errors
+        - var actualYear = templateData.actualYear
+        p Pro registraci psího dárce o něm potřebujeme následující informace:
+        form(method='post', action='/register-donor')
+            div
+                label(for='name') Jméno:
+                input#name(type='text', name='name', value=data ? data.name : '')
+                if errors && errors.name
+                    span= errors.name
+            div
+                label(for='weight') Hmotnost (kg):
+                input#weight(type='number', name='weight', value=data ? data.weight : '', step=1)
+                if errors && errors.weight
+                    span= errors.weight
+            div
+                - var n = 0
+                label(for='birth-year') Rok narození:
+                select#birth-year(name='birthYear')
+                    - var selectedYear = data ? parseFloat(data.birthYear) : actualYear
+                    while n < 30
+                        - var year = actualYear - n++
+                        option(value=year, selected=selectedYear === year)= year
+                if errors && errors.birthYear
+                    span= errors.birthYear
+            div
+                label(for='sex') Pohlaví:
+                select#sex(name='sex')
+                    option(label='Pes', value='M', selected=data ? data.sex === 'M' : false)
+                    option(label='Fena', value='F', selected=data ? data.sex === 'F' : false)
+                if errors && errors.sex
+                    span= errors.sex
+            div
+                label(for='breed') Plemeno:
+                input#breed(type='text', name='breed', value=data ? data.breed : '')
+                if errors && errors.breed
+                    span= errors.breed
+            div
+                input(type='submit', value='Odeslat')
+    else
+        p Pro registraci psího dárce je potřeba se #[a(href='/login') přihlásit].
