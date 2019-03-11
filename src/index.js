@@ -114,11 +114,12 @@ router.post("/login", async (ctx, next) => {
             jwt.sign(
                 {
                     iss: "cervena-tlapka",
-                    sub: { id: user.id, email: user.email }
+                    sub: { id: user.id, email: user.email },
+                    iat: Math.floor(Date.now() / 1000)
                 },
                 jwtSecret,
                 {
-                    expiresIn: "1h"
+                    expiresIn: "7d"
                 },
                 (err, token) => {
                     err ? reject(err) : resolve(token);
