@@ -11,4 +11,7 @@ block content
             label(for='password') Heslo:
             input#password(type='password', name='password')
         div
+            label(for='zip') PSČ:
+            input#zip(type='text', name='zip', value=data ? data.zip : '')
+        div
             input(type='submit', value='Odeslat')

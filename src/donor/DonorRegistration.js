@@ -30,8 +30,29 @@ const donorRegistrationSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: [true, "Uživatel je povinný."]
+    },
+    zip: {
+        type: String,
+        required: true
+    },
+    city: {
+        type: String,
+        required: true
+    },
+    location: {
+        type: {
+            type: String,
+            default: "Point",
+            enum: ["Point"]
+        },
+        coordinates: {
+            type: [Number],
+            default: [0, 0]
+        }
     }
 });
+
+donorRegistrationSchema.index({ location: "2dsphere" });
 
 export const DonorRegistration = mongoose.model(
     "DonorRegistration",

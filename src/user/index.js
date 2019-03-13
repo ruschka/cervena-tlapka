@@ -25,12 +25,17 @@ userRouter.post("/register", async (ctx, next) => {
     // FIXME check validity of email
     // FIXME send activation email
     // FIXME check complexity of password
+    // FIXME validate zip
     const passwordHash = await new Promise((resolve, reject) => {
         bcrypt.hash(data.password, saltRounds, (err, hash) => {
             err ? reject(err) : resolve(hash);
         });
     });
-    const user = new User({ email: data.email, passwordHash: passwordHash });
+    const user = new User({
+        email: data.email,
+        passwordHash: passwordHash,
+        zip: data.zip
+    });
     const validation = await validateAsync(user);
     if (validation) {
         setTemplateData(ctx, { data: data });
@@ -67,7 +72,7 @@ userRouter.post("/login", async (ctx, next) => {
             jwt.sign(
                 {
                     iss: "cervena-tlapka",
-                    sub: { id: user.id, email: user.email },
+                    sub: { id: user.id, email: user.email, zip: user.zip },
                     iat: Math.floor(Date.now() / 1000)
                 },
                 jwtSecret,

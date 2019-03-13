@@ -1,8 +1,24 @@
 extends main-template
 
 block content
-    p Na této stránce najdete všechny zaregistrovné dárce.
+    p Na této stránce najdete všechny zaregistrovné dárce. Pro snadnější nalezení toho vhodného můžete použít filtr.
     p Nového hrdinu, který by byl ochotný darovat krev, můžete zaregistrovat #[a(href='/register-donor') zde].
+
+    - var data = templateData.data
+    div
+        form(method='get', action='/find-donor')
+            div
+                label(for='zip') Vaše PSČ:
+                input#zip(type='text', name='zip', value=data ? data.zip : '')
+            div
+                label(for='maxDistance') Maximální vzdálenost:
+                select#maxDistance(name='maxDistance')
+                    option(label='50km', value='50', selected=data ? data.maxDistance === 50 : false)
+                    option(label='100km', value='100', selected=data ? data.maxDistance === 100 : false)
+                    option(label='200km', value='200', selected=data ? data.maxDistance === 200 : false)
+                    option(label='500km', value='500', selected=data ? data.maxDistance === 500 : false)
+            div
+                input(type='submit', value='Odeslat')
     table
         tr
             th Jméno
@@ -10,6 +26,8 @@ block content
             th Rok narození
             th Pohlaví
             th Plemeno
+            th Obec
+            th PSČ
         for registration in templateData.registrations
             tr
                 td= registration.name
@@ -17,3 +35,5 @@ block content
                 td= registration.birthYear
                 td= registration.sex
                 td= registration.breed
+                td= registration.city
+                td= registration.zip
