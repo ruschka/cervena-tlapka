@@ -26,4 +26,8 @@ export class MongoProvider {
             });
         });
     }
+
+    async disconnect() {
+        await mongoose.disconnect();
+    }
 }
