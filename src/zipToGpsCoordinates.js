@@ -1,18 +1,18 @@
 import fs from "fs";
 import csv from "fast-csv";
 import axios from "axios";
-import { Transform } from "stream";
 import { MongoProvider } from "./core/mongo/MongoProvider";
 import { Zip } from "./zip/Zip";
+import { Writable } from "stream";
 
 const apiKey = "CHANGE_ME";
 
-class ZipTransform extends Transform {
+class ZipTransform extends Writable {
     constructor() {
         super({ objectMode: true });
     }
 
-    async _transform(chunk, encoding, callback) {
+    async _write(chunk, encoding, callback) {
         const placeResponse = await axios.get(
             `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${
                 chunk.zip
@@ -23,13 +23,13 @@ class ZipTransform extends Transform {
                 `${placeResponse.status} ${placeResponse.statusText}`
             );
         }
-        const found = placeResponse.data.predictions[0];
-        if (!found) {
+        const predictions = placeResponse.data.predictions;
+        if (!predictions || predictions.length === 0) {
             console.log(`Unknown zip ${chunk.zip}`);
             callback();
             return;
         }
-        const placeId = found.place_id;
+        const placeId = predictions[0].place_id;
         const geocodeResponse = await axios.get(
             `https://maps.googleapis.com/maps/api/geocode/json?place_id=${placeId}&key=${apiKey}`
         );
@@ -38,25 +38,25 @@ class ZipTransform extends Transform {
                 `${geocodeResponse.status} ${geocodeResponse.statusText}`
             );
         }
-        const result = geocodeResponse.data.results[0];
-        if (!result) {
+        const results = geocodeResponse.data.results;
+        if (!results || results.length === 0) {
             console.log(`Unknown zip ${chunk.zip}`);
             callback();
             return;
         }
-        const coordinates = result.geometry.location;
+        const coordinates = results[0].geometry.location;
         if (!coordinates) {
             console.log(`No coordinates for zip ${chunk.zip}`);
             callback();
             return;
         }
-        console.log(coordinates);
         const zip = new Zip({
             zip: chunk.zip,
             city: chunk.city,
             coordinates: [coordinates.lng, coordinates.lat]
         });
         await zip.save();
+        console.log(`Zip ${chunk.zip} done`);
         callback();
     }
 }
@@ -65,7 +65,7 @@ class ZipToGpsCoordinates {
     async run() {
         const mongo = new MongoProvider();
         await mongo.connect();
-        const stream = fs.createReadStream("data/cz-zip-test.csv");
+        const stream = fs.createReadStream("data/cz-zip.csv");
 
         const csvStream = csv({ headers: true, delimiter: ";" });
 
