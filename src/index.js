@@ -1,22 +1,25 @@
 "use strict";
 
-import { MongoProvider } from "./core/mongo/MongoProvider";
-
+import path from "path";
 import Koa from "koa";
 import KoaBody from "koa-body";
 import KoaJwt from "koa-jwt";
 import KoaViews from "koa-views";
+import KoaStatic from "koa-static";
 import { jwtSecret, tokenCookie, userRouter } from "./user";
 import { pagesRouter } from "./pages";
 import { donorRouter } from "./donor";
+import { MongoProvider } from "./core/mongo/MongoProvider";
 
 const app = new Koa();
 const mongoProvider = new MongoProvider();
 
 // middlewares
 
+app.use(KoaStatic(path.join(__dirname, "..", "public")));
+
 app.use(
-    KoaViews(__dirname + "/../views", {
+    KoaViews(path.join(__dirname, "..", "views"), {
         map: {
             pug: "pug"
         }
