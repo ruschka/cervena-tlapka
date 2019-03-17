@@ -37,3 +37,25 @@ block content
                 td= registration.breed
                 td= registration.city
                 td= registration.zip
+    div#donor-map
+    script.
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('donor-map'), {
+                mapTypeId: 'roadmap'
+            });
+            var bounds = new google.maps.LatLngBounds();
+            var markersData = !{JSON.stringify(templateData.registrations)};
+            var markers = markersData.map(markerData => {
+                var marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(markerData.location.coordinates[1], markerData.location.coordinates[0]),
+                    map: map
+                });
+                bounds.extend(marker.position);
+                return marker;
+            });
+            var markerCluster = new MarkerClusterer(map, markers, { imagePath: '/static/image/markerclusterer/m' });
+            map.fitBounds(bounds);
+        }
+    script(src='/static/js/markerclusterer.js')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)
