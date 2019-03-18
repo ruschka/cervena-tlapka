@@ -1,0 +1,14 @@
+extends main-template
+
+block content
+    - var registration = templateData.registration
+    div
+        h2 Registrace dárce: #{registration.name}
+        ul
+            li Hmotnost: #{registration.weight}
+            li Rok narození: #{registration.birthYear}
+            li Pohlaví: #{registration.sex === 'M' ? 'Pes' : 'Fena'}
+            li Plemeno: #{registration.breed}
+            li Místo: #{registration.city} (#{registration.zip})
+        h3 Kontaktní formulář
+        p TODO Zde bude kontaktní formulář, který odešle email majiteli dárce.

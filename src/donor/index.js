@@ -78,3 +78,14 @@ donorRouter.get("/register-donor/thanks", async (ctx, next) => {
     setTemplateData(ctx, {});
     await ctx.render("register-donor-thanks.pug");
 });
+
+donorRouter.get("/donor/:id", async (ctx, next) => {
+    const registration = await DonorRegistration.findOne({
+        _id: ctx.params.id
+    });
+    if (!registration) {
+        ctx.throw(404);
+    }
+    setTemplateData(ctx, { registration });
+    await ctx.render("donor-detail.pug");
+});
