@@ -7,38 +7,26 @@ import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
 import KoaRouter from "koa-router";
 import { Zip } from "../zip/Zip";
+import { DonorKoaService } from "./DonorKoaService";
 
 export const donorRouter = new KoaRouter();
 
+const donorService = new DonorKoaService();
+
 donorRouter.get("/find-donor", async (ctx, next) => {
-    let query = {};
-    const zipCode = ctx.query.zip
-        ? ctx.query.zip
-        : isUserLogged(ctx)
-        ? loggedUserZip(ctx)
-        : null;
-    const maxDistance = ctx.query.maxDistance
-        ? Number(ctx.query.maxDistance)
-        : 50; // default 50km
-    if (zipCode) {
-        const zip = await Zip.findOne({ zip: zipCode });
-        if (!zip) {
-            console.log(`Unknown zip ${zipCode}`);
-            ctx.throw(400);
-            return;
-        }
-        Object.assign(query, {
-            location: {
-                $near: {
-                    $geometry: { type: "Point", coordinates: zip.coordinates },
-                    $maxDistance: maxDistance * 1000 // meters
-                }
-            }
-        });
-    }
-    const registrations = await DonorRegistration.find(query);
+    const {
+        registrations,
+        zipCode,
+        maxDistance
+    } = await donorService.findDonors(ctx);
+    const aggregatedRegistrations = await donorService.aggregateDonorsByZip(
+        ctx,
+        zipCode,
+        maxDistance
+    );
     setTemplateData(ctx, {
         registrations: registrations,
+        aggregatedRegistrations: aggregatedRegistrations,
         data: { zip: zipCode, maxDistance: maxDistance }
     });
     await ctx.render("find-donor.pug");

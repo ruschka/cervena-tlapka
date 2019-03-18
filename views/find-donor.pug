@@ -45,17 +45,16 @@ block content
                 mapTypeId: 'roadmap'
             });
             var bounds = new google.maps.LatLngBounds();
-            var markersData = !{JSON.stringify(templateData.registrations)};
+            var markersData = !{JSON.stringify(templateData.aggregatedRegistrations)};
             var markers = markersData.map(markerData => {
                 var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(markerData.location.coordinates[1], markerData.location.coordinates[0]),
-                    map: map
+                    position: new google.maps.LatLng(markerData.location[1], markerData.location[0]),
+                    map: map,
+                    label: `${markerData.registrationCount}`
                 });
                 bounds.extend(marker.position);
                 return marker;
             });
-            var markerCluster = new MarkerClusterer(map, markers, { imagePath: '/static/image/markerclusterer/m' });
             map.fitBounds(bounds);
         }
-    script(src='/static/js/markerclusterer.js')
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)
