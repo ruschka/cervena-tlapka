@@ -6,10 +6,11 @@ import KoaBody from "koa-body";
 import KoaJwt from "koa-jwt";
 import KoaViews from "koa-views";
 import KoaStatic from "koa-static";
-import { jwtSecret, tokenCookie, userRouter } from "./user";
+import { userRouter } from "./user";
 import { pagesRouter } from "./pages";
 import { donorRouter } from "./donor";
 import { MongoProvider } from "./core/mongo/MongoProvider";
+import { jwtSecret, tokenCookie } from "./user/UserKoaService";
 
 const app = new Koa();
 const mongoProvider = new MongoProvider();

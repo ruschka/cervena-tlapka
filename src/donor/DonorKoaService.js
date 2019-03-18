@@ -1,8 +1,10 @@
 "use strict";
 
-import { isUserLogged, loggedUserZip } from "../core/user";
+import { isUserLogged, loggedUserId, loggedUserZip } from "../core/user";
 import { Zip } from "../zip/Zip";
 import { DonorRegistration } from "./DonorRegistration";
+import mongoose from "mongoose";
+import { validateAsync } from "../core/mongo";
 
 export class DonorKoaService {
     async findDonors(ctx) {
@@ -57,6 +59,32 @@ export class DonorKoaService {
                 _id: 0
             })
             .exec();
+    }
+
+    async registerDonor(ctx) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const data = ctx.request.body;
+        const zip = await this.findZip(ctx, loggedUserZip(ctx));
+        const registration = new DonorRegistration({
+            name: data.name,
+            weight: data.weight,
+            birthYear: data.birthYear,
+            sex: data.sex,
+            breed: data.breed,
+            userId: mongoose.mongo.ObjectId(loggedUserId(ctx)),
+            zip: zip.zip,
+            city: zip.city,
+            location: { type: "Point", coordinates: zip.coordinates }
+        });
+        const validation = await validateAsync(registration);
+        if (validation) {
+            return { success: false, data: data, errors: validation.errors };
+        } else {
+            await registration.save();
+            return { success: true };
+        }
     }
 
     async findZip(ctx, zipCode) {
