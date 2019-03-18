@@ -40,7 +40,6 @@ donorRouter.get("/register-donor", async (ctx, next) => {
 donorRouter.post("/register-donor", async (ctx, next) => {
     if (!isUserLogged(ctx)) {
         ctx.throw(401);
-        return;
     }
     const data = ctx.request.body;
     const zip = await Zip.findOne({ zip: loggedUserZip(ctx) });
