@@ -34,7 +34,6 @@ userRouter.get("/login", async (ctx, next) => {
 
 userRouter.post("/login", async (ctx, next) => {
     const { success, data } = await userService.login(ctx);
-    console.log(success);
     if (success) {
         ctx.redirect("/");
     } else {

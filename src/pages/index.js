@@ -1,3 +1,5 @@
+"use strict"
+
 import KoaRouter from "koa-router";
 
 export const pagesRouter = new KoaRouter();
