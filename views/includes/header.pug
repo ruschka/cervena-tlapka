@@ -1,5 +1,5 @@
 h1 Červená tlapka
 if user
-    p #{user.sub.email} | #[a(href='/logout') Odhlásit]
+    p #[a(href='/profile') #{user.sub.email}] | #[a(href='/logout') Odhlásit]
 else
     p #[a(href='/login') Přihlásit] | #[a(href='/register') Registrovat]

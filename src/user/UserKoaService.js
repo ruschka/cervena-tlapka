@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { User } from "./User";
 import { validateAsync } from "../core/mongo";
 import jwt from "jsonwebtoken";
+import { isUserLogged, loggedUserId } from "../core/user";
 
 // FIXME configuration
 export const jwtSecret = "asdfghjkl";
@@ -73,5 +74,17 @@ export class UserKoaService {
 
     logout(ctx) {
         ctx.cookies.set(tokenCookie);
+    }
+
+    async loggedUser(ctx) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const userId = loggedUserId(ctx);
+        const user = User.findOne({ _id: userId });
+        if (!user) {
+            ctx.throw(404);
+        }
+        return user;
     }
 }

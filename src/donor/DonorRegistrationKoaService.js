@@ -6,7 +6,7 @@ import { DonorRegistration } from "./DonorRegistration";
 import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
 
-export class DonorKoaService {
+export class DonorRegistrationKoaService {
     async findDonors(ctx) {
         let query = {};
         const zipCode = ctx.query.zip
@@ -93,5 +93,66 @@ export class DonorKoaService {
             ctx.throw(400, "unknown zip");
         }
         return zip;
+    }
+
+    async findLoggedUserRegistrations(ctx) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const userId = loggedUserId(ctx);
+        return DonorRegistration.find({
+            userId: userId
+        });
+    }
+
+    removeDonorRegistration(ctx) {
+        return this.modifyDonorRegistration(ctx, async (ctx, registration) => {
+            await DonorRegistration.deleteOne({ _id: registration.id });
+        });
+    }
+
+    editDonorRegistration(ctx) {
+        return this.modifyDonorRegistration(ctx, async (ctx, registration) => {
+            const data = ctx.request.body;
+            registration.name = data.name;
+            registration.weight = data.weight;
+            registration.birthYear = data.birthYear;
+            registration.sex = data.sex;
+            registration.breed = data.breed;
+            const validation = await validateAsync(registration);
+            if (validation) {
+                return {
+                    success: false,
+                    registration: registration,
+                    data: data,
+                    errors: validation.errors
+                };
+            } else {
+                await DonorRegistration.replaceOne(
+                    { _id: registration.id },
+                    registration
+                );
+                return { success: true };
+            }
+        });
+    }
+
+    async modifyDonorRegistration(ctx, modifyFun) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const userId = loggedUserId(ctx);
+        const registration = await this.findDonorRegistration(ctx)
+        if (userId !== registration.userId.toString()) {
+            ctx.throw(403);
+        }
+        return modifyFun(ctx, registration);
+    }
+
+    findDonorRegistration(ctx) {
+        const registrationId = ctx.params.id;
+        return DonorRegistration.findOne({
+            _id: registrationId
+        });
     }
 }

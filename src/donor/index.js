@@ -3,11 +3,11 @@
 import { DonorRegistration } from "./DonorRegistration";
 import { setTemplateData } from "../core/template";
 import KoaRouter from "koa-router";
-import { DonorKoaService } from "./DonorKoaService";
+import { DonorRegistrationKoaService } from "./DonorRegistrationKoaService";
 
 export const donorRouter = new KoaRouter();
 
-const donorService = new DonorKoaService();
+const donorService = new DonorRegistrationKoaService();
 
 donorRouter.get("/find-donor", async (ctx, next) => {
     const {
