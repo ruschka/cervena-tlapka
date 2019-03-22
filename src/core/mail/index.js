@@ -26,6 +26,10 @@ export async function sendMail(to, templateName, templateParams) {
         message: {
             to: to
         },
-        locals: templateParams
+        locals: enrichTemplateParams(templateParams)
     });
+}
+
+function enrichTemplateParams(templateParams) {
+    return Object.assign(templateParams, { baseUrl: "http://localhost:3000" }); // FIXME configuration
 }

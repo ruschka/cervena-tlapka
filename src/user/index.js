@@ -13,21 +13,32 @@ const donorService = new DonorRegistrationKoaService();
 
 userRouter.get("/register", async (ctx, next) => {
     setTemplateData(ctx, {});
-    await ctx.render("register.pug");
+    await ctx.render("register/register.pug");
 });
 
 userRouter.post("/register", async (ctx, next) => {
     const { success, data, errors } = await userService.register(ctx);
     if (success) {
-        ctx.redirect("/register/thanks");
+        ctx.redirect("/register/saved");
     } else {
         setTemplateData(ctx, { data: data, errors: errors });
-        await ctx.render("register.pug");
+        await ctx.render("register/register.pug");
     }
 });
 
+userRouter.get("/register/saved", async (ctx, next) => {
+    setTemplateData(ctx, {});
+    await ctx.render("register/saved.pug");
+});
+
+userRouter.get("/register/activate", async (ctx, next) => {
+    const { success } = await userService.activate(ctx);
+    ctx.redirect(`/register/thanks?success=${success}`);
+});
+
 userRouter.get("/register/thanks", async (ctx, next) => {
-    await ctx.render("register-thanks.pug");
+    setTemplateData(ctx, { success: ctx.query.success === "true" });
+    await ctx.render("register/thanks.pug");
 });
 
 userRouter.get("/login", async (ctx, next) => {

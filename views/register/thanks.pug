@@ -1,0 +1,13 @@
+extends ../main-template
+
+block content
+    if templateData.success
+        p Děkujeme za Vaši registraci. Váš účet byl úspěšně aktivován.
+        p Nyní se můžete #[a(href='/login') přihlásit].
+    else
+        p Omlouváme se, ale Váš účet nemohl být aktivován.
+        p Příčin může být více:
+        ul
+            li Účet již může být aktivován. Zkuste se prosím #[a(href='/login') přihlásit].
+            li Účet pod tímto emailem nebyl zaregistrován.
+            li Aktivační odkaz byl poškozen.

@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import { isUserLogged, loggedUserId } from "../core/user";
 import { sendMail } from "../core/mail";
 import crypto from "crypto";
+import util from "util";
 
 // FIXME configuration
 export const jwtSecret = "asdfghjkl";
@@ -20,18 +21,20 @@ export class UserKoaService {
         // FIXME check validity of email
         // FIXME check complexity of password
         // FIXME validate zip
-        // FIXME send activation email
-        const passwordHash = await new Promise((resolve, reject) => {
-            bcrypt.hash(data.password, saltRounds, (err, hash) => {
-                err ? reject(err) : resolve(hash);
-            });
-        });
-        const activateHash = crypto.randomBytes(64).toString("base64");
+        const email = data.email;
+        const passwordHash = await util.promisify(bcrypt.hash)(
+            data.password,
+            saltRounds
+        );
+        const activateHash = (await util.promisify(crypto.randomBytes)(
+            64
+        )).toString("base64");
         const user = new User({
-            email: data.email,
+            email: email,
             passwordHash: passwordHash,
             activated: false,
             activateHash: activateHash,
+            registerDate: new Date(),
             zip: data.zip
         });
         const validation = await validateAsync(user);
@@ -39,8 +42,31 @@ export class UserKoaService {
             return { success: false, data: data, errors: validation.errors };
         } else {
             await user.save();
-            await sendMail(user.email, "activate-profile", { activateHash });
+            await sendMail(email, "activate-profile", {
+                email,
+                activateHash
+            });
             return { success: true };
+        }
+    }
+
+    async activate(ctx) {
+        const email = ctx.query.email;
+        const activateHash = ctx.query.activateHash;
+        const result = await User.updateOne(
+            { email, activateHash },
+            {
+                $set: {
+                    activated: true,
+                    activateDate: new Date(),
+                    activateHash: null
+                }
+            }
+        );
+        if (result.nModified === 1) {
+            return { success: true };
+        } else {
+            return { success: false };
         }
     }
 

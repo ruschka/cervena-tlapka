@@ -11,11 +11,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    registerDate: {
+        type: Date,
+        required: true
+    },
     activated: {
         type: Boolean,
         required: true
     },
+    activateDate: Date,
     activateHash: String,
+    lastLogin: Date,
     zip: {
         type: String,
         required: [true, "PSČ je povinné."]
