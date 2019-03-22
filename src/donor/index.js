@@ -25,12 +25,12 @@ donorRouter.get("/find-donor", async (ctx, next) => {
         aggregatedRegistrations: aggregatedRegistrations,
         data: { zip: zipCode, maxDistance: maxDistance }
     });
-    await ctx.render("find-donor.pug");
+    await ctx.render("donor/find.pug");
 });
 
 donorRouter.get("/register-donor", async (ctx, next) => {
     setTemplateData(ctx, { actualYear: new Date().getFullYear() });
-    await ctx.render("register-donor.pug");
+    await ctx.render("register-donor/register-donor.pug");
 });
 
 donorRouter.post("/register-donor", async (ctx, next) => {
@@ -43,13 +43,13 @@ donorRouter.post("/register-donor", async (ctx, next) => {
             data: data,
             errors: errors
         });
-        await ctx.render("register-donor.pug");
+        await ctx.render("register-donor/register-donor.pug");
     }
 });
 
 donorRouter.get("/register-donor/thanks", async (ctx, next) => {
     setTemplateData(ctx, {});
-    await ctx.render("register-donor-thanks.pug");
+    await ctx.render("register-donor/register-donor-thanks.pug");
 });
 
 donorRouter.get("/donor/:id", async (ctx, next) => {
@@ -60,5 +60,5 @@ donorRouter.get("/donor/:id", async (ctx, next) => {
         ctx.throw(404);
     }
     setTemplateData(ctx, { registration });
-    await ctx.render("donor-detail.pug");
+    await ctx.render("donor/detail.pug");
 });

@@ -46,7 +46,7 @@ userRouter.get("/login", async (ctx, next) => {
         ctx.redirect("/");
     }
     setTemplateData(ctx, {});
-    await ctx.render("login.pug");
+    await ctx.render("profile/login.pug");
 });
 
 userRouter.post("/login", async (ctx, next) => {
@@ -55,7 +55,7 @@ userRouter.post("/login", async (ctx, next) => {
         ctx.redirect("/");
     } else {
         setTemplateData(ctx, { data: data });
-        await ctx.render("login.pug");
+        await ctx.render("profile/login.pug");
     }
 });
 
@@ -69,7 +69,7 @@ userRouter.get("/profile", async (ctx, next) => {
         loggedUser: await userService.loggedUser(ctx),
         registrations: await donorService.findLoggedUserRegistrations(ctx)
     });
-    await ctx.render("profile.pug");
+    await ctx.render("profile/profile.pug");
 });
 
 userRouter.get("/profile/donor/:id/edit", async (ctx, next) => {
@@ -77,7 +77,7 @@ userRouter.get("/profile/donor/:id/edit", async (ctx, next) => {
         actualYear: new Date().getFullYear(),
         registration: await donorService.findDonorRegistration(ctx)
     });
-    await ctx.render("edit-donor.pug");
+    await ctx.render("donor/edit.pug");
 });
 
 userRouter.post("/profile/donor/:id/edit", async (ctx, next) => {
@@ -96,7 +96,7 @@ userRouter.post("/profile/donor/:id/edit", async (ctx, next) => {
             data,
             errors
         });
-        await ctx.render("edit-donor.pug");
+        await ctx.render("donor/edit.pug");
     }
 });
 
