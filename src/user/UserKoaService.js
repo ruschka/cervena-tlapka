@@ -8,11 +8,11 @@ import { isUserLogged, loggedUserId } from "../core/user";
 import { sendMail } from "../core/mail";
 import crypto from "crypto";
 import util from "util";
+import config from "../core/config";
 
-// FIXME configuration
-export const jwtSecret = "asdfghjkl";
 export const tokenCookie = "token";
-export const saltRounds = 10;
+const jwtSecret = config.user.jwtSecret;
+const saltRounds = config.user.saltRounds;
 
 export class UserKoaService {
     async register(ctx) {
@@ -42,10 +42,14 @@ export class UserKoaService {
             return { success: false, data: data, errors: validation.errors };
         } else {
             await user.save();
-            await sendMail(email, "activate-profile", {
-                email,
-                activateHash
-            });
+            await sendMail(
+                "activate-profile",
+                {
+                    email,
+                    activateHash
+                },
+                email
+            );
             return { success: true };
         }
     }

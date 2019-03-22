@@ -10,10 +10,15 @@ import { userRouter } from "./user";
 import { pagesRouter } from "./pages";
 import { donorRouter } from "./donor";
 import { MongoProvider } from "./core/mongo/MongoProvider";
-import { jwtSecret, tokenCookie } from "./user/UserKoaService";
+import { tokenCookie } from "./user/UserKoaService";
+import config from "./core/config";
 
 const app = new Koa();
 const mongoProvider = new MongoProvider();
+
+console.log(`Config: ${JSON.stringify(config)}`);
+
+const jwtSecret = config.user.jwtSecret;
 
 // middlewares
 
@@ -60,5 +65,5 @@ app.on("error", (err, ctx) => {
 });
 
 mongoProvider.connect().then(() => {
-    app.listen(3000);
+    app.listen(config.server.port);
 });

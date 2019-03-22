@@ -4,23 +4,24 @@ import Email from "email-templates";
 import nodemailer from "nodemailer";
 import nodemailerSparkpostTransport from "nodemailer-sparkpost-transport";
 import path from "path";
+import config from "../config";
 
 const transporter = nodemailer.createTransport(
     nodemailerSparkpostTransport({
-        sparkPostApiKey: "changeme"
+        sparkPostApiKey: config.email.apiKey
     })
 );
 const root = path.join(__dirname, "../../..", "mail-templates");
 const email = new Email({
     views: { root: root },
     message: {
-        from: "no-reply@email.cervenatlapka.cz"
+        from: config.email.defaultFrom
     },
-    //send: true,
+    send: true,
     transport: transporter
 });
 
-export async function sendMail(to, templateName, templateParams) {
+export async function sendMail(templateName, templateParams, to) {
     return email.send({
         template: templateName,
         message: {
@@ -31,5 +32,5 @@ export async function sendMail(to, templateName, templateParams) {
 }
 
 function enrichTemplateParams(templateParams) {
-    return Object.assign(templateParams, { baseUrl: "http://localhost:3000" }); // FIXME configuration
+    return Object.assign(templateParams, { baseUrl: config.server.baseUrl });
 }
