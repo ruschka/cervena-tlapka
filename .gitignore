@@ -62,3 +62,4 @@ typings/
 
 .idea
 dist
+config/env/development.js
