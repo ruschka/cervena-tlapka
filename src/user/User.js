@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    activated: {
+        type: Boolean,
+        required: true
+    },
+    activateHash: String,
     zip: {
         type: String,
         required: [true, "PSČ je povinné."]

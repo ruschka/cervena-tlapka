@@ -5,6 +5,8 @@ import { User } from "./User";
 import { validateAsync } from "../core/mongo";
 import jwt from "jsonwebtoken";
 import { isUserLogged, loggedUserId } from "../core/user";
+import { sendMail } from "../core/mail";
+import crypto from "crypto";
 
 // FIXME configuration
 export const jwtSecret = "asdfghjkl";
@@ -16,17 +18,20 @@ export class UserKoaService {
         const data = ctx.request.body;
         // FIXME check duplicate user names
         // FIXME check validity of email
-        // FIXME send activation email
         // FIXME check complexity of password
         // FIXME validate zip
+        // FIXME send activation email
         const passwordHash = await new Promise((resolve, reject) => {
             bcrypt.hash(data.password, saltRounds, (err, hash) => {
                 err ? reject(err) : resolve(hash);
             });
         });
+        const activateHash = crypto.randomBytes(64).toString("base64");
         const user = new User({
             email: data.email,
             passwordHash: passwordHash,
+            activated: false,
+            activateHash: activateHash,
             zip: data.zip
         });
         const validation = await validateAsync(user);
@@ -34,6 +39,7 @@ export class UserKoaService {
             return { success: false, data: data, errors: validation.errors };
         } else {
             await user.save();
+            await sendMail(user.email, "activate-profile", { activateHash });
             return { success: true };
         }
     }
