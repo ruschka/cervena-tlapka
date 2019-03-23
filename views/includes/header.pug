@@ -2,37 +2,40 @@ div.w3-container
     div.w3-third
         h1 Červená tlapka
     div.w3-twothird
-        div.w3-bar.w3-red
-            a.w3-bar-item.w3-button.w3-hide-large(href="#") Domů
-            a.w3-bar-item.w3-button.w3-hide-small.w3-hide-medium(href="#") Najít dárce
-            a.w3-bar-item.w3-button.w3-hide-small.w3-hide-medium(href="#") Registrovat dárce
-            a.w3-bar-item.w3-button.w3-hide-small.w3-hide-medium(href="#") O nás
-            a.w3-bar-item.w3-button.w3-hide-small.w3-hide-medium(href="#") Kontakt
-            a.w3-bar-item.w3-button.w3-hide-small.w3-hide-medium(href="#") Blog
+        div.w3-bar.w3-deep-purple
+            a.w3-bar-item.w3-button.w3-hide-large(href="/") Domů
+            - var itemClasses = "w3-bar-item w3-button w3-hide-small w3-hide-medium"
+            - var itemClassesRight = itemClasses + " w3-right"
+            a(class=itemClasses href="/find-donor") Najít dárce
+            a(class=itemClasses href="/register-donor") Registrovat dárce
+            a(class=itemClasses href="#") O nás
+            a(class=itemClasses href="#") Kontakt
+            a(class=itemClasses href="#") Blog
             if user
-                a.w3-bar-item.w3-button.w3-right.w3-hide-small.w3-hide-medium(href="/logout") Odhlásit
-                a.w3-bar-item.w3-button.w3-right.w3-hide-small.w3-hide-medium(href="/profile") #{user.sub.email}
+                a(class=itemClassesRight href="/logout") Odhlásit
+                a(class=itemClassesRight href="/profile") #{user.sub.email}
             else
-                a.w3-bar-item.w3-button.w3-right.w3-hide-small.w3-hide-medium(href="/login") Přihlásit
-                a.w3-bar-item.w3-button.w3-right.w3-hide-small.w3-hide-medium(href="/register") Registrovat
+                a(class=itemClassesRight href="/login") Přihlásit
+                a(class=itemClassesRight href="/register") Registrovat
             a.w3-bar-item.w3-button.w3-right.w3-hide-large(href="javascript:void(0)", onclick="handleMobileMenu()") &#9776
         div#mobile-menu.w3-bar-block.w3-red.w3-hide.w3-hide-large
-            a.w3-bar-item.w3-button(href="#") Najít dárce
-            a.w3-bar-item.w3-button(href="#") Registrovat dárce
-            a.w3-bar-item.w3-button(href="#") O nás
-            a.w3-bar-item.w3-button(href="#") Kontakt
-            a.w3-bar-item.w3-button(href="#") Blog
+            - var mobileItemClasses = "w3-bar-item w3-button"
+            a(class=mobileItemClasses href="/find-donor") Najít dárce
+            a(class=mobileItemClasses href="/register-donor") Registrovat dárce
+            a(class=mobileItemClasses href="#") O nás
+            a(class=mobileItemClasses href="#") Kontakt
+            a(class=mobileItemClasses href="#") Blog
             if user
-                a.w3-bar-item.w3-button(href="/profile") #{user.sub.email}
-                a.w3-bar-item.w3-button(href="/logout") Odhlásit
+                a(class=mobileItemClasses href="/profile") #{user.sub.email}
+                a(class=mobileItemClasses href="/logout") Odhlásit
             else
-                a.w3-bar-item.w3-button(href="/register") Registrovat
-                a.w3-bar-item.w3-button(href="/login") Přihlásit
+                a(class=mobileItemClasses href="/register") Registrovat
+                a(class=mobileItemClasses href="/login") Přihlásit
 
     script.
         function handleMobileMenu() {
             var x = document.getElementById("mobile-menu");
-            if (x.className.indexOf("w3-show") == -1) {
+            if (x.className.indexOf("w3-show") === -1) {
                 x.className += " w3-show";
             } else {
                 x.className = x.className.replace(" w3-show", "");
