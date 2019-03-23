@@ -1,45 +1,25 @@
 extends ../main-template
 
 block content
-    if user
-        - var data = templateData.data
-        - var errors = templateData.errors
-        - var actualYear = templateData.actualYear
-        p Pro registraci psího dárce o něm potřebujeme následující informace:
-        form(method='post', action='/register-donor')
-            div
-                label(for='name') Jméno:
-                input#name(type='text', name='name', value=data ? data.name : '')
-                if errors && errors.name
-                    span= errors.name
-            div
-                label(for='weight') Hmotnost (kg):
-                input#weight(type='number', name='weight', value=data ? data.weight : '', step=1)
-                if errors && errors.weight
-                    span= errors.weight
-            div
-                - var n = 0
-                label(for='birth-year') Rok narození:
-                select#birth-year(name='birthYear')
-                    - var selectedYear = data ? parseFloat(data.birthYear) : actualYear
-                    while n < 30
-                        - var year = actualYear - n++
-                        option(value=year, selected=selectedYear === year)= year
-                if errors && errors.birthYear
-                    span= errors.birthYear
-            div
-                label(for='sex') Pohlaví:
-                select#sex(name='sex')
-                    option(label='Pes', value='M', selected=data ? data.sex === 'M' : false)
-                    option(label='Fena', value='F', selected=data ? data.sex === 'F' : false)
-                if errors && errors.sex
-                    span= errors.sex
-            div
-                label(for='breed') Plemeno:
-                input#breed(type='text', name='breed', value=data ? data.breed : '')
-                if errors && errors.breed
-                    span= errors.breed
-            div
-                input(type='submit', value='Odeslat')
-    else
-        p Pro registraci psího dárce je potřeba se #[a(href='/login') přihlásit].
+    div.w3-half
+        h1 Registrace dárce
+        if user
+            p Pro registraci psího dárce o něm potřebujeme následující informace:
+            form(method='post', action='/register-donor')
+                include ../includes/donor-form
+        else
+            p Pro registraci psího dárce je potřeba se #[a(href='/login') přihlásit].
+    div.w3-half
+        h2 Informace o registraci dárce
+        p Pokud jste se rozhodli registrovat svého miláčka do naší databáze dobrovolných psích dárců krve, v první řadě máte náš velký dík! Vaše rozhodnutí může pomoci zachránit život jiného chlupáče, který to bude v budoucnu potřebovat. Aby ale byla vaše pomoc účinná, je důležité, abyste se seznámili s podmínkami, za kterých je možné vašeho psa zaregistrovat. Prosím, nejprve si je pozorně projděte. Pokud shledáte, že váš pes splňuje všechny body, můžete směle přikročit k vyplňování registračního formuláře.
+        p Podmínky pro registraci dárce:
+        ul
+            li váha nejméně 20 kg (čím větší pes, tím menší zátěž pro něj odběr znamená)
+            li věk 2 – 8 let (stejný důvod jako u váhy, musí se jednat o dospělého jedince)
+            li v době odběru v plné kondici
+            li dobře ovladatelný
+            li bez chronických chorob (např. cukrovka, epilepsie) a trvalých léků
+        p Pokud by váš pes přestal některou z podmínek dočasně splňovat (např. bude nemocný, zraněný,..), dejte nám o tom prosím vědět prostřednictvím emailu nebo na facebooku a my vaše údaje dočasně z databáze odejmeme.
+        p Pokud si z jakéhokoliv důvodu nebudete přát nadále setrvávat v naší databázi, klikněte na tlačítko a vaše údaje budou vymazány.
+
+

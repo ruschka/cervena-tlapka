@@ -2,9 +2,11 @@ extends ../main-template
 
 block content
     if templateData.success
+        h1 Registrace dokončena
         p Děkujeme za Vaši registraci. Váš účet byl úspěšně aktivován.
         p Nyní se můžete #[a(href='/login') přihlásit].
     else
+        h1 Chyba při dokončení registrace
         p Omlouváme se, ale Váš účet nemohl být aktivován.
         p Příčin může být více:
         ul

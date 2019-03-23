@@ -1,60 +1,65 @@
 extends ../main-template
 
 block content
-    p Na této stránce najdete všechny zaregistrovné dárce. Pro snadnější nalezení toho vhodného můžete použít filtr.
-    p Nového hrdinu, který by byl ochotný darovat krev, můžete zaregistrovat #[a(href='/register-donor') zde].
+    div.w3-half
+        h1 Najít dárce
+        p Na této stránce najdete všechny zaregistrovné dárce. Pro snadnější nalezení toho vhodného můžete použít filtr.
+        p Nového hrdinu, který by byl ochotný darovat krev, můžete zaregistrovat #[a(href='/register-donor') zde].
 
-    - var data = templateData.data
-    div
-        form(method='get', action='/find-donor')
-            div
-                label(for='zip') Vaše PSČ:
-                input#zip(type='text', name='zip', value=data ? data.zip : '')
-            div
-                label(for='maxDistance') Maximální vzdálenost:
-                select#maxDistance(name='maxDistance')
-                    option(label='50km', value='50', selected=data ? data.maxDistance === 50 : false)
-                    option(label='100km', value='100', selected=data ? data.maxDistance === 100 : false)
-                    option(label='200km', value='200', selected=data ? data.maxDistance === 200 : false)
-                    option(label='500km', value='500', selected=data ? data.maxDistance === 500 : false)
-            div
-                input(type='submit', value='Odeslat')
-    table
-        tr
-            th Jméno
-            th Hmotnost
-            th Rok narození
-            th Pohlaví
-            th Plemeno
-            th Obec
-            th PSČ
-        for registration in templateData.registrations
-            tr
-                td #[a(href="/donor/" + registration.id) #{registration.name}]
-                td= registration.weight
-                td= registration.birthYear
-                td= registration.sex
-                td= registration.breed
-                td= registration.city
-                td= registration.zip
-    div#donor-map
-    script.
-        var map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById('donor-map'), {
-                mapTypeId: 'roadmap'
-            });
-            var bounds = new google.maps.LatLngBounds();
-            var markersData = !{JSON.stringify(templateData.aggregatedRegistrations)};
-            var markers = markersData.map(markerData => {
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(markerData.location[1], markerData.location[0]),
-                    map: map,
-                    label: `${markerData.registrationCount}`
+        - var data = templateData.data
+        div
+            form(method='get', action='/find-donor')
+                div.w3-container.w3-row-padding.align-bottom
+                    div.w3-third
+                        label(for='zip') Vaše PSČ:
+                        input#zip.w3-input.w3-border(type='text', name='zip', value=data ? data.zip : '')
+                    div.w3-third
+                        label(for='maxDistance') Maximální vzdálenost:
+                        select#maxDistance.w3-select.w3-border(name='maxDistance')
+                            option(label='50km', value='50', selected=data ? data.maxDistance === 50 : false)
+                            option(label='100km', value='100', selected=data ? data.maxDistance === 100 : false)
+                            option(label='200km', value='200', selected=data ? data.maxDistance === 200 : false)
+                            option(label='500km', value='500', selected=data ? data.maxDistance === 500 : false)
+                    div.w3-third
+                        input.w3-input(type='submit', value='Odeslat')
+        div.w3-responsive.w3-section
+            table.w3-table-all
+                tr
+                    th Jméno
+                    th Hmotnost
+                    th Rok narození
+                    th Pohlaví
+                    th Plemeno
+                    th Obec
+                    th PSČ
+                for registration in templateData.registrations
+                    tr
+                        td #[a(href="/donor/" + registration.id) #{registration.name}]
+                        td= registration.weight
+                        td= registration.birthYear
+                        td= registration.sex
+                        td= registration.breed
+                        td= registration.city
+                        td= registration.zip
+    div.w3-half
+        div#donor-map
+        script.
+            var map;
+            function initMap() {
+                map = new google.maps.Map(document.getElementById('donor-map'), {
+                    mapTypeId: 'roadmap'
                 });
-                bounds.extend(marker.position);
-                return marker;
-            });
-            map.fitBounds(bounds);
-        }
-    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)
+                var bounds = new google.maps.LatLngBounds();
+                var markersData = !{JSON.stringify(templateData.aggregatedRegistrations)};
+                var markers = markersData.map(markerData => {
+                    var marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(markerData.location[1], markerData.location[0]),
+                        map: map,
+                        label: `${markerData.registrationCount}`
+                    });
+                    bounds.extend(marker.position);
+                    return marker;
+                });
+                map.fitBounds(bounds);
+            }
+        script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)

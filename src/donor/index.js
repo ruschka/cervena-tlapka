@@ -49,7 +49,7 @@ donorRouter.post("/register-donor", async (ctx, next) => {
 
 donorRouter.get("/register-donor/thanks", async (ctx, next) => {
     setTemplateData(ctx, {});
-    await ctx.render("register-donor/register-donor-thanks.pug");
+    await ctx.render("register-donor/thanks.pug");
 });
 
 donorRouter.get("/donor/:id", async (ctx, next) => {

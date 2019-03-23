@@ -1,17 +1,19 @@
 extends ../main-template
 
 block content
-    - var data = templateData.data;
-    p Registrace
-    form(method='post', action='/register')
-        div
-            label(for='email') Email:
-            input#email(type='text', name='email', value=data ? data.email : '')
-        div
-            label(for='password') Heslo:
-            input#password(type='password', name='password')
-        div
-            label(for='zip') PSČ:
-            input#zip(type='text', name='zip', value=data ? data.zip : '')
-        div
-            input(type='submit', value='Odeslat')
+    div.w3-half
+        - var data = templateData.data;
+        h1 Registrace
+        form(method='post', action='/register')
+            div.w3-container
+                label(for='email') Email:
+                input#email.w3-input.w3-border(type='text', name='email', value=data ? data.email : '')
+            div.w3-container
+                label(for='password') Heslo:
+                input#password.w3-input.w3-border(type='password', name='password')
+            div.w3-container
+                label(for='zip') PSČ:
+                input#zip.w3-input.w3-border(type='text', name='zip', value=data ? data.zip : '')
+            div.w3-container.w3-section
+                input.w3-input.w3-border(type='submit', value='Odeslat')
+    div.w3-half

@@ -1,17 +1,19 @@
 extends ../main-template
 
 block content
-    - var data = templateData.data;
-    p Přihlášení
-    if data
-        p Přihlášení se nezdařilo. Účet buď neexistuje nebo bylo zadáno špatné heslo.
-    form(method='post', action='/login')
-        div
-            label(for='email') Email:
-            input#email(type='text', name='email', value=data ? data.email : '')
-        div
-            label(for='password') Heslo:
-            input#password(type='password', name='password')
-        div
-            input(type='submit', value='Odeslat')
-    p Pokud nemáte založený účet, #[a(href='/register') zaregistrujte se prosím].
+    div.w3-half
+        - var data = templateData.data;
+        h1 Přihlášení
+        if data
+            p Přihlášení se nezdařilo. Účet buď neexistuje nebo bylo zadáno špatné heslo.
+        form(method='post', action='/login')
+            div.w3-container
+                label(for='email') Email:
+                input#email.w3-input.w3-border(type='text', name='email', value=data ? data.email : '')
+            div.w3-container
+                label(for='password') Heslo:
+                input#password.w3-input.w3-border(type='password', name='password')
+            div.w3-container.w3-section
+                input.w3-input(type='submit', value='Odeslat')
+    div.w3-half
+        p Pokud nemáte založený účet, #[a(href='/register') zaregistrujte se prosím].

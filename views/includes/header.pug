@@ -1,13 +1,13 @@
 div.w3-container
     div.w3-third
-        h1 Červená tlapka
+        h1: a(href="/") Červená tlapka
     div.w3-twothird
-        div.w3-bar.w3-deep-purple
+        div.w3-bar.w3-yellow
             a.w3-bar-item.w3-button.w3-hide-large(href="/") Domů
             - var itemClasses = "w3-bar-item w3-button w3-hide-small w3-hide-medium"
             - var itemClassesRight = itemClasses + " w3-right"
             a(class=itemClasses href="/find-donor") Najít dárce
-            a(class=itemClasses href="/register-donor") Registrovat dárce
+            a(class=itemClasses href="/register-donor") Registrace dárce
             a(class=itemClasses href="#") O nás
             a(class=itemClasses href="#") Kontakt
             a(class=itemClasses href="#") Blog
@@ -18,10 +18,10 @@ div.w3-container
                 a(class=itemClassesRight href="/login") Přihlásit
                 a(class=itemClassesRight href="/register") Registrovat
             a.w3-bar-item.w3-button.w3-right.w3-hide-large(href="javascript:void(0)", onclick="handleMobileMenu()") &#9776
-        div#mobile-menu.w3-bar-block.w3-red.w3-hide.w3-hide-large
+        div#mobile-menu.w3-bar-block.w3-yellow.w3-hide.w3-hide-large
             - var mobileItemClasses = "w3-bar-item w3-button"
             a(class=mobileItemClasses href="/find-donor") Najít dárce
-            a(class=mobileItemClasses href="/register-donor") Registrovat dárce
+            a(class=mobileItemClasses href="/register-donor") Registrace dárce
             a(class=mobileItemClasses href="#") O nás
             a(class=mobileItemClasses href="#") Kontakt
             a(class=mobileItemClasses href="#") Blog

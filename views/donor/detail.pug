@@ -2,13 +2,15 @@ extends ../main-template
 
 block content
     - var registration = templateData.registration
-    div
-        h2 Registrace dárce: #{registration.name}
+    div.w3-half
+        h1 Registrace dárce
         ul
+            li Jméno: #{registration.name}
             li Hmotnost: #{registration.weight}
             li Rok narození: #{registration.birthYear}
             li Pohlaví: #{registration.sex === 'M' ? 'Pes' : 'Fena'}
             li Plemeno: #{registration.breed}
             li Místo: #{registration.city} (#{registration.zip})
-        h3 Kontaktní formulář
+    div.w3-half
+        h2 Kontaktní formulář
         p TODO Zde bude kontaktní formulář, který odešle email majiteli dárce.

@@ -2,7 +2,7 @@ extends ../main-template
 
 block content
     - var loggedUser = templateData.loggedUser;
-    h2 Profilové informace
+    h1 Profilové informace
     table
         tr
             td Email
@@ -11,23 +11,24 @@ block content
             td PSČ
             td= loggedUser.zip
     h2 Vaše registrace dárců
-    table
-        tr
-            th Jméno
-            th Hmotnost
-            th Rok narození
-            th Pohlaví
-            th Plemeno
-            th
-            th
-        for registration in templateData.registrations
+    div.w3-responsive.w3-section
+        table.w3-table-all
             tr
-                td #[a(href="/donor/" + registration.id) #{registration.name}]
-                td= registration.weight
-                td= registration.birthYear
-                td= registration.sex
-                td= registration.breed
-                td #[a(href="/profile/donor/" + registration.id + "/edit") Upravit]
-                td
-                    form(method="post", action="/profile/donor/" + registration.id + "/remove")
-                        input(type="submit", value="Smazat")
+                th Jméno
+                th Hmotnost
+                th Rok narození
+                th Pohlaví
+                th Plemeno
+                th
+                th
+            for registration in templateData.registrations
+                tr
+                    td #[a(href="/donor/" + registration.id) #{registration.name}]
+                    td= registration.weight
+                    td= registration.birthYear
+                    td= registration.sex
+                    td= registration.breed
+                    td #[a(href="/profile/donor/" + registration.id + "/edit") Upravit]
+                    td
+                        form(method="post", action="/profile/donor/" + registration.id + "/remove")
+                            input(type="submit", value="Smazat")
