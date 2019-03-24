@@ -9,6 +9,8 @@ import { sendMail } from "../core/mail";
 import crypto from "crypto";
 import util from "util";
 import config from "../core/config";
+import { Zip } from "../zip/Zip";
+import zxcvbn from "zxcvbn";
 
 export const tokenCookie = "token";
 const jwtSecret = config.user.jwtSecret;
@@ -17,13 +19,39 @@ const saltRounds = config.user.saltRounds;
 export class UserKoaService {
     async register(ctx) {
         const data = ctx.request.body;
-        // FIXME check duplicate user names
-        // FIXME check validity of email
-        // FIXME check complexity of password
-        // FIXME validate zip
-        const email = data.email;
+        const originalEmail = data.email;
+        const email = originalEmail.toLowerCase();
+        const existingUser = await this.findUserByEmail(email);
+        if (existingUser) {
+            return {
+                success: false,
+                data: data,
+                errors: { email: "Účet s daným emailem již existuje." }
+            };
+        }
+        const zip = await Zip.findOne({ zip: data.zip });
+        if (!zip) {
+            return {
+                success: false,
+                data: data,
+                errors: { zip: "Neznámé PSČ." }
+            };
+        }
+        const password = data.password;
+        const passwordCheck = zxcvbn(password);
+        // configuration
+        if (passwordCheck.score < 3) {
+            return {
+                success: false,
+                data: data,
+                errors: {
+                    password:
+                        "Heslo je příliš slabé. Mělo by být dostatečně dlouhé a obsahovat malé i velké písmena a číslice, případně další symboly."
+                }
+            };
+        }
         const passwordHash = await util.promisify(bcrypt.hash)(
-            data.password,
+            password,
             saltRounds
         );
         const activateHash = (await util.promisify(crypto.randomBytes)(
@@ -31,6 +59,7 @@ export class UserKoaService {
         )).toString("base64");
         const user = new User({
             email: email,
+            originalEmail: originalEmail,
             passwordHash: passwordHash,
             activated: false,
             activateHash: activateHash,
@@ -45,7 +74,7 @@ export class UserKoaService {
             await sendMail(
                 "activate-profile",
                 {
-                    email,
+                    originalEmail,
                     activateHash
                 },
                 email
@@ -76,7 +105,7 @@ export class UserKoaService {
 
     async login(ctx) {
         const data = ctx.request.body;
-        const user = await User.findOne({ email: data.email });
+        const user = await this.findUserByEmail(data.email);
         if (!user) {
             return { success: false, data: data };
         }
@@ -122,5 +151,9 @@ export class UserKoaService {
             ctx.throw(404);
         }
         return user;
+    }
+
+    findUserByEmail(email) {
+        return User.findOne({ email });
     }
 }
