@@ -1,8 +1,9 @@
 extends ../main-template
 
 block content
-    div.w3-half
-        - var registration = templateData.registration
-        form(method='post', action='/profile/donor/' + registration.id + '/edit')
-            include ../includes/donor-form
-    div.w3-half
+    div.w3-container.w3-row-padding
+        div.w3-half
+            - var registration = templateData.registration
+            form(method='post', action='/profile/donor/' + registration.id + '/edit')
+                include ../includes/donor-form
+        div.w3-half

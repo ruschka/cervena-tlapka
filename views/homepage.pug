@@ -1,22 +1,41 @@
 extends main-template
 
 block content
-    div.w3-half
-        h1 O co jde?
-        p: b Červená tlapka je platforma pro pejskaře, kteří chtějí pomoci nebo pomoc potřebují.
-        p V životě psím může nastat situace, kdy váš miláček musí na operaci a potřebuje transfuzi. Pokud ale ve svém okolí nemáte kamaráda s velkým zdravým psem, který by vám potřebnou krev daroval, jste v háji.
-        p Veterináři zpravidla na nikoho kontakt nemají a nemocnice krev tohoto typu nemusí mít na skladě. Pak si krev musíte zajistit sami, což může být dost obtížné. Nedej bože, když to spěchá (a někdy to spěchá hodně).
-        p: b Proto vznikla Červená tlapka. Aby propojila potenciální dárce s těmi, kteří potřebují jejich laskavou pomoc.
+    div.w3-container.w3-row-padding
+        div.w3-half
+            h1 O co jde?
+            p: b Červená tlapka je platforma pro pejskaře, kteří chtějí pomoci nebo pomoc potřebují.
+            p V životě psím může nastat situace, kdy váš miláček musí na operaci a potřebuje transfuzi. Pokud ale ve svém okolí nemáte kamaráda s velkým zdravým psem, který by vám potřebnou krev daroval, jste v háji.
+            p Veterináři zpravidla na nikoho kontakt nemají a nemocnice krev tohoto typu nemusí mít na skladě. Pak si krev musíte zajistit sami, což může být dost obtížné. Nedej bože, když to spěchá (a někdy to spěchá hodně).
+            p: b Proto vznikla Červená tlapka. Aby propojila potenciální dárce s těmi, kteří potřebují jejich laskavou pomoc.
 
-        div.w3-half.w3-center
-            a.w3-button.w3-deep-purple.w3-round-xxlarge.w3-xlarge.w3-padding-large.w3-section(href='/register-donor') Chci se stát dárcem
-        div.w3-half.w3-center
-            a.w3-button.w3-deep-purple.w3-round-xxlarge.w3-xlarge.w3-padding-large.w3-section(href='/find-donor') Potřebuji transfuzi
+            div.w3-half.w3-center
+                //a.w3-button.ct-blue.w3-round-xxlarge.w3-xlarge.w3-padding-large.w3-section(href='/register-donor') Chci se stát dárcem
+                a(href='/register-donor'): img.content-image(src="/static/image/want-to-be-a-donor.svg", alt="Chci se stát dárcem")
+            div.w3-half.w3-center
+                //a.w3-button.ct-blue.w3-round-xxlarge.w3-xlarge.w3-padding-large.w3-section(href='/find-donor') Potřebuji transfuzi
+                a(href='/find-donor'): img.content-image(src="/static/image/need-a-transfusion.svg", alt="Potřebuji transfuzi")
 
-        h2 Proč to děláme?
-        p: b Protože nezapomínáme.
-        p Naše úžasná sedmiletá boxerka Jasmína potřebovala akutní operaci a měla to štěstí, že jsme pro ni dárce měli. Její dlouholetý kamarád Lexík a jeho páníček nám obětavě přispěchali na pomoc. Bohužel, i přesto zápas s rakovinou prohrála. Lékaři po otevření konstatovali metastáze a tak ji místo operace sleziny jen zase zašili a nechali spát napořád. Naštěstí netrpěla a do poslední chvíle byla veselá a statečná. Odešla náhle a zůstala nám po ní velká smutná prázdnota.
-        p Abychom ji alespoň nějak zaplnili, rozhodli jsme se, že na její památku založíme tuhle platformu pro dobrovolné psí dárce. Abychom dali šanci i ostatním psům, kterým bychom touto cestou mohli pomoci. A aby v nich tak mohl Jasmínky odkaz žít dál.
-    div.w3-half
-        p TODO obrázek
-        p: b Pokud chcete znát náš celý příběh anebo příběhy našich dárců a zachráněných psích kamarádů, podívajte se na náš blog.
+            h2 Proč to děláme?
+            p: b Protože nezapomínáme.
+            p Naše úžasná sedmiletá boxerka Jasmína potřebovala akutní operaci a měla to štěstí, že jsme pro ni dárce měli. Její dlouholetý kamarád Lexík a jeho páníček nám obětavě přispěchali na pomoc. Bohužel, i přesto zápas s rakovinou prohrála. Lékaři po otevření konstatovali metastáze a tak ji místo operace sleziny jen zase zašili a nechali spát napořád. Naštěstí netrpěla a do poslední chvíle byla veselá a statečná. Odešla náhle a zůstala nám po ní velká smutná prázdnota.
+            p Abychom ji alespoň nějak zaplnili, rozhodli jsme se, že na její památku založíme tuhle platformu pro dobrovolné psí dárce. Abychom dali šanci i ostatním psům, kterým bychom touto cestou mohli pomoci. A aby v nich tak mohl Jasmínky odkaz žít dál.
+        div.w3-half
+            div.w3-constainer.w3-center
+                img.content-image(src="/static/image/homepage.svg", alt="Dárcovství spojuje")
+            p: b Pokud chcete znát náš celý příběh anebo příběhy našich dárců a zachráněných psích kamarádů, podívajte se na náš blog.
+    div.w3-container.w3-row-padding
+        h2 Chcete nám pomoci?
+        p: b Nesplňujete podmínky pro registraci dárce, ale přesto byste chtěli nějak přiložit ruku k dílu? Každá pomoc je vítána! Možností je hned několik:
+        div.w3-third
+            div.w3-constainer.w3-center
+                img.content-image(src="/static/image/help-by-printing-a-flyer.svg", alt="Pomůžu vytisknutím letáku")
+            p Připravili jsme pro vás letáček, který můžete vytisknout a umístit do vaší veterinární ordinace, kam chodíte se svým miláčkem.
+        div.w3-third
+            div.w3-constainer.w3-center
+                img.content-image(src="/static/image/help-by-sharing.svg", alt="Pomůžu sdílením")
+            p Informujte o nás své okolí. Svoje kamarády pejkaře i nepejskaře, svého psího doktora, sdílejte nás na Facebooku. Čím širší povědomí o databázi bude, tím víc členů může získat a tím víc pomáhat. #cervenatlapka
+        div.w3-third
+            div.w3-constainer.w3-center
+                img.content-image(src="/static/image/help-financially.svg", alt="Pomůžu finančně")
+            p Financujeme se z vlastních zdrojů. Pokud byste nás chtěli podpořit, můžete nám zaslat malý finanční obnos na účet... Peníze z něj použijeme na udržování a vylepšování registru, výrobu a zasílání známek a dalších věcí souvisejících s tímto projektem.

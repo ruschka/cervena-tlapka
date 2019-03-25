@@ -1,3 +1,76 @@
+html, body {
+    font-family: "Work Sans", sans-serif;
+    font-size: calc(10px + 0.5vw);
+    color: rgb(203, 0, 60);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Chivo", sans-serif;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2.5em;
+}
+
+h3 {
+    font-size: 2em;
+}
+
+h4 {
+    font-size: 1.66em;
+}
+
+h5 {
+    font-size: 1.33em;
+}
+
+h6 {
+    font-size: 1em;
+}
+
+.ct-red {
+    color: #fff!important;
+    background-color: rgb(203, 0, 60)!important
+}
+
+.ct-yellow {
+    color: rgb(203, 0, 60)!important;
+    background-color: rgb(255, 237, 60)!important
+}
+
+.ct-blue {
+    color: #fff!important;
+    background-color: rgb(39,49,106)!important
+}
+
+.ct-grey {
+    color: #fff!important;
+    background-color: rgb(87, 87, 86)!important
+}
+
+@media (min-width:600px) {
+    .logo {
+        width: 100%;
+    }
+}
+
+@media (min-width:768px) {
+    .logo {
+        width: 80%;
+    }
+}
+
+@media (min-width:992px) {
+    .logo {
+        width: 60%;
+    }
+}
+
 #donor-map {
     height: 500px;
     width: 100%;
@@ -6,4 +79,8 @@
 .align-bottom {
     display: flex;
     align-items: flex-end;
+}
+
+.content-image {
+    width: 50%;
 }
