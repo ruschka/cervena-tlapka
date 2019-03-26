@@ -5,6 +5,7 @@ import { User } from "./User";
 import { validateAsync } from "../core/mongo";
 import jwt from "jsonwebtoken";
 import { isUserLogged, loggedUserId } from "../core/user";
+import { validateRecaptcha } from "../core/recaptcha";
 import { sendMail } from "../core/mail";
 import crypto from "crypto";
 import util from "util";
@@ -19,6 +20,24 @@ const saltRounds = config.user.saltRounds;
 export class UserKoaService {
     async register(ctx) {
         const data = ctx.request.body;
+        const grecaptchaResponse = data["g-recaptcha-response"];
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            grecaptchaResponse
+        );
+        if (
+            recaptchaResult.action !== "register" ||
+            recaptchaResult.score < 0.5
+        ) {
+            return {
+                success: false,
+                data: data,
+                errors: {
+                    email:
+                        "Tento formulář využívá ochranu proti robotům. Pokud toto čtete, je to omyl, za který se omlouváme. Kontaktujte nás prosím."
+                }
+            };
+        }
         const originalEmail = data.email;
         const email = originalEmail.toLowerCase();
         const existingUser = await this.findUserByEmail(email);
@@ -74,7 +93,7 @@ export class UserKoaService {
             await sendMail(
                 "activate-profile",
                 {
-                    originalEmail,
+                    email: originalEmail,
                     activateHash
                 },
                 email

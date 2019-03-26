@@ -23,5 +23,8 @@ block content
                     if errors && errors.zip
                         div.w3-panel.w3-red: p= errors.zip
                 div.w3-container.w3-section
+                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
                     input.w3-input.w3-border(type='submit', value='Odeslat')
+                - var recaptchaAction = "register"
+                include ../includes/recaptcha-script
         div.w3-half

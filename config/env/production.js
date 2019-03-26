@@ -9,5 +9,8 @@ module.exports = {
     },
     email: {
         apiKey: process.env.EMAIL_API_KEY
+    },
+    recaptcha: {
+        apiKey: process.env.RECAPTCHA_API_KEY
     }
 };

@@ -9,5 +9,8 @@ module.exports = {
     },
     email: {
         apiKey: "changeme"
+    },
+    recaptcha: {
+        apiKey: "changeme"
     }
 };
