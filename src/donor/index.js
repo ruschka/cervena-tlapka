@@ -53,12 +53,24 @@ donorRouter.get("/register-donor/thanks", async (ctx, next) => {
 });
 
 donorRouter.get("/donor/:id", async (ctx, next) => {
-    const registration = await DonorRegistration.findOne({
-        _id: ctx.params.id
-    });
+    const registration = await donorService.findDonorRegistration(ctx);
     if (!registration) {
         ctx.throw(404);
     }
-    setTemplateData(ctx, { registration });
+    setTemplateData(ctx, {
+        registration,
+        applicationSent: ctx.query.applicationSent
+    });
     await ctx.render("donor/detail.pug");
+});
+
+donorRouter.post("/donor/:id/contact", async (ctx, next) => {
+    const { success, data, errors } = await donorService.contactDonor(ctx);
+    if (success) {
+        ctx.redirect(`/donor/${ctx.params.id}?applicationSent=true`);
+    } else {
+        const registration = await donorService.findDonorRegistration(ctx);
+        setTemplateData(ctx, { data, errors, registration });
+        await ctx.render("donor/detail.pug");
+    }
 });

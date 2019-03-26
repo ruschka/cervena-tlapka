@@ -5,6 +5,10 @@ import { Zip } from "../zip/Zip";
 import { DonorRegistration } from "./DonorRegistration";
 import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
+import { emailRegex, sendMail } from "../core/mail";
+import { hasAnyOwnProperty } from "../core/utils";
+import { User } from "../user/User";
+import { DonorApplication } from "./DonorApplication";
 
 export class DonorRegistrationKoaService {
     async findDonors(ctx) {
@@ -87,24 +91,6 @@ export class DonorRegistrationKoaService {
         }
     }
 
-    async findZip(ctx, zipCode) {
-        const zip = await Zip.findOne({ zip: zipCode });
-        if (!zip) {
-            ctx.throw(400, "unknown zip");
-        }
-        return zip;
-    }
-
-    async findLoggedUserRegistrations(ctx) {
-        if (!isUserLogged(ctx)) {
-            ctx.throw(401);
-        }
-        const userId = loggedUserId(ctx);
-        return DonorRegistration.find({
-            userId: userId
-        });
-    }
-
     removeDonorRegistration(ctx) {
         return this.modifyDonorRegistration(ctx, async (ctx, registration) => {
             await DonorRegistration.deleteOne({ _id: registration.id });
@@ -142,11 +128,75 @@ export class DonorRegistrationKoaService {
             ctx.throw(401);
         }
         const userId = loggedUserId(ctx);
-        const registration = await this.findDonorRegistration(ctx)
+        const registration = await this.findDonorRegistration(ctx);
         if (userId !== registration.userId.toString()) {
             ctx.throw(403);
         }
         return modifyFun(ctx, registration);
+    }
+
+    async contactDonor(ctx) {
+        const registration = await this.findDonorRegistration(ctx);
+        if (!registration) {
+            ctx.throw(404, "Unknown donor registration");
+        }
+        const donor = await User.findOne({ _id: registration.userId });
+        if (!donor) {
+            ctx.throw(404, "Unknown donor user");
+        }
+        const data = ctx.request.body;
+        const applicantEmail = data.email;
+        const applicantName = data.name;
+        const applicantMessage = data.message;
+        const errors = {};
+        if (!emailRegex.test(applicantEmail)) {
+            Object.assign(errors, { email: "Email není validní." });
+        }
+        if (!applicantName || 0 === applicantName.length) {
+            Object.assign(errors, { name: "Jméno je povinné." });
+        }
+        if (!applicantMessage || 0 === applicantMessage.length) {
+            Object.assign(errors, { message: "Zpráva pro dárce je povinná." });
+        }
+        if (hasAnyOwnProperty(errors)) {
+            return { success: false, data: data, errors: errors };
+        } else {
+            const userId = isUserLogged(ctx) ? loggedUserId(ctx) : null;
+            const donorApplication = new DonorApplication({
+                applicantEmail: applicantEmail,
+                applicantName: applicantName,
+                applicantMessage: applicantMessage,
+                donorRegistrationId: registration.id,
+                userId: userId,
+                createdDate: new Date()
+            });
+            await donorApplication.save();
+            await sendMail(
+                "contact-donor",
+                { applicantMessage, applicantName, registration },
+                donor.originalEmail,
+                applicantEmail
+            );
+            return { success: true };
+        }
+    }
+
+    async findZip(ctx, zipCode) {
+        const zip = await Zip.findOne({ zip: zipCode });
+        if (!zip) {
+            ctx.throw(400, "unknown zip");
+        }
+        return zip;
+    }
+
+    async findLoggedUserRegistrations(ctx) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const userId = loggedUserId(ctx);
+        return DonorRegistration.find({
+            userId: userId
+        });
     }
 
     findDonorRegistration(ctx) {

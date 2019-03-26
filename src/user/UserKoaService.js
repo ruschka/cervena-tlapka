@@ -13,7 +13,6 @@ import config from "../core/config";
 import { Zip } from "../zip/Zip";
 import zxcvbn from "zxcvbn";
 import { PasswordReset } from "./PasswordReset";
-import { ObjectId } from "mongoose";
 
 export const tokenCookie = "token";
 const jwtSecret = config.user.jwtSecret;
@@ -165,7 +164,7 @@ export class UserKoaService {
         const passwordReset = new PasswordReset({
             userId: user.id,
             passwordResetHash: passwordResetHash,
-            created: new Date()
+            createdDate: new Date()
         });
         await passwordReset.save();
         await sendMail(

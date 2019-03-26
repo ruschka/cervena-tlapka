@@ -11,13 +11,13 @@ const passwordResetSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    created: {
+    createdDate: {
         type: Date,
         required: true
     }
 });
 
-passwordResetSchema.index({ created: 1 }, { expireAfterSeconds: 60 * 60 });
+passwordResetSchema.index({ createdDate: 1 }, { expireAfterSeconds: 60 * 60 });
 passwordResetSchema.index({ passwordResetHash: 1 });
 
 export const PasswordReset = mongoose.model(

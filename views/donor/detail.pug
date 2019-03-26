@@ -1,17 +1,45 @@
 extends ../main-template
 
 block content
+    if templateData.applicationSent
+        div.w3-panel.w3-pale-green
+            p Vaše žádost byla úspěšně odeslána.
     div.w3-container.w3-row-padding
-        - var registration = templateData.registration
+        - const registration = templateData.registration
         div.w3-half
             h1 Registrace dárce
             ul
                 li Jméno: #{registration.name}
                 li Hmotnost: #{registration.weight}
                 li Rok narození: #{registration.birthYear}
-                li Pohlaví: #{registration.sex === 'M' ? 'Pes' : 'Fena'}
+                li Pohlaví: #{registration.sex === "M" ? "Pes" : "Fena"}
                 li Plemeno: #{registration.breed}
                 li Místo: #{registration.city} (#{registration.zip})
         div.w3-half
             h2 Kontaktní formulář
-            p TODO Zde bude kontaktní formulář, který odešle email majiteli dárce.
+            p: b Našli jste vhodného dárce? Kontaktujte ho pomocí tohoto formuláře!
+            p Vyplňte svůj email a napište zprávu pro dárce. Nezapomeňte na své kontakty (telefonní číslo, Facebook), na kterých Vás bude moci dárce zastihnout.
+            p Urychlíte tím celý proces darování krve.
+            - const data = templateData.data
+            - const errors = templateData.errors
+            form(method="post", action="/donor/" + registration.id + "/contact")
+                div.w3-container
+                    label(for="email") Váš email:
+                    input#email.w3-input.w3-border(type="text", name="email", value=data ? data.email : "")
+                    if errors && errors.email
+                        div.w3-panel.w3-red: p= errors.email
+                div.w3-container
+                    label(for="name") Vaše jméno:
+                    input#name.w3-input.w3-border(type="text", name="name", value=data ? data.name : "")
+                    if errors && errors.name
+                        div.w3-panel.w3-red: p= errors.name
+                div.w3-container
+                    label(for="message") Vaše zpráva:
+                    textarea#message.w3-input.w3-border(name="message") #{data ? data.message : ""}
+                    if errors && errors.message
+                        div.w3-panel.w3-red: p= errors.message
+                div.w3-container.w3-section
+                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+                    input.w3-input.w3-border(type='submit', value='Odeslat')
+                - const recaptchaAction = "contactDonor";
+                include ../includes/recaptcha-script
