@@ -11,6 +11,7 @@ module.exports = {
         apiKey: "changeme"
     },
     recaptcha: {
-        apiKey: "changeme"
+        apiKey: "changeme",
+        clientKey: "changeme"
     }
 };

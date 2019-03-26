@@ -6,7 +6,7 @@ html(lang="cz")
         link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Chivo:400,700|Work+Sans:400,700")
         link(rel="stylesheet", type="text/css", href="https://www.w3schools.com/w3css/4/w3.css")
         link(rel="stylesheet", type="text/css", href="/static/css/style.css")
-        script(src="https://www.google.com/recaptcha/api.js?render=6Lfs8pkUAAAAAAgfGeMu-HAToOV0MWZ_1dpyrLGZ")
+        script(src="https://www.google.com/recaptcha/api.js?render=" + templateData.recaptchaKey)
     body
         include includes/header
         block content

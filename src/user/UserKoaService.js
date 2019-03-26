@@ -20,23 +20,9 @@ const saltRounds = config.user.saltRounds;
 export class UserKoaService {
     async register(ctx) {
         const data = ctx.request.body;
-        const grecaptchaResponse = data["g-recaptcha-response"];
-        const recaptchaResult = await validateRecaptcha(
-            ctx,
-            grecaptchaResponse
-        );
-        if (
-            recaptchaResult.action !== "register" ||
-            recaptchaResult.score < 0.5
-        ) {
-            return {
-                success: false,
-                data: data,
-                errors: {
-                    email:
-                        "Tento formulář využívá ochranu proti robotům. Pokud toto čtete, je to omyl, za který se omlouváme. Kontaktujte nás prosím."
-                }
-            };
+        const recaptchaResult = await validateRecaptcha(ctx, data, "register");
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
         }
         const originalEmail = data.email;
         const email = originalEmail.toLowerCase();

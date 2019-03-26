@@ -11,6 +11,7 @@ module.exports = {
         apiKey: process.env.EMAIL_API_KEY
     },
     recaptcha: {
-        apiKey: process.env.RECAPTCHA_API_KEY
+        apiKey: process.env.RECAPTCHA_API_KEY,
+        clientKey: process.env.RECAPTCHA_CLIENT_KEY
     }
 };
