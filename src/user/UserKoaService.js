@@ -12,6 +12,8 @@ import util from "util";
 import config from "../core/config";
 import { Zip } from "../zip/Zip";
 import zxcvbn from "zxcvbn";
+import { PasswordReset } from "./PasswordReset";
+import { ObjectId } from "mongoose";
 
 export const tokenCookie = "token";
 const jwtSecret = config.user.jwtSecret;
@@ -43,22 +45,11 @@ export class UserKoaService {
             };
         }
         const password = data.password;
-        const passwordCheck = zxcvbn(password);
-        // configuration
-        if (passwordCheck.score < 3) {
-            return {
-                success: false,
-                data: data,
-                errors: {
-                    password:
-                        "Heslo je příliš slabé. Mělo by být dostatečně dlouhé a obsahovat malé i velké písmena a číslice, případně další symboly."
-                }
-            };
+        const passwordCheck = this.checkPassword(data, password);
+        if (!passwordCheck.success) {
+            return passwordCheck;
         }
-        const passwordHash = await util.promisify(bcrypt.hash)(
-            password,
-            saltRounds
-        );
+        const passwordHash = await this.createPasswordHash(password);
         const activateHash = (await util.promisify(crypto.randomBytes)(
             64
         )).toString("base64");
@@ -146,6 +137,98 @@ export class UserKoaService {
         ctx.cookies.set(tokenCookie);
     }
 
+    async sendPasswordResetEmail(ctx) {
+        const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "sendPasswordResetEmail"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
+        const originalEmail = data.email;
+        const email = originalEmail.toLowerCase();
+        const user = await this.findUserByEmail(email);
+        if (!user) {
+            return {
+                success: false,
+                data: data,
+                errors: {
+                    email: "Uživatel nebyl nalezen. Je zadaný email správně?"
+                }
+            };
+        }
+        const passwordResetHash = (await util.promisify(crypto.randomBytes)(
+            64
+        )).toString("base64");
+        const passwordReset = new PasswordReset({
+            userId: user.id,
+            passwordResetHash: passwordResetHash,
+            created: new Date()
+        });
+        await passwordReset.save();
+        await sendMail(
+            "password-reset",
+            {
+                passwordResetHash
+            },
+            originalEmail
+        );
+        return { success: true };
+    }
+
+    async resetPassword(ctx) {
+        const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "passwordReset"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
+        const passwordResetHash = data.passwordResetHash;
+        const passwordReset = await PasswordReset.findOne({
+            passwordResetHash
+        });
+        if (!passwordReset) {
+            return {
+                success: false,
+                data,
+                errors: {
+                    password:
+                        "Odkaz pro obnovení hesla není platný. Zkuste to prosím znovu."
+                }
+            };
+        }
+        const password = data.password;
+        const passwordCheck = this.checkPassword(data, password);
+        if (!passwordCheck.success) {
+            return passwordCheck;
+        }
+        const passwordHash = await this.createPasswordHash(password);
+        const result = await User.updateOne(
+            { _id: passwordReset.userId },
+            { passwordHash }
+        );
+        await PasswordReset.deleteOne({ _id: passwordReset.id });
+        if (result.nModified === 1) {
+            return { success: true };
+        } else {
+            console.error(
+                `Password wasn't reset. User id ${passwordReset.userId}`
+            );
+            return {
+                success: false,
+                data,
+                errors: {
+                    password: "Heslo nebylo obnoveno. Kontaktujte nás prosím."
+                }
+            };
+        }
+    }
+
     async loggedUser(ctx) {
         if (!isUserLogged(ctx)) {
             ctx.throw(401);
@@ -160,5 +243,26 @@ export class UserKoaService {
 
     findUserByEmail(email) {
         return User.findOne({ email });
+    }
+
+    checkPassword(data, password) {
+        const passwordCheck = zxcvbn(password);
+        // configuration
+        if (passwordCheck.score < 3) {
+            return {
+                success: false,
+                data: data,
+                errors: {
+                    password:
+                        "Heslo je příliš slabé. Mělo by být dostatečně dlouhé a obsahovat malé i velké písmena a číslice, případně další symboly."
+                }
+            };
+        } else {
+            return { success: true };
+        }
+    }
+
+    createPasswordHash(password) {
+        return util.promisify(bcrypt.hash)(password, saltRounds);
     }
 }

@@ -1,0 +1,22 @@
+extends ../main-template
+
+block content
+    div.w3-container.w3-row-padding
+        div.w3-half
+            - var data = templateData.data;
+            - var errors = templateData.errors;
+            h1 Obnovení hesla
+            p Zadejte prosím Váš email, který jste uvedli při registraci. Po odeslání formuláře Vám na něj budou odeslány pokyny pro obnovení hesla.
+            form(method='post', action='/password-reset/email')
+                div.w3-container
+                    label(for='email') Email:
+                    input#email.w3-input.w3-border(type='text', name='email', value=data ? data.email : '')
+                    if errors && errors.email
+                        div.w3-panel.w3-red: p= errors.email
+                div.w3-container.w3-section
+                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+                    input.w3-input(type='submit', value='Odeslat')
+                - var recaptchaAction = "sendPasswordResetEmail"
+                include ../includes/recaptcha-script
+        div.w3-half
+            p Pokud nemáte založený účet, #[a(href='/register') zaregistrujte se prosím].

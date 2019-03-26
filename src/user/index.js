@@ -64,6 +64,50 @@ userRouter.get("/logout", async (ctx, next) => {
     ctx.redirect("/");
 });
 
+userRouter.get("/password-reset/email", async (ctx, next) => {
+    setTemplateData(ctx, {});
+    await ctx.render("password-reset/email-form.pug");
+});
+
+userRouter.post("/password-reset/email", async (ctx, next) => {
+    const { success, data, errors } = await userService.sendPasswordResetEmail(
+        ctx
+    );
+    if (success) {
+        ctx.redirect("/password-reset/email-sent");
+    } else {
+        setTemplateData(ctx, { data, errors });
+        await ctx.render("password-reset/email-form.pug");
+    }
+});
+
+userRouter.get("/password-reset/email-sent", async (ctx, next) => {
+    setTemplateData(ctx, {});
+    await ctx.render("password-reset/email-sent.pug");
+});
+
+userRouter.get("/password-reset", async (ctx, next) => {
+    setTemplateData(ctx, {
+        data: { passwordResetHash: ctx.query.passwordResetHash }
+    });
+    await ctx.render("password-reset/reset-form.pug");
+});
+
+userRouter.post("/password-reset", async (ctx, next) => {
+    const { success, data, errors } = await userService.resetPassword(ctx);
+    if (success) {
+        ctx.redirect("/password-reset/success");
+    } else {
+        setTemplateData(ctx, { data, errors });
+        await ctx.render("password-reset/reset-form.pug");
+    }
+});
+
+userRouter.get("/password-reset/success", async (ctx, next) => {
+    setTemplateData(ctx, {});
+    await ctx.render("password-reset/success.pug");
+});
+
 userRouter.get("/profile", async (ctx, next) => {
     setTemplateData(ctx, {
         loggedUser: await userService.loggedUser(ctx),

@@ -1,0 +1,22 @@
+extends ../main-template
+
+block content
+    div.w3-container.w3-row-padding
+        div.w3-half
+            - var data = templateData.data
+            - var errors = templateData.errors
+            h1 Obnovení hesla
+            p Zadejte prosím nové heslo a odešlete formulář.
+            form(method='post', action='/password-reset')
+                div.w3-container
+                    label(for='password') Nové heslo:
+                    input#password.w3-input.w3-border(type='password', name='password')
+                    if errors && errors.password
+                        div.w3-panel.w3-red: p= errors.password
+                div.w3-container.w3-section
+                    input(type="hidden", name="passwordResetHash", value=data.passwordResetHash)
+                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+                    input.w3-input(type='submit', value='Odeslat')
+                - var recaptchaAction = "passwordReset"
+                include ../includes/recaptcha-script
+        div.w3-half
