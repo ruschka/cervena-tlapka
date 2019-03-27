@@ -1,7 +1,7 @@
 module.exports = {
     server: {
         baseUrl: "https://www.cervenatlapka.cz",
-        port: 80
+        port: process.env.SERVER_PORT
     },
     user: {
         jwtSecret: process.env.JWT_SECRET,

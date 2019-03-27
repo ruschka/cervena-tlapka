@@ -10,6 +10,7 @@ export class MongoProvider {
         return new Promise((resolve, reject) => {
             const options = { useNewUrlParser: true };
             mongoose
+                // FIXME configuration
                 .connect("mongodb://localhost:27017/donor-registry", options)
                 .catch(err => {
                     console.error("MongoDB connect failed.", err);
