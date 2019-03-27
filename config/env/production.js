@@ -1,6 +1,6 @@
 module.exports = {
     server: {
-        baseUrl: "https://www.cervenatlapka.cz",
+        baseUrl: process.env.SERVER_BASE_URL,
         port: process.env.SERVER_PORT
     },
     user: {
