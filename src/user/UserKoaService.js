@@ -69,10 +69,10 @@ export class UserKoaService {
             await sendMail(
                 "activate-profile",
                 {
-                    email: originalEmail,
+                    email,
                     activateHash
                 },
-                email
+                originalEmail
             );
             return { success: true };
         }
