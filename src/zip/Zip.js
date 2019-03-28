@@ -4,7 +4,8 @@ import mongoose from "mongoose";
 
 const zipSchema = new mongoose.Schema({
     zip: String,
-    city: String,
+    district: String,
+    region: String,
     coordinates: [Number]
 });
 

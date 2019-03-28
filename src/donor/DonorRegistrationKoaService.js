@@ -79,7 +79,7 @@ export class DonorRegistrationKoaService {
             breed: data.breed,
             userId: mongoose.mongo.ObjectId(loggedUserId(ctx)),
             zip: zip.zip,
-            city: zip.city,
+            district: zip.district,
             location: { type: "Point", coordinates: zip.coordinates }
         });
         const validation = await validateAsync(registration);

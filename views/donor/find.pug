@@ -31,7 +31,7 @@ block content
                         th Rok narození
                         th Pohlaví
                         th Plemeno
-                        th Obec
+                        th Okres
                         th PSČ
                     for registration in templateData.registrations
                         tr
@@ -40,7 +40,7 @@ block content
                             td= registration.birthYear
                             td= registration.sex
                             td= registration.breed
-                            td= registration.city
+                            td= registration.district
                             td= registration.zip
         div.w3-half
             div#donor-map

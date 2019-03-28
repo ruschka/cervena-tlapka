@@ -52,7 +52,8 @@ class ZipTransform extends Writable {
         }
         const zip = new Zip({
             zip: chunk.zip,
-            city: chunk.city,
+            district: chunk.district,
+            region: chunk.region,
             coordinates: [coordinates.lng, coordinates.lat]
         });
         await zip.save();
