@@ -100,7 +100,7 @@ export class UserKoaService {
 
     async login(ctx) {
         const data = ctx.request.body;
-        const user = await this.findUserByEmail(data.email);
+        const user = await this.findUserByEmail(data.email.toLowerCase());
         if (!user) {
             return { success: false, data: data };
         }
