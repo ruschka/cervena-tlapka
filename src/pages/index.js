@@ -13,3 +13,13 @@ pagesRouter.get("/", async (ctx, next) => {
 pagesRouter.get("/robots.txt", async (ctx, next) => {
     ctx.response.body = "User-agent: * \n" + "Disallow: /";
 });
+
+pagesRouter.get("/404", async (ctx, next) => {
+    setTemplateData(ctx, {});
+    await ctx.render("error-page/404.pug");
+});
+
+pagesRouter.get("/500", async (ctx, next) => {
+    setTemplateData(ctx, {});
+    await ctx.render("error-page/500.pug");
+});

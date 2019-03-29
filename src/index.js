@@ -36,6 +36,10 @@ app.use((ctx, next) => {
     return next().catch(err => {
         if (401 === err.status) {
             ctx.redirect("/login");
+        } else if (404 === err.status) {
+            ctx.redirect("/404");
+        } else if (500 === err.status) {
+            ctx.redirect("/500");
         } else {
             throw err;
         }
