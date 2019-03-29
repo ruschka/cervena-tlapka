@@ -44,7 +44,11 @@ export class UserKoaService {
             };
         }
         const password = data.password;
-        const passwordCheck = this.checkPassword(data, password);
+        const passwordCheck = this.checkPassword(
+            data,
+            password,
+            data.passwordConfirm
+        );
         if (!passwordCheck.success) {
             return passwordCheck;
         }
@@ -202,7 +206,11 @@ export class UserKoaService {
             };
         }
         const password = data.password;
-        const passwordCheck = this.checkPassword(data, password);
+        const passwordCheck = this.checkPassword(
+            data,
+            password,
+            data.passwordConfirm
+        );
         if (!passwordCheck.success) {
             return passwordCheck;
         }
@@ -244,7 +252,16 @@ export class UserKoaService {
         return User.findOne({ email });
     }
 
-    checkPassword(data, password) {
+    checkPassword(data, password, passwordConfirm) {
+        if (password !== passwordConfirm) {
+            return {
+                success: false,
+                data: data,
+                errors: {
+                    password: "Hesla nejsou stejná. Zkuste to prosím znovu."
+                }
+            };
+        }
         const passwordCheck = zxcvbn(password);
         if (passwordCheck.score < config.user.passwordStrength) {
             return {

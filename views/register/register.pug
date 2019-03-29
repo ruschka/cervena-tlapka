@@ -18,6 +18,9 @@ block content
                     if errors && errors.password
                         div.w3-panel.w3-red: p= errors.password
                 div.w3-container
+                    label(for='passwordConfirm') Heslo znovu:
+                    input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
+                div.w3-container
                     label(for='zip') PSČ:
                     input#zip.w3-input.w3-border(type='text', name='zip', value=data ? data.zip : '')
                     if errors && errors.zip
