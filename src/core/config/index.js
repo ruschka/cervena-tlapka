@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Utility for deep merge of objects
  *
