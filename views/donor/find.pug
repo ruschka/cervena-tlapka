@@ -45,20 +45,27 @@ block content
         div.w3-half
             div#donor-map
             script.
-                var map;
+                let map;
                 function initMap() {
                     map = new google.maps.Map(document.getElementById('donor-map'), {
                         mapTypeId: 'roadmap'
                     });
-                    var bounds = new google.maps.LatLngBounds();
-                    var markersData = !{JSON.stringify(templateData.aggregatedRegistrations)};
-                    var markers = markersData.map(markerData => {
+                    const bounds = new google.maps.LatLngBounds();
+                    const markersData = !{ JSON.stringify(templateData.aggregatedRegistrations) };
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: "Test"
+                    });
+                    const markers = markersData.map(markerData => {
                         var marker = new google.maps.Marker({
                             position: new google.maps.LatLng(markerData.location[1], markerData.location[0]),
                             map: map,
                             label: `${markerData.registrationCount}`
                         });
-                        bounds.extend(marker.position);
+                        marker.addListener('click', function() {
+                            infoWindow.setContent(`<p>PSČ ${markerData.zip}</p><p><a href='/find-donor?zip=${markerData.zip}'>Zobrazit místní dárce</a></p>`);
+                            infoWindow.open(map, marker);
+                        })
+                    bounds.extend(marker.position);
                         return marker;
                     });
                     map.fitBounds(bounds);
