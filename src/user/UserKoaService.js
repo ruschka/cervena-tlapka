@@ -246,8 +246,7 @@ export class UserKoaService {
 
     checkPassword(data, password) {
         const passwordCheck = zxcvbn(password);
-        // configuration
-        if (passwordCheck.score < 3) {
+        if (passwordCheck.score < config.user.passwordStrength) {
             return {
                 success: false,
                 data: data,
