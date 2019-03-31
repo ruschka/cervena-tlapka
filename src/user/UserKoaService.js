@@ -104,6 +104,10 @@ export class UserKoaService {
 
     async login(ctx) {
         const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(ctx, data, "login");
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
         const user = await this.findUserByEmail(data.email.toLowerCase());
         if (!user) {
             return { success: false, data: data };

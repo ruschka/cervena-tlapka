@@ -15,7 +15,10 @@ block content
                     label(for='password') Heslo:
                     input#password.w3-input.w3-border(type='password', name='password')
                 div.w3-container.w3-section
+                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
                     input.w3-input(type='submit', value='Odeslat')
+                - const recaptchaAction = "login";
+                include ../includes/recaptcha-script
         div.w3-half
             p Pokud nemáte založený účet, #[a(href='/register') zaregistrujte se prosím].
             p Pokud jste zapomněli heslo, #[a(href='/password-reset/email') můžete si ho obnovit].

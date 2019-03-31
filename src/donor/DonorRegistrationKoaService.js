@@ -9,6 +9,7 @@ import { emailRegex, sendMail } from "../core/mail";
 import { hasAnyOwnProperty } from "../core/utils";
 import { User } from "../user/User";
 import { DonorApplication } from "./DonorApplication";
+import { validateRecaptcha } from "../core/recaptcha";
 
 export class DonorRegistrationKoaService {
     async findDonors(ctx) {
@@ -70,6 +71,14 @@ export class DonorRegistrationKoaService {
             ctx.throw(401);
         }
         const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "registerDonor"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
         const zip = await this.findZip(ctx, loggedUserZip(ctx));
         const registration = new DonorRegistration({
             name: data.name,
@@ -100,6 +109,14 @@ export class DonorRegistrationKoaService {
     editDonorRegistration(ctx) {
         return this.modifyDonorRegistration(ctx, async (ctx, registration) => {
             const data = ctx.request.body;
+            const recaptchaResult = await validateRecaptcha(
+                ctx,
+                data,
+                "editDonor"
+            );
+            if (!recaptchaResult.success) {
+                return recaptchaResult;
+            }
             registration.name = data.name;
             registration.weight = data.weight;
             registration.birthYear = data.birthYear;
@@ -145,6 +162,14 @@ export class DonorRegistrationKoaService {
             ctx.throw(404, "Unknown donor user");
         }
         const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "contactDonor"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
         const applicantEmail = data.email;
         const applicantName = data.name;
         const applicantMessage = data.message;
