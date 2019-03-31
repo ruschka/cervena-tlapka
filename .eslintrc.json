@@ -16,5 +16,13 @@
     "rules": {
         "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": false }],
         "no-console": "off"
-    }
+    },
+    "overrides": [
+        {
+            "files": ["test/**/*.test.js"],
+            "env": {
+                "jest": true
+            }
+        }
+    ]
 }

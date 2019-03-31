@@ -1,5 +1,7 @@
 extends ../main-template
 
+include ../includes/pagination
+
 block content
     div.w3-container.w3-row-padding
         div.w3-half
@@ -42,6 +44,7 @@ block content
                             td= registration.breed
                             td= registration.district
                             td= registration.zip
+            +pagination(templateData.paging)
         div.w3-half
             div#donor-map
             script.

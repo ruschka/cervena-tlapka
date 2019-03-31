@@ -12,7 +12,22 @@ import { DonorApplication } from "./DonorApplication";
 import { validateRecaptcha } from "../core/recaptcha";
 
 export class DonorRegistrationKoaService {
-    async findDonors(ctx) {
+    async findDonors(ctx, paging) {
+        const { query, zipCode, maxDistance } = await this.createDonorQuery(
+            ctx
+        );
+        const registrations = await DonorRegistration.find(query)
+            .skip(paging.offset)
+            .limit(paging.limit);
+        return { registrations, zipCode, maxDistance };
+    }
+
+    async countDonors(ctx) {
+        const { query } = await this.createDonorQuery(ctx);
+        return await DonorRegistration.count(query);
+    }
+
+    async createDonorQuery(ctx) {
         let query = {};
         const zipCode = ctx.query.zip
             ? ctx.query.zip
@@ -23,6 +38,7 @@ export class DonorRegistrationKoaService {
             ? Number(ctx.query.maxDistance)
             : 50; // default 50km
         if (zipCode) {
+            // FIXME unknown zip?
             const zip = await this.findZip(ctx, zipCode);
             Object.assign(query, {
                 location: {
@@ -36,8 +52,7 @@ export class DonorRegistrationKoaService {
                 }
             });
         }
-        const registrations = await DonorRegistration.find(query);
-        return { registrations, zipCode, maxDistance };
+        return { query, zipCode, maxDistance };
     }
 
     async aggregateDonorsByZip(ctx, zipCode, maxDistance) {

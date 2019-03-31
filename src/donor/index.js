@@ -1,29 +1,32 @@
 "use strict";
 
-import { DonorRegistration } from "./DonorRegistration";
 import { setTemplateData } from "../core/template";
 import KoaRouter from "koa-router";
 import { DonorRegistrationKoaService } from "./DonorRegistrationKoaService";
+import { pagingFromContext } from "../core/utils/Paging";
 
 export const donorRouter = new KoaRouter();
 
 const donorService = new DonorRegistrationKoaService();
 
 donorRouter.get("/find-donor", async (ctx, next) => {
+    const totalCount = await donorService.countDonors(ctx);
+    const paging = pagingFromContext(ctx, 10, totalCount);
     const {
         registrations,
         zipCode,
         maxDistance
-    } = await donorService.findDonors(ctx);
+    } = await donorService.findDonors(ctx, paging);
     const aggregatedRegistrations = await donorService.aggregateDonorsByZip(
         ctx,
         zipCode,
         maxDistance
     );
     setTemplateData(ctx, {
-        registrations: registrations,
-        aggregatedRegistrations: aggregatedRegistrations,
-        data: { zip: zipCode, maxDistance: maxDistance }
+        registrations,
+        aggregatedRegistrations,
+        paging,
+        data: { zip: zipCode, maxDistance }
     });
     await ctx.render("donor/find.pug");
 });

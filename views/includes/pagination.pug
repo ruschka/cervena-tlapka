@@ -1,0 +1,16 @@
+mixin pagination(paging)
+    div.w3-center
+        div.w3-bar
+            if (paging.hasPrevious)
+                a.w3-bar-item.w3-button(href=paging.previous) &laquo;
+            else
+                span.w3-bar-item &laquo;
+            each page in paging.pagesWithDirectLink
+                - var classes = "w3-bar-item w3-button"
+                if (paging.activePage === page.number)
+                    - classes = classes + " ct-blue"
+                a(href=page.link, class=classes)= page.number
+            if (paging.hasNext)
+                a.w3-bar-item.w3-button(href=paging.previous) &raquo;
+            else
+                span.w3-bar-item &raquo;
