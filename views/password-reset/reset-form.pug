@@ -14,7 +14,7 @@ block content
                     if errors && errors.password
                         div.w3-panel.w3-red: p= errors.password
                 div.w3-container
-                    label(for='passwordConfirm') Heslo znovu:
+                    label(for='passwordConfirm') Potvrdit heslo:
                     input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
                 div.w3-container.w3-section
                     input(type="hidden", name="passwordResetHash", value=data.passwordResetHash)

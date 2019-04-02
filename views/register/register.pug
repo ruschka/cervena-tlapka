@@ -1,5 +1,14 @@
 extends ../main-template
 
+block append scripts
+    script(src="https://secure.smartform.cz/api/v1/smartform.js" async=true)
+    script.
+        var smartform = smartform || {};
+
+        smartform.beforeInit = function initialize() {
+            smartform.setClientId('MrVx1RL97R');
+        }
+
 block content
     div.w3-container.w3-row-padding
         div.w3-half
@@ -18,11 +27,21 @@ block content
                     if errors && errors.password
                         div.w3-panel.w3-red: p= errors.password
                 div.w3-container
-                    label(for='passwordConfirm') Heslo znovu:
+                    label(for='passwordConfirm') Potvrdit heslo:
                     input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
                 div.w3-container
+                    label(for='street') Ulice:
+                    input#street.w3-input.w3-border.smartform-street-and-number(type='text', name='street', value=data ? data.street : '')
+                    if errors && errors.street
+                        div.w3-panel.w3-red: p= errors.street
+                div.w3-container
+                    label(for='city') Město:
+                    input#city.w3-input.w3-border.smartform-city(type='text', name='city', value=data ? data.city : '')
+                    if errors && errors.city
+                        div.w3-panel.w3-red: p= errors.city
+                div.w3-container
                     label(for='zip') PSČ:
-                    input#zip.w3-input.w3-border(type='text', name='zip', value=data ? data.zip : '')
+                    input#zip.w3-input.w3-border.smartform-zip(type='text', name='zip', value=data ? data.zip : '')
                     if errors && errors.zip
                         div.w3-panel.w3-red: p= errors.zip
                 div.w3-container.w3-section
