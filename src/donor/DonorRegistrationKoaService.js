@@ -6,7 +6,7 @@ import { DonorRegistration } from "./DonorRegistration";
 import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
 import { emailRegex, sendMail } from "../core/mail";
-import { hasAnyOwnProperty } from "../core/utils";
+import { hasAnyOwnProperty, isEmptyString } from "../core/utils";
 import { User } from "../user/User";
 import { DonorApplication } from "./DonorApplication";
 import { validateRecaptcha } from "../core/recaptcha";
@@ -192,10 +192,10 @@ export class DonorRegistrationKoaService {
         if (!emailRegex.test(applicantEmail)) {
             Object.assign(errors, { email: "Email není validní." });
         }
-        if (!applicantName || 0 === applicantName.length) {
+        if (isEmptyString(applicantName)) {
             Object.assign(errors, { name: "Jméno je povinné." });
         }
-        if (!applicantMessage || 0 === applicantMessage.length) {
+        if (isEmptyString(applicantMessage)) {
             Object.assign(errors, { message: "Zpráva pro dárce je povinná." });
         }
         if (hasAnyOwnProperty(errors)) {

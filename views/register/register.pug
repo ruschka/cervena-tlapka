@@ -30,7 +30,19 @@ block content
                     label(for='passwordConfirm') Potvrdit heslo:
                     input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
                 div.w3-container
-                    label(for='street') Ulice:
+                    p: b Pokud plánujete pouze registrovat pejska, potřebujeme jenom vaše PSČ. Jestliže chcete, abychom vám za registraci pejska zaslali známku, vyplňte všechna následující pole.
+                div.w3-container
+                    label(for='firstName') Křestní jméno:
+                    input#firstName.w3-input.w3-border(type='text', name='firstName', value=data ? data.firstName : '')
+                    if errors && errors.firstName
+                        div.w3-panel.w3-red: p= errors.firstName
+                div.w3-container
+                    label(for='surname') Příjmení:
+                    input#surname.w3-input.w3-border(type='text', name='surname', value=data ? data.surname : '')
+                    if errors && errors.surname
+                        div.w3-panel.w3-red: p= errors.surname
+                div.w3-container
+                    label(for='street') Ulice a číslo domu:
                     input#street.w3-input.w3-border.smartform-street-and-number(type='text', name='street', value=data ? data.street : '')
                     if errors && errors.street
                         div.w3-panel.w3-red: p= errors.street

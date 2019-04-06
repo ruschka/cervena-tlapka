@@ -13,6 +13,7 @@ import config from "../core/config";
 import { Zip } from "../zip/Zip";
 import zxcvbn from "zxcvbn";
 import { PasswordReset } from "./PasswordReset";
+import { hasAnyOwnProperty, isEmptyString, isNonEmptyString, success, unsuccess } from "../core/utils";
 
 export const tokenCookie = "token";
 const jwtSecret = config.user.jwtSecret;
@@ -29,19 +30,9 @@ export class UserKoaService {
         const email = originalEmail.toLowerCase();
         const existingUser = await this.findUserByEmail(email);
         if (existingUser) {
-            return {
-                success: false,
-                data: data,
-                errors: { email: "Účet s daným emailem již existuje." }
-            };
-        }
-        const zip = await Zip.findOne({ zip: data.zip });
-        if (!zip) {
-            return {
-                success: false,
-                data: data,
-                errors: { zip: "Neznámé PSČ." }
-            };
+            return unsuccess(data, {
+                email: "Účet s daným emailem již existuje."
+            });
         }
         const password = data.password;
         const passwordCheck = this.checkPassword(
@@ -56,18 +47,27 @@ export class UserKoaService {
         const activateHash = (await util.promisify(crypto.randomBytes)(
             64
         )).toString("base64");
+        const validatedAddress = await this.buildAndValidateAddress(ctx);
+        if (!validatedAddress.success) {
+            return validatedAddress;
+        }
+        const address = validatedAddress.result;
         const user = new User({
             email: email,
             originalEmail: originalEmail,
             passwordHash: passwordHash,
+            firstName: address.firstName,
+            surname: address.surname,
+            street: address.street,
+            city: address.city,
+            zip: address.zip,
             activated: false,
             activateHash: activateHash,
-            registerDate: new Date(),
-            zip: data.zip
+            registerDate: new Date()
         });
         const validation = await validateAsync(user);
         if (validation) {
-            return { success: false, data: data, errors: validation.errors };
+            return unsuccess(data, validation.errors);
         } else {
             await user.save();
             await sendMail(
@@ -78,7 +78,48 @@ export class UserKoaService {
                 },
                 originalEmail
             );
-            return { success: true };
+            return success();
+        }
+    }
+
+    async buildAndValidateAddress(ctx) {
+        const errors = {};
+        const data = ctx.request.body;
+        const { firstName, surname, street, city, zip } = data;
+        // mandatory only if one is non empty
+        if (
+            isNonEmptyString(firstName) ||
+            isNonEmptyString(surname) ||
+            isNonEmptyString(street) ||
+            isNonEmptyString(city)
+        ) {
+            if (isEmptyString(firstName)) {
+                Object.assign(errors, { firstName: "Doplňte křestní jméno." });
+            }
+            if (isEmptyString(surname)) {
+                Object.assign(errors, { surname: "Doplňte příjmení." });
+            }
+            if (isEmptyString(street)) {
+                Object.assign(errors, {
+                    street: "Doplňte ulici a číslo domu."
+                });
+            }
+            if (isEmptyString(city)) {
+                Object.assign(errors, { city: "Doplňte město." });
+            }
+        }
+        if (isEmptyString(zip)) {
+            Object.assign(errors, { zip: "PSČ je povinné." });
+        } else {
+            const foundZip = await Zip.findOne({ zip });
+            if (!foundZip) {
+                Object.assign(errors, { zip: "Neznámé PSČ." });
+            }
+        }
+        if (hasAnyOwnProperty(errors)) {
+            return unsuccess(data, errors);
+        } else {
+            return success({ firstName, surname, street, city, zip });
         }
     }
 

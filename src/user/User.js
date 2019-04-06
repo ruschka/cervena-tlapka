@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    firstName: String,
+    surname: String,
+    street: String,
+    city: String,
+    zip: {
+        type: String,
+        required: [true, "PSČ je povinné."]
+    },
     registerDate: {
         type: Date,
         required: true
@@ -35,11 +43,7 @@ const userSchema = new mongoose.Schema({
     },
     activateDate: Date,
     activateHash: String,
-    lastLogin: Date,
-    zip: {
-        type: String,
-        required: [true, "PSČ je povinné."]
-    }
+    lastLogin: Date
 });
 
 export const User = mongoose.model("User", userSchema, "user");
