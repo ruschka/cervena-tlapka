@@ -13,7 +13,13 @@ import config from "../core/config";
 import { Zip } from "../zip/Zip";
 import zxcvbn from "zxcvbn";
 import { PasswordReset } from "./PasswordReset";
-import { hasAnyOwnProperty, isEmptyString, isNonEmptyString, success, unsuccess } from "../core/utils";
+import {
+    hasAnyOwnProperty,
+    isEmptyString,
+    isNonEmptyString,
+    success,
+    unsuccess
+} from "../core/utils";
 
 export const tokenCookie = "token";
 const jwtSecret = config.user.jwtSecret;

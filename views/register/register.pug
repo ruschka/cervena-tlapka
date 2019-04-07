@@ -10,55 +10,26 @@ block append scripts
         }
 
 block content
+    include ../includes/forms
+    include ../includes/recaptcha
     div.w3-container.w3-row-padding
         div.w3-half
-            - var data = templateData.data
-            - var errors = templateData.errors
+            - const data = templateData.data
+            - const errors = templateData.errors
             h1 Registrace
             form(method='post', action='/register')
-                div.w3-container
-                    label(for='email') Email:
-                    input#email.w3-input.w3-border(type='text', name='email', value=data ? data.email : '')
-                    if errors && errors.email
-                        div.w3-panel.w3-red: p= errors.email
-                div.w3-container
-                    label(for='password') Heslo:
-                    input#password.w3-input.w3-border(type='password', name='password')
-                    if errors && errors.password
-                        div.w3-panel.w3-red: p= errors.password
-                div.w3-container
-                    label(for='passwordConfirm') Potvrdit heslo:
-                    input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
+                +input("text", "email", "Email:", data, errors)
+                +input("password", "password", "Heslo:", data, errors)
+                +input("password", "passwordConfirm", "Potvrdit heslo:", data, errors)
                 div.w3-container
                     p: b Pokud plánujete pouze registrovat pejska, potřebujeme jenom vaše PSČ. Jestliže chcete, abychom vám za registraci pejska zaslali známku, vyplňte všechna následující pole.
-                div.w3-container
-                    label(for='firstName') Křestní jméno:
-                    input#firstName.w3-input.w3-border(type='text', name='firstName', value=data ? data.firstName : '')
-                    if errors && errors.firstName
-                        div.w3-panel.w3-red: p= errors.firstName
-                div.w3-container
-                    label(for='surname') Příjmení:
-                    input#surname.w3-input.w3-border(type='text', name='surname', value=data ? data.surname : '')
-                    if errors && errors.surname
-                        div.w3-panel.w3-red: p= errors.surname
-                div.w3-container
-                    label(for='street') Ulice a číslo domu:
-                    input#street.w3-input.w3-border.smartform-street-and-number(type='text', name='street', value=data ? data.street : '')
-                    if errors && errors.street
-                        div.w3-panel.w3-red: p= errors.street
-                div.w3-container
-                    label(for='city') Město:
-                    input#city.w3-input.w3-border.smartform-city(type='text', name='city', value=data ? data.city : '')
-                    if errors && errors.city
-                        div.w3-panel.w3-red: p= errors.city
-                div.w3-container
-                    label(for='zip') PSČ:
-                    input#zip.w3-input.w3-border.smartform-zip(type='text', name='zip', value=data ? data.zip : '')
-                    if errors && errors.zip
-                        div.w3-panel.w3-red: p= errors.zip
+                +input("text", "firstName", "Křestní jméno:", data, errors)
+                +input("text", "surname", "Příjmení:", data, errors)
+                +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number" })
+                +input("text", "city", "Město:", data, errors, { classes: "smartform-city" })
+                +input("text", "zip", "PSČ:", data, errors, { classes: "smartform-zip" })
                 div.w3-container.w3-section
-                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
-                    input.w3-input.w3-border(type='submit', value='Odeslat')
-                - var recaptchaAction = "register"
-                include ../includes/recaptcha-script
+                    +recaptchaInput()
+                    +submit()
+                +recaptchaScript("register")
         div.w3-half

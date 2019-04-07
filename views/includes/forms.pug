@@ -1,0 +1,16 @@
+mixin input(type, name, title, data, errors, params)
+    div.w3-container
+        - let entity, classes
+        if params
+            - entity = params.entity
+            - classes = params.classes
+        - let inputClasses = "w3-input w3-border"
+        if classes
+            - inputClasses = inputClasses + " " + classes
+        label(for=name)= title
+        input(type=type, id=name, name=name, class=inputClasses, value=entity ? entity[name] : data ? data[name] : '')
+        if errors && errors[name]
+            div.w3-panel.w3-red: p= errors[name]
+
+mixin submit(title)
+    input.w3-input.w3-border(type='submit', value=title ? title : 'Odeslat')
