@@ -148,3 +148,22 @@ userRouter.post("/profile/donor/:id/remove", async (ctx, next) => {
     await donorService.removeDonorRegistration(ctx);
     ctx.redirect("/profile");
 });
+
+userRouter.get("/profile/edit-address", async (ctx, next) => {
+    setTemplateData(ctx, { loggedUser: await userService.loggedUser(ctx) });
+    await ctx.render("profile/edit-address.pug");
+});
+
+userRouter.post("/profile/edit-address", async (ctx, next) => {
+    const { success, data, errors } = await userService.editAddress(ctx);
+    if (success) {
+        ctx.redirect("/profile");
+    } else {
+        setTemplateData(ctx, {
+            loggedUser: await userService.loggedUser(ctx),
+            data,
+            errors
+        });
+        await ctx.render("profile/edit-address.pug");
+    }
+});

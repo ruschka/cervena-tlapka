@@ -4,13 +4,29 @@ block content
     div.w3-container.w3-row-padding
         - var loggedUser = templateData.loggedUser;
         h1 Profilové informace
-        table
-            tr
-                td Email
-                td= loggedUser.email
-            tr
-                td PSČ
-                td= loggedUser.zip
+        div.w3-responsive.w3-section
+            table.w3-table-all
+                tr
+                    td Email
+                    td= loggedUser.email
+                tr
+                    td Jméno
+                    td= loggedUser.firstName
+                tr
+                    td Příjmení
+                    td= loggedUser.surname
+                tr
+                    td Ulice
+                    td= loggedUser.street
+                tr
+                    td Město
+                    td= loggedUser.city
+                tr
+                    td PSČ
+                    td= loggedUser.zip
+        div.w3-bar
+            a.w3-button.w3-bar-item(href="/profile/edit-address") Upravit adresu
+            a.w3-button.w3-bar-item(href="/profile/change-password") Změnit heslo
         h2 Vaše registrace dárců
         div.w3-responsive.w3-section
             table.w3-table-all

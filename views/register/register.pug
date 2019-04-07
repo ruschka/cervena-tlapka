@@ -1,13 +1,8 @@
 extends ../main-template
 
 block append scripts
-    script(src="https://secure.smartform.cz/api/v1/smartform.js" async=true)
-    script.
-        var smartform = smartform || {};
-
-        smartform.beforeInit = function initialize() {
-            smartform.setClientId('MrVx1RL97R');
-        }
+    include ../includes/smartform
+    +smartformScript()
 
 block content
     include ../includes/forms

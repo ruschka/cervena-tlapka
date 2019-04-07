@@ -88,47 +88,6 @@ export class UserKoaService {
         }
     }
 
-    async buildAndValidateAddress(ctx) {
-        const errors = {};
-        const data = ctx.request.body;
-        const { firstName, surname, street, city, zip } = data;
-        // mandatory only if one is non empty
-        if (
-            isNonEmptyString(firstName) ||
-            isNonEmptyString(surname) ||
-            isNonEmptyString(street) ||
-            isNonEmptyString(city)
-        ) {
-            if (isEmptyString(firstName)) {
-                Object.assign(errors, { firstName: "Doplňte křestní jméno." });
-            }
-            if (isEmptyString(surname)) {
-                Object.assign(errors, { surname: "Doplňte příjmení." });
-            }
-            if (isEmptyString(street)) {
-                Object.assign(errors, {
-                    street: "Doplňte ulici a číslo domu."
-                });
-            }
-            if (isEmptyString(city)) {
-                Object.assign(errors, { city: "Doplňte město." });
-            }
-        }
-        if (isEmptyString(zip)) {
-            Object.assign(errors, { zip: "PSČ je povinné." });
-        } else {
-            const foundZip = await Zip.findOne({ zip });
-            if (!foundZip) {
-                Object.assign(errors, { zip: "Neznámé PSČ." });
-            }
-        }
-        if (hasAnyOwnProperty(errors)) {
-            return unsuccess(data, errors);
-        } else {
-            return success({ firstName, surname, street, city, zip });
-        }
-    }
-
     async activate(ctx) {
         const email = ctx.query.email;
         const activateHash = ctx.query.activateHash;
@@ -287,6 +246,40 @@ export class UserKoaService {
         }
     }
 
+    async editAddress(ctx) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "editAddress"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
+        const validatedAddress = await this.buildAndValidateAddress(ctx);
+        if (!validatedAddress.success) {
+            return validatedAddress;
+        }
+        const address = validatedAddress.data;
+        const userId = loggedUserId(ctx);
+        const result = await User.updateOne({ _id: userId }, address);
+        if (result.nModified === 1) {
+            return { success: true };
+        } else {
+            console.error(`Address wasn't saved. User id ${userId}`);
+            return {
+                success: false,
+                data,
+                errors: {
+                    password: "Adresa nebyla uložena. Kontaktujte nás prosím."
+                }
+            };
+        }
+    }
+
     async loggedUser(ctx) {
         if (!isUserLogged(ctx)) {
             ctx.throw(401);
@@ -330,5 +323,46 @@ export class UserKoaService {
 
     createPasswordHash(password) {
         return util.promisify(bcrypt.hash)(password, saltRounds);
+    }
+
+    async buildAndValidateAddress(ctx) {
+        const errors = {};
+        const data = ctx.request.body;
+        const { firstName, surname, street, city, zip } = data;
+        // mandatory only if one is non empty
+        if (
+            isNonEmptyString(firstName) ||
+            isNonEmptyString(surname) ||
+            isNonEmptyString(street) ||
+            isNonEmptyString(city)
+        ) {
+            if (isEmptyString(firstName)) {
+                Object.assign(errors, { firstName: "Doplňte křestní jméno." });
+            }
+            if (isEmptyString(surname)) {
+                Object.assign(errors, { surname: "Doplňte příjmení." });
+            }
+            if (isEmptyString(street)) {
+                Object.assign(errors, {
+                    street: "Doplňte ulici a číslo domu."
+                });
+            }
+            if (isEmptyString(city)) {
+                Object.assign(errors, { city: "Doplňte město." });
+            }
+        }
+        if (isEmptyString(zip)) {
+            Object.assign(errors, { zip: "PSČ je povinné." });
+        } else {
+            const foundZip = await Zip.findOne({ zip });
+            if (!foundZip) {
+                Object.assign(errors, { zip: "Neznámé PSČ." });
+            }
+        }
+        if (hasAnyOwnProperty(errors)) {
+            return unsuccess(data, errors);
+        } else {
+            return success({ firstName, surname, street, city, zip });
+        }
     }
 }
