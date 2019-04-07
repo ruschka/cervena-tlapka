@@ -1,3 +1,4 @@
+include ../includes/recaptcha
 - var data = templateData.data
 - var errors = templateData.errors
 - var actualYear = templateData.actualYear
@@ -36,6 +37,6 @@ div.w3-container
     if errors && errors.breed
         div.w3-panel.w3-red: p= errors.breed
 div.w3-container.w3-section
-    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+    +recaptchaInput()
     input.w3-input(type='submit', value='Odeslat')
-include ../includes/recaptcha-script
++recaptchaScript(recaptchaAction)

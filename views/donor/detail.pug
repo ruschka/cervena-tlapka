@@ -1,6 +1,7 @@
 extends ../main-template
 
 block content
+    include ../includes/recaptcha
     if templateData.applicationSent
         div.w3-panel.w3-pale-green
             p Vaše žádost byla úspěšně odeslána.
@@ -39,7 +40,6 @@ block content
                     if errors && errors.message
                         div.w3-panel.w3-red: p= errors.message
                 div.w3-container.w3-section
-                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+                    +recaptchaInput
                     input.w3-input.w3-border(type='submit', value='Odeslat')
-                - const recaptchaAction = "contactDonor";
-                include ../includes/recaptcha-script
+                +recaptchaScript("contactDonor")

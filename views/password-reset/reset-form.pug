@@ -1,6 +1,7 @@
 extends ../main-template
 
 block content
+    include ../includes/recaptcha
     div.w3-container.w3-row-padding
         div.w3-half
             - var data = templateData.data
@@ -18,8 +19,7 @@ block content
                     input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
                 div.w3-container.w3-section
                     input(type="hidden", name="passwordResetHash", value=data.passwordResetHash)
-                    input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+                    +recaptchaInput()
                     input.w3-input(type='submit', value='Odeslat')
-                - var recaptchaAction = "passwordReset"
-                include ../includes/recaptcha-script
+                +recaptchaScript("passwordReset")
         div.w3-half
