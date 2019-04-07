@@ -1,18 +1,11 @@
+include ../includes/forms
 include ../includes/recaptcha
 - var data = templateData.data
 - var errors = templateData.errors
 - var actualYear = templateData.actualYear
 - var registration = templateData.registration
-div.w3-container
-    label(for='name') Jméno:
-    input#name.w3-input.w3-border(type='text', name='name', value=data ? data.name : registration ? registration.name : '')
-    if errors && errors.name
-        div.w3-panel.w3-red: p= errors.name
-div.w3-container
-    label(for='weight') Hmotnost (kg):
-    input#weight.w3-input.w3-border(type='number', name='weight', value=data ? data.weight : registration ? registration.weight : '', step=1, min=0)
-    if errors && errors.weight
-        div.w3-panel.w3-red: p= errors.weight
++input("text", "name", "Jméno:", data, errors, { entity: registration })
++input("number", "weight", "Hmotnost (kg):", data, errors, { entity: registration, attributes: { step: 1, min: 0 } })
 div.w3-container
     - var n = 0
     label(for='birth-year') Rok narození:
@@ -31,12 +24,9 @@ div.w3-container
         option(label='Fena', value='F', selected=selectedSex === 'F' : false)
     if errors && errors.sex
         div.w3-panel.w3-red: p= errors.sex
-div.w3-container
-    label(for='breed') Plemeno:
-    input#breed.w3-input.w3-border(type='text', name='breed', value=data ? data.breed : registration ? registration.breed : '')
-    if errors && errors.breed
-        div.w3-panel.w3-red: p= errors.breed
++input("text", "breed", "Plemeno:", data, errors, { entity: registration })
++textarea("note", "Poznámka:", data, errors, { entity: registration })
 div.w3-container.w3-section
     +recaptchaInput()
-    input.w3-input(type='submit', value='Odeslat')
+    +submit()
 +recaptchaScript(recaptchaAction)

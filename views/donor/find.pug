@@ -40,7 +40,7 @@ block content
                             td #[a(href="/donor/" + registration.id) #{registration.name}]
                             td #{registration.weight} kg
                             td= registration.birthYear
-                            td= registration.sex
+                            td= registration.sex === "M" ? "Pes" : "Fena"
                             td= registration.breed
                             td= registration.district
                             td= registration.zip

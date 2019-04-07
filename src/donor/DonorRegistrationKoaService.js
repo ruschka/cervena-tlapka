@@ -104,7 +104,10 @@ export class DonorRegistrationKoaService {
             userId: mongoose.mongo.ObjectId(loggedUserId(ctx)),
             zip: zip.zip,
             district: zip.district,
-            location: { type: "Point", coordinates: zip.coordinates }
+            location: { type: "Point", coordinates: zip.coordinates },
+            note: data.note,
+            registerDate: new Date(),
+            modifyDate: new Date()
         });
         const validation = await validateAsync(registration);
         if (validation) {
@@ -137,6 +140,8 @@ export class DonorRegistrationKoaService {
             registration.birthYear = data.birthYear;
             registration.sex = data.sex;
             registration.breed = data.breed;
+            registration.note = data.note;
+            registration.modifyDate = new Date();
             const validation = await validateAsync(registration);
             if (validation) {
                 return {

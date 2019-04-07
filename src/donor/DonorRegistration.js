@@ -49,6 +49,15 @@ const donorRegistrationSchema = new mongoose.Schema({
             type: [Number],
             default: [0, 0]
         }
+    },
+    note: String,
+    registerDate: {
+        type: Date,
+        required: true
+    },
+    modifyDate: {
+        type: Date,
+        required: true
     }
 });
 
