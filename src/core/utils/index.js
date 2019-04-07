@@ -21,8 +21,8 @@ export function isNonEmptyString(s) {
     return !isEmptyString(s);
 }
 
-export function success(result) {
-    return { success: true, result };
+export function success(data) {
+    return { success: true, data };
 }
 
 export function unsuccess(data, errors) {

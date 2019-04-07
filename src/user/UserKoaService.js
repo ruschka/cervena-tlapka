@@ -51,7 +51,7 @@ export class UserKoaService {
         if (!validatedAddress.success) {
             return validatedAddress;
         }
-        const address = validatedAddress.result;
+        const address = validatedAddress.data;
         const user = new User({
             email: email,
             originalEmail: originalEmail,
