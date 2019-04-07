@@ -33,7 +33,7 @@ export class UserKoaService {
             return recaptchaResult;
         }
         const originalEmail = data.email;
-        const email = originalEmail.toLowerCase();
+        const email = this.normalizeEmail(originalEmail);
         const existingUser = await this.findUserByEmail(email);
         if (existingUser) {
             return unsuccess(data, {
@@ -114,7 +114,9 @@ export class UserKoaService {
         if (!recaptchaResult.success) {
             return recaptchaResult;
         }
-        const user = await this.findUserByEmail(data.email.toLowerCase());
+        const user = await this.findUserByEmail(
+            this.normalizeEmail(data.email)
+        );
         if (!user) {
             return { success: false, data: data };
         }
@@ -161,7 +163,7 @@ export class UserKoaService {
             return recaptchaResult;
         }
         const originalEmail = data.email;
-        const email = originalEmail.toLowerCase();
+        const email = this.normalizeEmail(originalEmail);
         const user = await this.findUserByEmail(email);
         if (!user) {
             return {
@@ -285,7 +287,7 @@ export class UserKoaService {
             ctx.throw(401);
         }
         const userId = loggedUserId(ctx);
-        const user = User.findOne({ _id: userId });
+        const user = await User.findOne({ _id: userId });
         if (!user) {
             ctx.throw(404);
         }
@@ -294,6 +296,13 @@ export class UserKoaService {
 
     findUserByEmail(email) {
         return User.findOne({ email });
+    }
+
+    normalizeEmail(email) {
+        if (!email) {
+            return email;
+        }
+        return email.toLowerCase().trim();
     }
 
     checkPassword(data, password, passwordConfirm) {
