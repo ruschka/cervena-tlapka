@@ -15,11 +15,13 @@ pagesRouter.get("/robots.txt", async (ctx, next) => {
 });
 
 pagesRouter.get("/404", async (ctx, next) => {
+    ctx.status = 404;
     setTemplateData(ctx, {});
     await ctx.render("error-page/404.pug");
 });
 
 pagesRouter.get("/500", async (ctx, next) => {
+    ctx.status = 500;
     setTemplateData(ctx, {});
     await ctx.render("error-page/500.pug");
 });

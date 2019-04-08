@@ -12,6 +12,7 @@ import { donorRouter } from "./donor";
 import { MongoProvider } from "./core/mongo/MongoProvider";
 import { tokenCookie } from "./user/UserKoaService";
 import config from "./core/config";
+import { setTemplateData } from "./core/template";
 
 const app = new Koa();
 const mongoProvider = new MongoProvider();
@@ -32,14 +33,18 @@ app.use(
     })
 );
 
-app.use((ctx, next) => {
-    return next().catch(err => {
+app.use(async (ctx, next) => {
+    return next().catch(async err => {
         if (401 === err.status) {
             ctx.redirect("/login");
         } else if (404 === err.status) {
-            ctx.redirect("/404");
+            ctx.status = 404;
+            setTemplateData(ctx, {});
+            await ctx.render("error-page/404.pug");
         } else if (500 === err.status) {
-            ctx.redirect("/500");
+            ctx.status = 500;
+            setTemplateData(ctx, {});
+            await ctx.render("error-page/500.pug");
         } else {
             throw err;
         }
