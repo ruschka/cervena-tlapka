@@ -16,15 +16,32 @@ block content
                 +input("text", "email", "Email:", data, errors)
                 +input("password", "password", "Heslo:", data, errors)
                 +input("password", "passwordConfirm", "Potvrdit heslo:", data, errors)
-                div.w3-container
-                    p: b Pokud plánujete pouze přidat pejska, potřebujeme jenom vaše PSČ. Jestliže chcete, abychom vám za přidání pejska zaslali známku, vyplňte všechna následující pole.
-                +input("text", "firstName", "Křestní jméno:", data, errors)
-                +input("text", "surname", "Příjmení:", data, errors)
-                +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number" })
-                +input("text", "city", "Město:", data, errors, { classes: "smartform-city" })
+                div.w3-container.w3-section
+                    input#dogTag.w3-check(type="checkbox", name="dogTag", checked=data ? data.dogTag : true, onclick="handleDogTagCheckbox()")
+                    label(for="dogTag"): b Chci po přidání psa dostat známku
+                +input("text", "firstName", "Křestní jméno:", data, errors, { containerClasses: "addressContainer" })
+                +input("text", "surname", "Příjmení:", data, errors, { containerClasses: "addressContainer" })
+                +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number", containerClasses: "addressContainer" })
+                +input("text", "city", "Město:", data, errors, { classes: "smartform-city", containerClasses: "addressContainer" })
                 +input("text", "zip", "PSČ:", data, errors, { classes: "smartform-zip" })
                 div.w3-container.w3-section
                     +recaptchaInput()
                     +submit()
                 +recaptchaScript("register")
+                script.
+                    function handleDogTagCheckbox() {
+                        const dogTagCheckbox = document.getElementById("dogTag");
+                        const display = dogTagCheckbox.checked ? "block": "none";
+                        const addressContainers = document.getElementsByClassName("addressContainer");
+                        for (let i = 0; i < addressContainers.length; i++) {
+                            addressContainers[i].style.display = display;
+                        }
+                        if (display === "none") {
+                            document.getElementById("firstName").value = "";
+                            document.getElementById("surname").value = "";
+                            document.getElementById("street").value = "";
+                            document.getElementById("city").value = "";
+                        }
+                    }
+                    handleDogTagCheckbox();
         div.w3-half

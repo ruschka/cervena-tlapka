@@ -1,8 +1,9 @@
 mixin input(type, name, title, data, errors, params)
-    div.w3-container
-        - const entity = params && params.entity ? params.entity : null
-        - const classes = params && params.classes ? params.classes : []
-        - const attrs = params && params.attributes ? params.attributes : {}
+    - const entity = params && params.entity ? params.entity : null
+    - const classes = params && params.classes ? params.classes : []
+    - const containerClasses = params && params.containerClasses ? params.containerClasses : []
+    - const attrs = params && params.attributes ? params.attributes : {}
+    div(class=["w3-container"], class=containerClasses)
         label(for=name)= title
         input(
             type=type,
