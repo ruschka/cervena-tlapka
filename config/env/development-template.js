@@ -12,6 +12,7 @@ module.exports = {
     },
     recaptcha: {
         apiKey: "changeme",
-        clientKey: "changeme"
+        clientKey: "changeme",
+        scoreThreshold: 0.5
     }
 };

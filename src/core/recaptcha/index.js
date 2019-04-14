@@ -5,6 +5,7 @@ import config from "../config";
 import { success, unsuccess } from "../utils";
 
 const secret = config.recaptcha.apiKey;
+const scoreThreshold = Number(config.recaptcha.scoreThreshold);
 
 export async function validateRecaptcha(ctx, data, actionName) {
     const response = data["g-recaptcha-response"];
@@ -25,7 +26,7 @@ export async function validateRecaptcha(ctx, data, actionName) {
             global: "Recaptcha actions don't match."
         });
     }
-    if (recaptchaResult.score < 0.5) {
+    if (recaptchaResult.score < scoreThreshold) {
         return unsuccess(data, {
             global:
                 "Tento formulář využívá ochranu proti robotům. Pokud toto čtete, je to omyl, za který se omlouváme. Zkuste obnovit stránku a formulář vyplnit znovu. Jestliže se chyba opakuje, kontaktujte nás prosím."
