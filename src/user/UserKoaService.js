@@ -101,11 +101,12 @@ export class UserKoaService {
                 }
             }
         );
-        if (result.nModified === 1) {
-            return { success: true };
-        } else {
+        if (result.nModified !== 1) {
             return { success: false };
         }
+        const user = await this.findUserByEmail(email);
+        await this.setTokenCookie(ctx, user);
+        return { success: true };
     }
 
     async login(ctx) {
@@ -120,32 +121,37 @@ export class UserKoaService {
         if (!user) {
             return { success: false, data: data };
         }
+        // FIXME check if profile is activated
         const passwordMatch = await bcrypt.compare(
             data.password,
             user.passwordHash
         );
         if (passwordMatch) {
-            const token = await new Promise((resolve, reject) => {
-                jwt.sign(
-                    {
-                        iss: "cervena-tlapka",
-                        sub: { id: user.id, email: user.email, zip: user.zip },
-                        iat: Math.floor(Date.now() / 1000)
-                    },
-                    jwtSecret,
-                    {
-                        expiresIn: "7d"
-                    },
-                    (err, token) => {
-                        err ? reject(err) : resolve(token);
-                    }
-                );
-            });
-            ctx.cookies.set(tokenCookie, token, { overwrite: true });
+            await this.setTokenCookie(ctx, user);
             return { success: true };
         } else {
             return { success: false, data: data };
         }
+    }
+
+    async setTokenCookie(ctx, user) {
+        const token = await new Promise((resolve, reject) => {
+            jwt.sign(
+                {
+                    iss: "cervena-tlapka",
+                    sub: { id: user.id, email: user.email, zip: user.zip },
+                    iat: Math.floor(Date.now() / 1000)
+                },
+                jwtSecret,
+                {
+                    expiresIn: "7d"
+                },
+                (err, token) => {
+                    err ? reject(err) : resolve(token);
+                }
+            );
+        });
+        ctx.cookies.set(tokenCookie, token, { overwrite: true });
     }
 
     logout(ctx) {
