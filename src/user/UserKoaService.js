@@ -254,6 +254,51 @@ export class UserKoaService {
         }
     }
 
+    async changePassword(ctx) {
+        const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "changePassword"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
+        const user = await this.loggedUser(ctx);
+        const passwordMatch = await bcrypt.compare(
+            data.oldPassword,
+            user.passwordHash
+        );
+        if (!passwordMatch) {
+            return unsuccess(data, {
+                oldPassword: "Zadané heslo není správně."
+            });
+        }
+        const password = data.password;
+        const passwordCheck = this.checkPassword(
+            data,
+            password,
+            data.passwordConfirm
+        );
+        if (!passwordCheck.success) {
+            return passwordCheck;
+        }
+        const passwordHash = await this.createPasswordHash(password);
+        const result = await User.updateOne({ _id: user.id }, { passwordHash });
+        if (result.nModified === 1) {
+            return { success: true };
+        } else {
+            console.error(`Password wasn't changed. User id ${user.id}`);
+            return {
+                success: false,
+                data,
+                errors: {
+                    password: "Heslo nebylo změněno. Kontaktujte nás prosím."
+                }
+            };
+        }
+    }
+
     async editAddress(ctx) {
         if (!isUserLogged(ctx)) {
             ctx.throw(401);

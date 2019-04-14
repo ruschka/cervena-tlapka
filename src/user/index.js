@@ -1,6 +1,6 @@
 "use strict";
 
-import { setTemplateData } from "../core/template";
+import { renderTemplate, setTemplateData } from "../core/template";
 import KoaRouter from "koa-router";
 import { UserKoaService } from "./UserKoaService";
 import { DonorRegistrationKoaService } from "../donor/DonorRegistrationKoaService";
@@ -165,5 +165,22 @@ userRouter.post("/profile/edit-address", async (ctx, next) => {
             errors
         });
         await ctx.render("profile/edit-address.pug");
+    }
+});
+
+userRouter.get("/profile/change-password", async (ctx, next) => {
+    await renderTemplate(ctx, "profile/change-password.pug");
+});
+
+userRouter.post("/profile/change-password", async (ctx, next) => {
+    const { success, data, errors } = await userService.changePassword(ctx);
+    if (success) {
+        ctx.redirect("/profile");
+    } else {
+        console.info(errors);
+        await renderTemplate(ctx, "profile/change-password.pug", {
+            data,
+            errors
+        });
     }
 });
