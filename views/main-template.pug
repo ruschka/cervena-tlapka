@@ -9,10 +9,9 @@ html(lang="cz")
         block scripts
             script(src="https://www.google.com/recaptcha/api.js?render=" + templateData.recaptchaKey)
     body
-        - const errors = templateData.errors
         include includes/header
-        if errors && errors.global
-            div.w3-panel.w3-red: p= errors.global
+        if templateData.errors && templateData.errors.global
+            div.w3-panel.w3-red: p= templateData.errors.global
         block content
         include includes/footer
         script(
