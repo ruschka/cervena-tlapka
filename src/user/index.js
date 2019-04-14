@@ -177,10 +177,20 @@ userRouter.post("/profile/change-password", async (ctx, next) => {
     if (success) {
         ctx.redirect("/profile");
     } else {
-        console.info(errors);
         await renderTemplate(ctx, "profile/change-password.pug", {
             data,
             errors
         });
     }
+});
+
+userRouter.post("/profile/delete", async (ctx, next) => {
+    const success = await userService.deleteProfile(ctx);
+    if (success) {
+        ctx.redirect("/profile/deleted");
+    }
+});
+
+userRouter.get("/profile/deleted", async (ctx, next) => {
+    await renderTemplate(ctx, "profile/deleted.pug");
 });

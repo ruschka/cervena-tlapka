@@ -3,8 +3,8 @@ extends ../main-template
 block content
     div.w3-container.w3-row-padding
         - var loggedUser = templateData.loggedUser;
-        h1 Profilové informace
         div.w3-responsive.w3-section
+            h1 Profilové informace
             table.w3-table-all
                 tr
                     td Email
@@ -24,11 +24,11 @@ block content
                 tr
                     td PSČ
                     td= loggedUser.zip
-        div.w3-bar
-            a.w3-button.w3-bar-item(href="/profile/edit-address") Upravit adresu
-            a.w3-button.w3-bar-item(href="/profile/change-password") Změnit heslo
-        h2 Vaše registrace dárců
+            div.w3-bar
+                a.w3-button.w3-bar-item(href="/profile/edit-address") Upravit adresu
+                a.w3-button.w3-bar-item(href="/profile/change-password") Změnit heslo
         div.w3-responsive.w3-section
+            h2 Vaše registrace dárců
             table.w3-table-all
                 tr
                     th Jméno
@@ -47,5 +47,11 @@ block content
                         td= registration.breed
                         td #[a(href="/profile/donor/" + registration.id + "/edit") Upravit]
                         td
-                            form(method="post", action="/profile/donor/" + registration.id + "/remove")
+                            form(method="post", action="/profile/donor/" + registration.id + "/remove", onsubmit="return confirm('Opravdu si přejete smazat registraci?');")
                                 input.w3-button.w3-padding-small(type="submit", value="Smazat")
+        div.w3-responsive.w3-section
+            h2 Odstranění profilu
+            p Zde můžete smazat svůj profil. Nezapomeňte však, že tato operace není vratná.
+            p Spolu s vaším profilem budou smazány i všechny vaše registrace psů.
+            form(method="post", action="/profile/delete", onsubmit="return confirm('Opravdu si přejete smazat svůj profil?');")
+                input.w3-button.ct-red(type="submit", value="Smazat profil")

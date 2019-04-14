@@ -20,6 +20,7 @@ import {
     success,
     unsuccess
 } from "../core/utils";
+import { DonorRegistration } from "../donor/DonorRegistration";
 
 export const tokenCookie = "token";
 const jwtSecret = config.user.jwtSecret;
@@ -331,6 +332,14 @@ export class UserKoaService {
                 }
             };
         }
+    }
+
+    async deleteProfile(ctx) {
+        const user = await this.loggedUser(ctx);
+        await DonorRegistration.deleteMany({ userId: user.id });
+        await User.deleteMany({ _id: user.id });
+        this.logout(ctx);
+        return success();
     }
 
     async loggedUser(ctx) {
