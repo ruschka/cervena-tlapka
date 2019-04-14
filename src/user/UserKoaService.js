@@ -337,7 +337,7 @@ export class UserKoaService {
     async deleteProfile(ctx) {
         const user = await this.loggedUser(ctx);
         await DonorRegistration.deleteMany({ userId: user.id });
-        await User.deleteMany({ _id: user.id });
+        await User.deleteOne({ _id: user.id });
         this.logout(ctx);
         return success();
     }
