@@ -140,7 +140,7 @@ export class UserKoaService {
             jwt.sign(
                 {
                     iss: "cervena-tlapka",
-                    sub: { id: user.id, email: user.email, zip: user.zip },
+                    sub: { id: user.id, email: user.email },
                     iat: Math.floor(Date.now() / 1000)
                 },
                 jwtSecret,
@@ -304,14 +304,23 @@ export class UserKoaService {
         const address = validatedAddress.data;
         const userId = loggedUserId(ctx);
         const result = await User.updateOne({ _id: userId }, address);
-        if (result.nModified === 1) {
-            return success();
-        } else {
+        if (result.nModified !== 1) {
             console.error(`Address wasn't saved. User id ${userId}`);
             return unsuccess(data, {
                 password: "Adresa nebyla uložena. Kontaktujte nás prosím."
             });
         }
+        const zip = await Zip.findOne({ zip: address.zip });
+        await DonorRegistration.updateMany(
+            { userId: userId },
+            {
+                zip: zip.zip,
+                district: zip.district,
+                location: { type: "Point", coordinates: zip.coordinates },
+                modifyDate: new Date()
+            }
+        );
+        return success();
     }
 
     async deleteProfile(ctx) {

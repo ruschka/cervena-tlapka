@@ -1,12 +1,17 @@
 "use strict";
 
-import { isUserLogged, loggedUserId, loggedUserZip } from "../core/user";
+import { isUserLogged, loggedUserId } from "../core/user";
 import { Zip } from "../zip/Zip";
 import { DonorRegistration } from "./DonorRegistration";
 import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
 import { emailRegex, sendMail } from "../core/mail";
-import { hasAnyOwnProperty, isEmptyString, success, unsuccess } from "../core/utils";
+import {
+    hasAnyOwnProperty,
+    isEmptyString,
+    success,
+    unsuccess
+} from "../core/utils";
 import { User } from "../user/User";
 import { DonorApplication } from "./DonorApplication";
 import { validateRecaptcha } from "../core/recaptcha";
@@ -32,7 +37,7 @@ export class DonorRegistrationKoaService {
         const zipCode = ctx.query.zip
             ? ctx.query.zip
             : isUserLogged(ctx)
-            ? loggedUserZip(ctx)
+            ? (await User.findOne({ _id: loggedUserId(ctx) })).zip
             : null;
         const maxDistance = ctx.query.maxDistance
             ? Number(ctx.query.maxDistance)
@@ -94,7 +99,8 @@ export class DonorRegistrationKoaService {
         if (!recaptchaResult.success) {
             return recaptchaResult;
         }
-        const zip = await this.findZip(ctx, loggedUserZip(ctx));
+        const user = await User.findOne({ _id: loggedUserId(ctx) });
+        const zip = await this.findZip(ctx, user.zip);
         const registration = new DonorRegistration({
             name: data.name,
             weight: data.weight,

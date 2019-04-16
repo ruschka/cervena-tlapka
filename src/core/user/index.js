@@ -9,7 +9,3 @@ export function loggedUserId(ctx) {
 export function loggedUserEmail(ctx) {
     return ctx.state.user.sub.email;
 }
-
-export function loggedUserZip(ctx) {
-    return ctx.state.user.sub.zip;
-}
