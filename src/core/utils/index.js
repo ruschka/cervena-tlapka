@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 export function isObject(item) {
     return item && typeof item === "object" && !Array.isArray(item);
@@ -25,6 +25,6 @@ export function success(data) {
     return { success: true, data };
 }
 
-export function unsuccess(data, errors) {
-    return { success: false, data, errors };
+export function unsuccess(data, errors, entity) {
+    return { success: false, data, errors, entity };
 }

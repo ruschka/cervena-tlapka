@@ -103,11 +103,11 @@ export class UserKoaService {
             }
         );
         if (result.nModified !== 1) {
-            return { success: false };
+            return unsuccess({}, {});
         }
         const user = await this.findUserByEmail(email);
         await this.setTokenCookie(ctx, user);
-        return { success: true };
+        return success();
     }
 
     async login(ctx) {
@@ -120,7 +120,7 @@ export class UserKoaService {
             this.normalizeEmail(data.email)
         );
         if (!user) {
-            return { success: false, data: data };
+            return unsuccess(data);
         }
         // FIXME check if profile is activated
         const passwordMatch = await bcrypt.compare(
@@ -129,9 +129,9 @@ export class UserKoaService {
         );
         if (passwordMatch) {
             await this.setTokenCookie(ctx, user);
-            return { success: true };
+            return success();
         } else {
-            return { success: false, data: data };
+            return unsuccess(data);
         }
     }
 
@@ -173,13 +173,9 @@ export class UserKoaService {
         const email = this.normalizeEmail(originalEmail);
         const user = await this.findUserByEmail(email);
         if (!user) {
-            return {
-                success: false,
-                data: data,
-                errors: {
-                    email: "Uživatel nebyl nalezen. Je zadaný email správně?"
-                }
-            };
+            return unsuccess(data, {
+                email: "Uživatel nebyl nalezen. Je zadaný email správně?"
+            });
         }
         const passwordResetHash = (await util.promisify(crypto.randomBytes)(
             64
@@ -197,7 +193,7 @@ export class UserKoaService {
             },
             originalEmail
         );
-        return { success: true };
+        return success();
     }
 
     async resetPassword(ctx) {
@@ -215,14 +211,10 @@ export class UserKoaService {
             passwordResetHash
         });
         if (!passwordReset) {
-            return {
-                success: false,
-                data,
-                errors: {
-                    password:
-                        "Odkaz pro obnovení hesla není platný. Zkuste to prosím znovu."
-                }
-            };
+            return unsuccess(data, {
+                password:
+                    "Odkaz pro obnovení hesla není platný. Zkuste to prosím znovu."
+            });
         }
         const password = data.password;
         const passwordCheck = this.checkPassword(
@@ -240,18 +232,14 @@ export class UserKoaService {
         );
         await PasswordReset.deleteOne({ _id: passwordReset.id });
         if (result.nModified === 1) {
-            return { success: true };
+            return success();
         } else {
             console.error(
                 `Password wasn't reset. User id ${passwordReset.userId}`
             );
-            return {
-                success: false,
-                data,
-                errors: {
-                    password: "Heslo nebylo obnoveno. Kontaktujte nás prosím."
-                }
-            };
+            return unsuccess(data, {
+                password: "Heslo nebylo obnoveno. Kontaktujte nás prosím."
+            });
         }
     }
 
@@ -287,16 +275,12 @@ export class UserKoaService {
         const passwordHash = await this.createPasswordHash(password);
         const result = await User.updateOne({ _id: user.id }, { passwordHash });
         if (result.nModified === 1) {
-            return { success: true };
+            return success();
         } else {
             console.error(`Password wasn't changed. User id ${user.id}`);
-            return {
-                success: false,
-                data,
-                errors: {
-                    password: "Heslo nebylo změněno. Kontaktujte nás prosím."
-                }
-            };
+            return unsuccess(data, {
+                password: "Heslo nebylo změněno. Kontaktujte nás prosím."
+            });
         }
     }
 
@@ -321,16 +305,12 @@ export class UserKoaService {
         const userId = loggedUserId(ctx);
         const result = await User.updateOne({ _id: userId }, address);
         if (result.nModified === 1) {
-            return { success: true };
+            return success();
         } else {
             console.error(`Address wasn't saved. User id ${userId}`);
-            return {
-                success: false,
-                data,
-                errors: {
-                    password: "Adresa nebyla uložena. Kontaktujte nás prosím."
-                }
-            };
+            return unsuccess(data, {
+                password: "Adresa nebyla uložena. Kontaktujte nás prosím."
+            });
         }
     }
 
@@ -367,26 +347,18 @@ export class UserKoaService {
 
     checkPassword(data, password, passwordConfirm) {
         if (password !== passwordConfirm) {
-            return {
-                success: false,
-                data: data,
-                errors: {
-                    password: "Hesla nejsou stejná. Zkuste to prosím znovu."
-                }
-            };
+            return unsuccess(data, {
+                password: "Hesla nejsou stejná. Zkuste to prosím znovu."
+            });
         }
         const passwordCheck = zxcvbn(password);
         if (passwordCheck.score < config.user.passwordStrength) {
-            return {
-                success: false,
-                data: data,
-                errors: {
-                    password:
-                        "Heslo je příliš slabé. Mělo by být dostatečně dlouhé a obsahovat malé i velké písmena a číslice, případně další symboly."
-                }
-            };
+            return unsuccess(data, {
+                password:
+                    "Heslo je příliš slabé. Mělo by být dostatečně dlouhé a obsahovat malé i velké písmena a číslice, případně další symboly."
+            });
         } else {
-            return { success: true };
+            return success();
         }
     }
 

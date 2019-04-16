@@ -68,12 +68,13 @@ donorRouter.get("/donor/:id", async (ctx, next) => {
 });
 
 donorRouter.post("/donor/:id/contact", async (ctx, next) => {
-    const { success, data, errors } = await donorService.contactDonor(ctx);
+    const { success, data, errors, entity } = await donorService.contactDonor(
+        ctx
+    );
     if (success) {
         ctx.redirect(`/donor/${ctx.params.id}?applicationSent=true`);
     } else {
-        const registration = await donorService.findDonorRegistration(ctx);
-        setTemplateData(ctx, { data, errors, registration });
+        setTemplateData(ctx, { data, errors, registration: entity });
         await ctx.render("donor/detail.pug");
     }
 });

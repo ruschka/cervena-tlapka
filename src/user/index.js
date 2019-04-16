@@ -127,16 +127,16 @@ userRouter.get("/profile/donor/:id/edit", async (ctx, next) => {
 userRouter.post("/profile/donor/:id/edit", async (ctx, next) => {
     const {
         success,
-        registration,
         data,
-        errors
+        errors,
+        entity
     } = await donorService.editDonorRegistration(ctx);
     if (success) {
         ctx.redirect("/profile");
     } else {
         setTemplateData(ctx, {
             actualYear: new Date().getFullYear(),
-            registration,
+            registration: entity,
             data,
             errors
         });

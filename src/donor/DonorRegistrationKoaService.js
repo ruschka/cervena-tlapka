@@ -6,7 +6,7 @@ import { DonorRegistration } from "./DonorRegistration";
 import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
 import { emailRegex, sendMail } from "../core/mail";
-import { hasAnyOwnProperty, isEmptyString } from "../core/utils";
+import { hasAnyOwnProperty, isEmptyString, success, unsuccess } from "../core/utils";
 import { User } from "../user/User";
 import { DonorApplication } from "./DonorApplication";
 import { validateRecaptcha } from "../core/recaptcha";
@@ -111,10 +111,10 @@ export class DonorRegistrationKoaService {
         });
         const validation = await validateAsync(registration);
         if (validation) {
-            return { success: false, data: data, errors: validation.errors };
+            return unsuccess(data, validation.errors);
         } else {
             await registration.save();
-            return { success: true };
+            return success();
         }
     }
 
@@ -144,18 +144,13 @@ export class DonorRegistrationKoaService {
             registration.modifyDate = new Date();
             const validation = await validateAsync(registration);
             if (validation) {
-                return {
-                    success: false,
-                    registration: registration,
-                    data: data,
-                    errors: validation.errors
-                };
+                return unsuccess(data, validation.errors, registration);
             } else {
                 await DonorRegistration.replaceOne(
                     { _id: registration.id },
                     registration
                 );
-                return { success: true };
+                return success();
             }
         });
     }
@@ -204,7 +199,7 @@ export class DonorRegistrationKoaService {
             Object.assign(errors, { message: "Zpráva pro dárce je povinná." });
         }
         if (hasAnyOwnProperty(errors)) {
-            return { success: false, data: data, errors: errors };
+            return unsuccess(data, errors, registration);
         } else {
             const userId = isUserLogged(ctx) ? loggedUserId(ctx) : null;
             const donorApplication = new DonorApplication({
@@ -222,7 +217,7 @@ export class DonorRegistrationKoaService {
                 donor.originalEmail,
                 applicantEmail
             );
-            return { success: true };
+            return success();
         }
     }
 
