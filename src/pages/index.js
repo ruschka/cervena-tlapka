@@ -9,6 +9,10 @@ pagesRouter.get("/", async (ctx, next) => {
     await renderTemplate(ctx, "homepage.pug");
 });
 
+pagesRouter.get("/contacts", async (ctx, next) => {
+    await renderTemplate(ctx, "about-us/contacts.pug");
+});
+
 pagesRouter.get("/robots.txt", async (ctx, next) => {
     ctx.response.body = "User-agent: * \n" + "Disallow: /";
 });
