@@ -17,6 +17,10 @@ pagesRouter.get("/about-us", async (ctx, next) => {
     await renderTemplate(ctx, "about-us/about-us.pug");
 });
 
+pagesRouter.get("/want-to-help", async (ctx, next) => {
+    await renderTemplate(ctx, "donor/want-to-help.pug");
+});
+
 pagesRouter.get("/robots.txt", async (ctx, next) => {
     ctx.response.body = "User-agent: * \n" + "Disallow: /";
 });

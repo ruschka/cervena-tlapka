@@ -1,0 +1,29 @@
+extends ../main-template
+
+block content
+    div.w3-container.w3-row-padding
+        h1 Chci pomoci i jinak
+        p: b Nesplňujete podmínky pro registraci dárce, ale přesto byste chtěli nějak přiložit ruku k dílu? Každá pomoc je vítána! Možností je hned několik:
+        div.w3-third
+            h2 Vytisknout leták
+            p Připravili jsme pro vás letáček, který můžete vytisknout a umístit do vaší veterinární ordinace, kam chodíte se svým miláčkem.
+            p: b Stahujte zde:
+            div.w3-row
+                div.w3-col.l4.m4.s4
+                    img(src="/static/image/flyer-a4-color.svg", alt="Barevný leták A4")
+                div.w3-col.l4.m4.s4
+                    img(src="/static/image/flyer-a4-black-and-white.svg", alt="Černobílý leták A4")
+                div.w3-col.l4.m4.s4
+                    img(src="/static/image/flyer-a6-color.svg", alt="Barevný leták A6", style="width: 50%")
+                    img(src="/static/image/flyer-a6-black-and-white.svg", alt="Černobílý leták A6", style="width: 50%")
+        div.w3-third
+            h2 Sdílet
+            p Informujte o nás své okolí. Svoje kamarády pejkaře i nepejskaře, svého psího doktora, sdílejte nás na Facebooku. Čím širší povědomí o databázi bude, tím víc členů může získat a tím víc pomáhat. #cervenatlapka
+            div.w3-constainer.w3-center.w3-section
+                img.content-image(src="/static/image/facebook-cervena-tlapka.svg", alt="Facebook")
+            div.w3-constainer.w3-center.w3-section
+                img.content-image(src="/static/image/instagram-cervena-tlapka.svg", alt="Instagram")
+        div.w3-third
+            h2 Finanční podpora
+            p Financujeme se z vlastních zdrojů. Pokud byste nás chtěli podpořit, můžete nám zaslat malý finanční obnos na účet. Peníze z něj použijeme na udržování a vylepšování registru, výrobu a zasílání známek a dalších věcí souvisejících s tímto projektem.
+            img(src="/static/image/money.svg", alt="Pomůžu finančně")
