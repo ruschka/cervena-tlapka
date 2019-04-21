@@ -75,7 +75,7 @@ routers.forEach(router => {
 });
 
 app.on("error", (err, ctx) => {
-    console.error("App error", err);
+    console.error(`App error, status: ${err.status}`, err);
 });
 
 mongoProvider.connect().then(() => {
