@@ -33,6 +33,7 @@ mixin checkbox(name, title, data, errors, params)
         - const entity = params && params.entity ? params.entity : null
         - const classes = params && params.classes ? params.classes : []
         - const defaultValue = params && params.default ? params.default : false
+        - const attrs = params && params.attributes ? params.attributes : {}
         input(
             type="checkbox",
             id=name,
@@ -40,7 +41,7 @@ mixin checkbox(name, title, data, errors, params)
             class=["w3-check"],
             class=classes,
             checked=entity ? entity[name] : data ? data[name] : defaultValue
-        )
+        )&attributes(attrs)
         label(for=name)!= title
         if errors && errors[name]
             div.w3-panel.w3-red: p= errors[name]

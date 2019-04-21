@@ -16,9 +16,7 @@ block content
                 +input("text", "email", "Email:", data, errors)
                 +input("password", "password", "Heslo:", data, errors)
                 +input("password", "passwordConfirm", "Potvrdit heslo:", data, errors)
-                div.w3-container.w3-section
-                    input#dogTag.w3-check(type="checkbox", name="dogTag", checked=data ? data.dogTag : true, onclick="handleDogTagCheckbox()")
-                    label(for="dogTag"): b Chci po přidání psa dostat známku
+                +checkbox("dogTag", "Přeji si přidání psa dostat známku", data, errors, { attributes: { onclick: "handleDogTagCheckbox()" }, default: true })
                 +input("text", "firstName", "Křestní jméno:", data, errors, { containerClasses: "addressContainer" })
                 +input("text", "surname", "Příjmení:", data, errors, { containerClasses: "addressContainer" })
                 +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number", containerClasses: "addressContainer" })
