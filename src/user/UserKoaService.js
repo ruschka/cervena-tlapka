@@ -59,10 +59,21 @@ export class UserKoaService {
             return validatedAddress;
         }
         const address = validatedAddress.data;
+        const privacyPolicy = data.privacyPolicy;
+        if (!privacyPolicy) {
+            return unsuccess(data, {
+                privacyPolicy:
+                    "Souhlas se zásadami ochrany osobních údajů je povinný."
+            });
+        }
         const user = new User({
             email: email,
             originalEmail: originalEmail,
             passwordHash: passwordHash,
+            agreements: {
+                privacyPolicy: true,
+                newsletter: !!data.newsletter
+            },
             firstName: address.firstName,
             surname: address.surname,
             street: address.street,

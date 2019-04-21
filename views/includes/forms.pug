@@ -4,7 +4,7 @@ mixin input(type, name, title, data, errors, params)
     - const containerClasses = params && params.containerClasses ? params.containerClasses : []
     - const attrs = params && params.attributes ? params.attributes : {}
     div(class=["w3-container"], class=containerClasses)
-        label(for=name)= title
+        label(for=name)!= title
         input(
             type=type,
             id=name,
@@ -19,12 +19,29 @@ mixin textarea(name, title, data, errors, params)
     div.w3-container
         - const entity = params && params.entity ? params.entity : null
         - const classes = params && params.classes ? params.classes : []
-        label(for=name)= title
+        label(for=name)!= title
         textarea(
             id=name,
             name=name,
             class=["w3-input", "w3-border"],
             class=classes) #{entity ? entity[name] : data ? data[name] : ""}
+        if errors && errors[name]
+            div.w3-panel.w3-red: p= errors[name]
+
+mixin checkbox(name, title, data, errors, params)
+    div.w3-container
+        - const entity = params && params.entity ? params.entity : null
+        - const classes = params && params.classes ? params.classes : []
+        - const defaultValue = params && params.default ? params.default : false
+        input(
+            type="checkbox",
+            id=name,
+            name=name,
+            class=["w3-check"],
+            class=classes,
+            checked=entity ? entity[name] : data ? data[name] : defaultValue
+        )
+        label(for=name)!= title
         if errors && errors[name]
             div.w3-panel.w3-red: p= errors[name]
 

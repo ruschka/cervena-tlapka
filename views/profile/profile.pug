@@ -5,28 +5,36 @@ block content
         - var loggedUser = templateData.loggedUser;
         div.w3-responsive.w3-section
             h1 Profilové informace
-            table.w3-table-all
-                tr
-                    td Email
-                    td= loggedUser.email
-                tr
-                    td Jméno
-                    td= loggedUser.firstName
-                tr
-                    td Příjmení
-                    td= loggedUser.surname
-                tr
-                    td Ulice
-                    td= loggedUser.street
-                tr
-                    td Město
-                    td= loggedUser.city
-                tr
-                    td PSČ
-                    td= loggedUser.zip
-            div.w3-bar
-                a.w3-button.w3-bar-item(href="/profile/edit-address") Upravit adresu
-                a.w3-button.w3-bar-item(href="/profile/change-password") Změnit heslo
+            div.w3-half
+                table.w3-table-all
+                    colgroup
+                        col(span="1", style="width: 30%")
+                        col(span="1", style="width: 70%")
+                    tr
+                        td Email
+                        td= loggedUser.email
+                    tr
+                        td Jméno
+                        td= loggedUser.firstName
+                    tr
+                        td Příjmení
+                        td= loggedUser.surname
+                    tr
+                        td Ulice
+                        td= loggedUser.street
+                    tr
+                        td Město
+                        td= loggedUser.city
+                    tr
+                        td PSČ
+                        td= loggedUser.zip
+                    tr
+                        td Newsletter
+                        td= loggedUser.agreements.newsletter ? "Ano" : "Ne"
+            div.w3-half
+                div.w3-bar
+                    a.w3-button.w3-bar-item(href="/profile/edit-address") Upravit adresu
+                    a.w3-button.w3-bar-item(href="/profile/change-password") Změnit heslo
         div.w3-responsive.w3-section
             h2 Vaše registrace dárců
             table.w3-table-all

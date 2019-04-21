@@ -25,6 +25,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    agreements: {
+        privacyPolicy: {
+            type: Boolean,
+            required: true
+        },
+        newsletter: {
+            type: Boolean,
+            required: true
+        }
+    },
     firstName: String,
     surname: String,
     street: String,
