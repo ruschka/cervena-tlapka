@@ -118,7 +118,7 @@ userRouter.get("/profile", async (ctx, next) => {
 
 userRouter.get("/profile/donor/:id/edit", async (ctx, next) => {
     setTemplateData(ctx, {
-        actualYear: new Date().getFullYear(),
+        actualYear: ctx.state.now.getFullYear(),
         registration: await donorService.findDonorRegistration(ctx)
     });
     await ctx.render("donor/edit.pug");
@@ -135,7 +135,7 @@ userRouter.post("/profile/donor/:id/edit", async (ctx, next) => {
         ctx.redirect("/profile");
     } else {
         setTemplateData(ctx, {
-            actualYear: new Date().getFullYear(),
+            actualYear: ctx.state.now.getFullYear(),
             registration: entity,
             data,
             errors

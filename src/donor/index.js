@@ -32,7 +32,7 @@ donorRouter.get("/find-donor", async (ctx, next) => {
 });
 
 donorRouter.get("/register-donor", async (ctx, next) => {
-    setTemplateData(ctx, { actualYear: new Date().getFullYear() });
+    setTemplateData(ctx, { actualYear: ctx.state.now.getFullYear() });
     await ctx.render("register-donor/register-donor.pug");
 });
 
@@ -42,7 +42,7 @@ donorRouter.post("/register-donor", async (ctx, next) => {
         ctx.redirect("/register-donor/thanks");
     } else {
         setTemplateData(ctx, {
-            actualYear: new Date().getFullYear(),
+            actualYear: ctx.state.now.getFullYear(),
             data: data,
             errors: errors
         });

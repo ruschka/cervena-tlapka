@@ -23,6 +23,11 @@ const jwtSecret = config.user.jwtSecret;
 
 // middlewares
 
+app.use(async (ctx, next) => {
+    ctx.state.now = new Date();
+    return next();
+});
+
 app.use(KoaStatic(path.join(__dirname, "..", "public")));
 
 app.use(

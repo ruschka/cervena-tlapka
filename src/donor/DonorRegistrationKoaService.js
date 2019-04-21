@@ -8,13 +8,14 @@ import { validateAsync } from "../core/mongo";
 import { emailRegex, sendMail } from "../core/mail";
 import {
     hasAnyOwnProperty,
-    isEmptyString,
+    isEmptyString, isNonEmptyString,
     success,
     unsuccess
 } from "../core/utils";
 import { User } from "../user/User";
 import { DonorApplication } from "./DonorApplication";
 import { validateRecaptcha } from "../core/recaptcha";
+import { DogTagOrder } from "./DogTagOrder";
 
 export class DonorRegistrationKoaService {
     async findDonors(ctx, paging) {
@@ -112,16 +113,42 @@ export class DonorRegistrationKoaService {
             district: zip.district,
             location: { type: "Point", coordinates: zip.coordinates },
             note: data.note,
-            registerDate: new Date(),
-            modifyDate: new Date()
+            registerDate: ctx.state.now,
+            modifyDate: ctx.state.now
         });
         const validation = await validateAsync(registration);
         if (validation) {
             return unsuccess(data, validation.errors);
         } else {
-            await registration.save();
+            const savedRegistration = await registration.save();
+            if (this.shouldCreateDogTagOrder(user)) {
+                const dogTagOrder = new DogTagOrder({
+                    userId: mongoose.mongo.ObjectId(loggedUserId(ctx)),
+                    donorRegistrationId: mongoose.mongo.ObjectId(
+                        savedRegistration.id
+                    ),
+                    orderState: "NEW",
+                    firstName: user.firstName,
+                    surname: user.surname,
+                    street: user.street,
+                    city: user.city,
+                    zip: user.zip,
+                    createDate: ctx.state.now
+                });
+                await dogTagOrder.save();
+            }
             return success();
         }
+    }
+
+    shouldCreateDogTagOrder(user) {
+        return (
+            isNonEmptyString(user.firstName) &&
+            isNonEmptyString(user.surname) &&
+            isNonEmptyString(user.street) &&
+            isNonEmptyString(user.city) &&
+            isNonEmptyString(user.zip)
+        );
     }
 
     removeDonorRegistration(ctx) {
@@ -147,7 +174,7 @@ export class DonorRegistrationKoaService {
             registration.sex = data.sex;
             registration.breed = data.breed;
             registration.note = data.note;
-            registration.modifyDate = new Date();
+            registration.modifyDate = ctx.state.now;
             const validation = await validateAsync(registration);
             if (validation) {
                 return unsuccess(data, validation.errors, registration);
@@ -214,7 +241,7 @@ export class DonorRegistrationKoaService {
                 applicantMessage: applicantMessage,
                 donorRegistrationId: registration.id,
                 userId: userId,
-                createdDate: new Date()
+                createdDate: ctx.state.now
             });
             await donorApplication.save();
             await sendMail(

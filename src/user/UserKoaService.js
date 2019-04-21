@@ -81,7 +81,7 @@ export class UserKoaService {
             zip: address.zip,
             activated: false,
             activateHash: activateHash,
-            registerDate: new Date()
+            registerDate: ctx.state.now
         });
         const validation = await validateAsync(user);
         if (validation) {
@@ -108,7 +108,7 @@ export class UserKoaService {
             {
                 $set: {
                     activated: true,
-                    activateDate: new Date(),
+                    activateDate: ctx.state.now,
                     activateHash: null
                 }
             }
@@ -194,7 +194,7 @@ export class UserKoaService {
         const passwordReset = new PasswordReset({
             userId: user.id,
             passwordResetHash: passwordResetHash,
-            createdDate: new Date()
+            createdDate: ctx.state.now
         });
         await passwordReset.save();
         await sendMail(
@@ -328,7 +328,7 @@ export class UserKoaService {
                 zip: zip.zip,
                 district: zip.district,
                 location: { type: "Point", coordinates: zip.coordinates },
-                modifyDate: new Date()
+                modifyDate: ctx.state.now
             }
         );
         return success();
