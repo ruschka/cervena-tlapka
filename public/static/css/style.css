@@ -88,8 +88,12 @@ h6 {
     align-items: flex-end;
 }
 
-.content-image {
+.image-50pc {
     width: 50%;
+}
+
+.image-70pc {
+    width: 70%;
 }
 
 .main-circle-image {
