@@ -1,6 +1,6 @@
 html, body {
     font-family: "Work Sans", sans-serif;
-    font-size: calc(10px + 0.5vw);
+    font-size: calc(12px + 0.3vw);
     color: rgb(203, 0, 60);
 }
 
@@ -10,27 +10,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 3em;
-    text-transform: uppercase;
-}
-
-h2 {
     font-size: 2.5em;
     text-transform: uppercase;
 }
 
+h2 {
+    font-size: 2.2em;
+    text-transform: uppercase;
+}
+
 h3 {
-    font-size: 2em;
+    font-size: 1.9em;
     text-transform: uppercase;
 }
 
 h4 {
-    font-size: 1.66em;
+    font-size: 1.6em;
     text-transform: uppercase;
 }
 
 h5 {
-    font-size: 1.33em;
+    font-size: 1.3em;
     text-transform: uppercase;
 }
 
@@ -59,21 +59,22 @@ h6 {
     background-color: rgb(87, 87, 86)!important
 }
 
-@media (min-width:600px) {
+@media (max-width:600px) {
     .logo {
         width: 100%;
+        margin: 4px;
     }
 }
 
-@media (min-width:768px) {
+@media (min-width:601px) and (max-width: 991px) {
     .logo {
-        width: 80%;
+        width: 60%;
     }
 }
 
 @media (min-width:992px) {
     .logo {
-        width: 60%;
+        width: 40%;
     }
 }
 
