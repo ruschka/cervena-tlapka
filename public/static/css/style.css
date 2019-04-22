@@ -91,3 +91,7 @@ h6 {
 .content-image {
     width: 50%;
 }
+
+.menu {
+    font-weight: bold;
+}

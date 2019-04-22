@@ -2,7 +2,7 @@ div.w3-container
     div.w3-third
         p
     div.w3-twothird
-        div.w3-bar.ct-yellow
+        div.w3-bar.ct-yellow.menu
             a.w3-bar-item.w3-button.w3-hide-large(href="/") Domů
             - var itemClasses = "w3-bar-item w3-button w3-hide-small w3-hide-medium"
             - var itemClassesRight = itemClasses + " w3-right"
@@ -27,7 +27,7 @@ div.w3-container
                 a(class=itemClassesRight href="/login") Přihlásit
                 a(class=itemClassesRight href="/register") Registrovat
             a.w3-bar-item.w3-button.w3-right.w3-hide-large(href="javascript:void(0)", onclick="handleMobileMenu()") &#9776
-        div#mobile-menu.w3-bar-block.ct-yellow.w3-hide.w3-hide-large
+        div#mobile-menu.w3-bar-block.ct-yellow.w3-hide.w3-hide-large.menu
             - var mobileItemClasses = "w3-bar-item w3-button"
             a(class=mobileItemClasses href="/find-donor") Najít dárce
             a(class=mobileItemClasses href="/register-donor") Registrace dárce
