@@ -11,26 +11,32 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 3em;
+    text-transform: uppercase;
 }
 
 h2 {
     font-size: 2.5em;
+    text-transform: uppercase;
 }
 
 h3 {
     font-size: 2em;
+    text-transform: uppercase;
 }
 
 h4 {
     font-size: 1.66em;
+    text-transform: uppercase;
 }
 
 h5 {
     font-size: 1.33em;
+    text-transform: uppercase;
 }
 
 h6 {
     font-size: 1em;
+    text-transform: uppercase;
 }
 
 .ct-red {
