@@ -133,7 +133,7 @@ export class DonorRegistrationKoaService {
                     street: user.street,
                     city: user.city,
                     zip: user.zip,
-                    createDate: ctx.state.now
+                    createdDate: ctx.state.now
                 });
                 await dogTagOrder.save();
             }
