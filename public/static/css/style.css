@@ -64,17 +64,26 @@ h6 {
         width: 100%;
         margin: 4px;
     }
+    .image-50s {
+        width: 50%;
+    }
 }
 
 @media (min-width:601px) and (max-width: 991px) {
     .logo {
         width: 60%;
     }
+    .image-50m {
+        width: 50%;
+    }
 }
 
 @media (min-width:992px) {
     .logo {
         width: 40%;
+    }
+    .image-90l {
+        width: 90%;
     }
 }
 
