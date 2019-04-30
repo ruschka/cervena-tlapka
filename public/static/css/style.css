@@ -34,27 +34,22 @@ h1 {
 
 h2 {
     font-size: 2em;
-    text-transform: uppercase;
 }
 
 h3 {
     font-size: 1.7em;
-    text-transform: uppercase;
 }
 
 h4 {
     font-size: 1.5em;
-    text-transform: uppercase;
 }
 
 h5 {
     font-size: 1.3em;
-    text-transform: uppercase;
 }
 
 h6 {
     font-size: 1em;
-    text-transform: uppercase;
 }
 
 .ct-red {
@@ -85,6 +80,9 @@ h6 {
     .image-50s {
         width: 50%;
     }
+    .image-70s {
+        width: 70%;
+    }
 }
 
 @media (min-width:601px) and (max-width: 991px) {
@@ -94,12 +92,21 @@ h6 {
     .image-50m {
         width: 50%;
     }
+    .image-70m {
+        width: 70%;
+    }
 }
 
 @media (min-width:992px) {
     .logo {
         width: 40%;
         max-width: 1000px;
+    }
+    .image-50l {
+        width: 50%;
+    }
+    .image-70l {
+        width: 70%;
     }
     .image-90l {
         width: 90%;
