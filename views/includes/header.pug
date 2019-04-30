@@ -8,17 +8,18 @@ div.w3-container
             - var itemClassesRight = itemClasses + " w3-right"
             a(class=itemClasses href="/find-donor") Najít dárce
             div.w3-dropdown-hover
-                button.w3-button.w3-hide-small.w3-hide-medium chci pomoci
+                button.w3-button.w3-hide-small.w3-hide-medium chci pomoct
                 div.w3-dropdown-content.w3-bar-block.w3-card-4
-                    a(class=itemClasses href="/register-donor") Registrace dárce
+                    a(class=itemClasses href="/register-donor") Přidat psa
                     a(class=itemClasses href="/want-to-help#flyer") Vytisknout leták
                     a(class=itemClasses href="/want-to-help#share") Sdílet
-                    a(class=itemClasses href="/want-to-help#financial-help") Finanční pomoc
+                    a(class=itemClasses href="/want-to-help#financial-help") Finanční podpora
                     a(class=itemClasses href="/want-to-help#i-have-an-idea") Mám nápad
             div.w3-dropdown-hover
                 button.w3-button.w3-hide-small.w3-hide-medium o nás
                 div.w3-dropdown-content.w3-bar-block.w3-card-4
-                    a(class=itemClasses href="/about-us") O nás
+                    a(class=itemClasses href="/about-us") Náš příběh
+                    a(class=itemClasses href="/team") Tým Červené tlapky
                     a(class=itemClasses href="/contacts") Kontakt
             if user
                 a(class=itemClassesRight href="/logout") Odhlásit
@@ -30,12 +31,13 @@ div.w3-container
         div#mobile-menu.w3-bar-block.ct-yellow.w3-hide.w3-hide-large.menu
             - var mobileItemClasses = "w3-bar-item w3-button"
             a(class=mobileItemClasses href="/find-donor") Najít dárce
-            a(class=mobileItemClasses href="/register-donor") Registrace dárce
+            a(class=mobileItemClasses href="/register-donor") Přidat psa
             a(class=mobileItemClasses href="/want-to-help#flyer") Vytisknout leták
             a(class=mobileItemClasses href="/want-to-help#share") Sdílet
-            a(class=mobileItemClasses href="/want-to-help#financial-help") Finanční pomoc
+            a(class=mobileItemClasses href="/want-to-help#financial-help") Finanční podpora
             a(class=mobileItemClasses href="/want-to-help#i-have-an-idea") Mám nápad
-            a(class=mobileItemClasses href="/about-us") O nás
+            a(class=mobileItemClasses href="/about-us") Náš příběh
+            a(class=mobileItemClasses href="/team") Tým Červené tlapky
             a(class=mobileItemClasses href="/contacts") Kontakt
             if user
                 a(class=mobileItemClasses href="/profile") #{user.sub.email}
