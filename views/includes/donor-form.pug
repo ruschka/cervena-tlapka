@@ -25,7 +25,7 @@ div.w3-container
     if errors && errors.sex
         div.w3-panel.w3-red: p= errors.sex
 +input("text", "breed", "Plemeno:", data, errors, { entity: registration })
-+textarea("note", "Poznámka:", data, errors, { entity: registration })
++textarea("note", "Poznámka:", data, errors, { entity: registration, placeholder: "Zde můžete případným žadatelům zanechat vzkaz." })
 div.w3-container.w3-section
     +recaptchaInput()
     +submit()
