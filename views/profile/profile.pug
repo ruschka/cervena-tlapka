@@ -36,7 +36,7 @@ block content
                     a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/edit-address") Upravit adresu
                     a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/change-password") Změnit heslo
         div.w3-responsive.w3-section
-            h2 Vaše registrace dárců
+            h2 Vaši psí hrdinové
             a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/register-donor") Přidat psa
             table.w3-table-all
                 tr
@@ -56,7 +56,7 @@ block content
                         td= registration.breed
                         td #[a(href="/profile/donor/" + registration.id + "/edit") Upravit]
                         td
-                            form(method="post", action="/profile/donor/" + registration.id + "/remove", onsubmit="return confirm('Opravdu si přejete smazat registraci?');")
+                            form(method="post", action="/profile/donor/" + registration.id + "/remove", onsubmit="return confirm('Opravdu si přejete smazat tohoto psího hrdinu?');")
                                 input.w3-button.w3-padding-small(type="submit", value="Smazat")
         div.w3-responsive.w3-section
             h2 Odstranění profilu
