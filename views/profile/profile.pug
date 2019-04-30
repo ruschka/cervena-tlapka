@@ -6,7 +6,7 @@ block content
         div.w3-responsive.w3-section
             h1 Profilové informace
             div.w3-half
-                table.w3-table-all
+                table.w3-table-all.w3-margin-bottom
                     colgroup
                         col(span="1", style="width: 30%")
                         col(span="1", style="width: 70%")
@@ -33,10 +33,11 @@ block content
                         td= loggedUser.agreements.newsletter ? "Ano" : "Ne"
             div.w3-half
                 div.w3-bar
-                    a.w3-button.w3-bar-item(href="/profile/edit-address") Upravit adresu
-                    a.w3-button.w3-bar-item(href="/profile/change-password") Změnit heslo
+                    a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/edit-address") Upravit adresu
+                    a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/change-password") Změnit heslo
         div.w3-responsive.w3-section
             h2 Vaše registrace dárců
+            a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/register-donor") Přidat psa
             table.w3-table-all
                 tr
                     th Jméno
@@ -62,4 +63,4 @@ block content
             p Zde můžete smazat svůj profil. Nezapomeňte však, že tato operace není vratná.
             p Spolu s vaším profilem budou smazány i všechny vaše registrace psů.
             form(method="post", action="/profile/delete", onsubmit="return confirm('Opravdu si přejete smazat svůj profil?');")
-                input.w3-button.ct-red(type="submit", value="Smazat profil")
+                input.w3-button.ct-red.w3-margin-left.w3-margin-bottom(type="submit", value="Smazat profil")
