@@ -8,7 +8,8 @@ import { validateAsync } from "../core/mongo";
 import { emailRegex, sendMail } from "../core/mail";
 import {
     hasAnyOwnProperty,
-    isEmptyString, isNonEmptyString,
+    isEmptyString,
+    isNonEmptyString,
     success,
     unsuccess
 } from "../core/utils";

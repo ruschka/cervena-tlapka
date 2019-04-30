@@ -56,4 +56,6 @@ const userSchema = new mongoose.Schema({
     lastLogin: Date
 });
 
+userSchema.index({ email: 1, activateHash: 1 });
+
 export const User = mongoose.model("User", userSchema, "user");

@@ -9,4 +9,6 @@ const zipSchema = new mongoose.Schema({
     coordinates: [Number]
 });
 
+zipSchema.index({ zip: 1 });
+
 export const Zip = mongoose.model("Zip", zipSchema, "zip");

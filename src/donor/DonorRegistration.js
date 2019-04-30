@@ -62,6 +62,7 @@ const donorRegistrationSchema = new mongoose.Schema({
 });
 
 donorRegistrationSchema.index({ location: "2dsphere" });
+donorRegistrationSchema.index({ userId: 1 });
 
 export const DonorRegistration = mongoose.model(
     "DonorRegistration",
