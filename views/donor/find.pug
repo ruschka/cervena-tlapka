@@ -5,9 +5,9 @@ block content
     include ../includes/forms
     div.w3-container.w3-row-padding
         div.w3-half
-            h1 Najít dárce
-            p Na této stránce najdete všechny zaregistrovné dárce. Pro snadnější nalezení toho vhodného můžete použít filtr.
-            p Nového hrdinu, který by byl ochotný darovat krev, můžete zaregistrovat #[a(href='/register-donor') zde].
+            h1 Najděte vhodného dárce krve
+            p Na této stránce najdete všechny zaregistrované psí hrdiny. Pro snadnější vyhledání toho vhodného použijte filtr. Stačí zadat vaše PSČ a maximální vzdálenost, ve které chcete potenciálního dárce hledat.
+            p: b Chtěli byste zaregistrovat nového psího hrdinu? Výborně! #[a(href='/register-donor') Přečtěte si, co to obnáší a jak na to].
 
             - var data = templateData.data
             form(method='get', action='/find-donor')
