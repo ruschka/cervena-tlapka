@@ -29,7 +29,7 @@ html(lang="cs")
         include includes/header
         if templateData.errors && templateData.errors.global
             div.w3-panel.w3-red: p= templateData.errors.global
-        div.content
+        div.content.w3-section
             block content
         include includes/footer
         script(
