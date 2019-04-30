@@ -16,7 +16,7 @@ block content
                 +input("text", "email", "Email:", data, errors)
                 +input("password", "password", "Heslo:", data, errors)
                 +input("password", "passwordConfirm", "Potvrdit heslo:", data, errors)
-                +checkbox("dogTag", "Přeji si přidání psa dostat známku", data, errors, { attributes: { onclick: "handleDogTagCheckbox()" }, default: true })
+                +checkbox("dogTag", "Chci známku", data, errors, { attributes: { onclick: "handleDogTagCheckbox()" }, default: true })
                 +input("text", "firstName", "Křestní jméno:", data, errors, { containerClasses: "addressContainer" })
                 +input("text", "surname", "Příjmení:", data, errors, { containerClasses: "addressContainer" })
                 +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number", containerClasses: "addressContainer" })
@@ -45,3 +45,4 @@ block content
                     }
                     handleDogTagCheckbox();
         div.w3-half
+            p Respektujeme vaše soukromí a snažíme se vám v tomto ohledu vyjít maximálně vstříc. Pro účely registru zveřejňujeme pouze ty nejnutnější údaje, tj. vaše PSČ a email. Pokud si budete přát obdržet pro svého psího hrdinu také známku, vyplňte jméno a adresu, kam vám ji budeme moci zaslat. Tyto údaje nebudou v registru veřejné dostupné.
