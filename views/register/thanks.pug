@@ -4,8 +4,8 @@ block content
     div.w3-container.w3-row-padding
         if templateData.success
             h1 Registrace dokončena
-            p Děkujeme za Vaši registraci. Váš účet byl úspěšně aktivován.
-            p Nyní se můžete #[a(href='/login') přihlásit].
+            p Děkujeme, že jste se zaregistrovali. Váš účet byl úspěšně aktivován.
+            p: b Nyní můžete #[a(href='/register-donor') přidat vašeho psího hrdinu].
         else
             h1 Chyba při dokončení registrace
             p Omlouváme se, ale Váš účet nemohl být aktivován.

@@ -11,7 +11,7 @@ block content
         div.w3-half
             - const data = templateData.data
             - const errors = templateData.errors
-            h1 Registrace
+            h1 Registrace majitele
             form(method='post', action='/register')
                 +input("text", "email", "Email:", data, errors)
                 +input("password", "password", "Heslo:", data, errors)

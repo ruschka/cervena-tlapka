@@ -6,5 +6,6 @@ block content
     - var activateLink = `${baseUrl}/password-reset?passwordResetHash=${encodeURIComponent(passwordResetHash)}`
     p #[a(href=activateLink) #{activateLink}]
     p Tým Červené tlapky
-    p Pokud jste tento email dostali omylem a na webu #{baseUrl} jste nežádali o změnu hesla, ignorujte jej prosím.
-    p Email byl vygenerován automaticky. Neodpovídejte na něj prosím.
+    p Pokud jste tento email dostali omylem a na webu #{baseUrl} jste nežádali o změnu hesla, ignorujte jej, prosím.
+    - var contactsLink = `${baseUrl}/contacts`
+    p Email byl vygenerován automaticky. Neodpovídejte na něj. V případě dotazů nás prosím neváhejte #[a(href=contactsLink) kontaktovat].

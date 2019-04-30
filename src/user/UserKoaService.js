@@ -368,7 +368,7 @@ export class UserKoaService {
     checkPassword(data, password, passwordConfirm) {
         if (password !== passwordConfirm) {
             return unsuccess(data, {
-                password: "Hesla nejsou stejná. Zkuste to prosím znovu."
+                password: "Hesla se neshodují. Zkuste to znovu, prosím."
             });
         }
         const passwordCheck = zxcvbn(password);

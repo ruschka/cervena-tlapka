@@ -2,10 +2,10 @@ extends ../main-template
 
 block content
     p Dobrý den,
-    p děkujeme za Vaši registraci.
-    p Pro dokončení Vaší registrace klikněte prosím na tento odkaz:
+    p vaše registrace je téměř hotová. Pro její dokončení klikněte prosím na následující odkaz:
     - var activateLink = `${baseUrl}/register/activate?email=${encodeURIComponent(email)}&activateHash=${encodeURIComponent(activateHash)}`
     p #[a(href=activateLink) #{activateLink}]
     p Tým Červené tlapky
-    p Pokud jste tento email dostali omylem a na webu #{baseUrl} jste se neregistrovali, ignorujte jej prosím.
-    p Email byl vygenerován automaticky. Neodpovídejte na něj prosím.
+    p Pokud jste tento email dostali omylem a na webu #{baseUrl} jste se neregistrovali, ignorujte jej, prosím.
+    - var contactsLink = `${baseUrl}/contacts`
+    p Email byl vygenerován automaticky. Neodpovídejte na něj. V případě dotazů nás prosím neváhejte #[a(href=contactsLink) kontaktovat].

@@ -60,7 +60,7 @@ block content
                                 input.w3-button.w3-padding-small(type="submit", value="Smazat")
         div.w3-responsive.w3-section
             h2 Odstranění profilu
-            p Zde můžete smazat svůj profil. Nezapomeňte však, že tato operace není vratná.
-            p Spolu s vaším profilem budou smazány i všechny vaše registrace psů.
+            p Zde můžete smazat svůj profil. Tato operace je nevratná.
+            p Spolu s vaším profilem budou z registru vymazány i všichni vaši psí hrdinové.
             form(method="post", action="/profile/delete", onsubmit="return confirm('Opravdu si přejete smazat svůj profil?');")
                 input.w3-button.ct-red.w3-margin-left.w3-margin-bottom(type="submit", value="Smazat profil")
