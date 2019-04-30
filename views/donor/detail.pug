@@ -20,9 +20,9 @@ block content
                 li Poznámka: #{registration.note ? registration.note : "-"}
         div.w3-half
             h2 Kontaktní formulář
-            p: b Našli jste vhodného dárce? Kontaktujte ho pomocí tohoto formuláře!
-            p Vyplňte svůj email a napište zprávu pro dárce. Nezapomeňte na své kontakty (telefonní číslo, Facebook), na kterých Vás bude moci dárce zastihnout.
-            p Urychlíte tím celý proces darování krve.
+            p: b Našli jste vhodného dárce pro svého psa? Kontaktujte ho pomocí tohoto formuláře!
+            p Vyplňte svůj email a jméno a napište zprávu pro jeho majitele. Nezapomeňte uvést kontakty (telefonní číslo, Facebook), na kterých vás bude moct zastihnout.
+            p Urychlíte tím celý proces darování krve. Hodně štěstí!
             - const data = templateData.data
             - const errors = templateData.errors
             form(method="post", action="/donor/" + registration.id + "/contact")
