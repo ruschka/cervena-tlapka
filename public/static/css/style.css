@@ -1,7 +1,6 @@
 html, body {
     font-family: "Work Sans", sans-serif;
     font-size: calc(12px + 0.3vw);
-    text-align: justify;
     color: rgb(203, 0, 60);
 }
 
@@ -51,6 +50,10 @@ h5 {
 
 h6 {
     font-size: 1em;
+}
+
+p {
+    text-align: justify;
 }
 
 .ct-red {
