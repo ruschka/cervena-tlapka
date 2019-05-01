@@ -133,6 +133,7 @@ h6 {
 
 .main-circle-image {
     width: 80%;
+    max-width: 600px;
 }
 
 .menu {

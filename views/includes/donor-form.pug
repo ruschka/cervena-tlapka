@@ -5,7 +5,7 @@ include ../includes/recaptcha
 - var actualYear = templateData.actualYear
 - var registration = templateData.registration
 +input("text", "name", "Jméno:", data, errors, { entity: registration })
-+input("number", "weight", "Hmotnost (kg):", data, errors, { entity: registration, attributes: { step: 1, min: 0 } })
++input("number", "weight", "Hmotnost (kg):", data, errors, { entity: registration, attributes: { step: 1, min: 20 } })
 div.w3-container
     - var n = 0
     label(for='birth-year') Rok narození:
