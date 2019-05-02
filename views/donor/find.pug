@@ -25,52 +25,58 @@ block content
                     div.w3-third
                         +submit()
         div.w3-half
-            div.w3-responsive.w3-section
-                table.w3-table-all
-                    tr
-                        th Jméno
-                        th: abbr(title="Hmotnost") H.
-                        th: abbr(title="Rok narození") R.N.
-                        th: abbr(title="Pohlaví") P.
-                        th Plemeno
-                        th Okres
-                        th PSČ
-                    for registration in templateData.registrations
+            if (templateData.registrations.length)
+                div.w3-responsive.w3-section
+                    table.w3-table-all
                         tr
-                            td #[a(href="/donor/" + registration.id) #{registration.name}]
-                            td #{registration.weight}&nbsp;kg
-                            td= registration.birthYear
-                            td= registration.sex === "M" ? "Pes" : "Fena"
-                            td= registration.breed
-                            td= registration.district
-                            td= registration.zip
-            +pagination(templateData.paging)
-    div.w3-container.w3-section
-        div#donor-map
-        script.
-            let map;
-            function initMap() {
-                map = new google.maps.Map(document.getElementById('donor-map'), {
-                    mapTypeId: 'roadmap'
-                });
-                const bounds = new google.maps.LatLngBounds();
-                const markersData = !{ JSON.stringify(templateData.aggregatedRegistrations) };
-                const infoWindow = new google.maps.InfoWindow({
-                    content: "Test"
-                });
-                const markers = markersData.map(markerData => {
-                    var marker = new google.maps.Marker({
-                        position: new google.maps.LatLng(markerData.location[1], markerData.location[0]),
-                        map: map,
-                        label: `${markerData.registrationCount}`
+                            th Jméno
+                            th: abbr(title="Hmotnost") H.
+                            th: abbr(title="Rok narození") R.N.
+                            th: abbr(title="Pohlaví") P.
+                            th Plemeno
+                            th Okres
+                            th PSČ
+                        for registration in templateData.registrations
+                            tr
+                                td #[a(href="/donor/" + registration.id) #{registration.name}]
+                                td #{registration.weight}&nbsp;kg
+                                td= registration.birthYear
+                                td= registration.sex === "M" ? "Pes" : "Fena"
+                                td= registration.breed
+                                td= registration.district
+                                td= registration.zip
+                +pagination(templateData.paging)
+            else
+                div.w3-panel.ct-blue
+                    p Pro zadaný filtr nebyli nalezeni žádní dárci.
+                    p Můžete zkusit zadat jiné PSČ nebo zvětšit maximální vzdálenost.
+    if (templateData.registrations.length)
+        div.w3-container.w3-section
+            div#donor-map
+            script.
+                let map;
+                function initMap() {
+                    map = new google.maps.Map(document.getElementById('donor-map'), {
+                        mapTypeId: 'roadmap'
                     });
-                    marker.addListener('click', function() {
-                        infoWindow.setContent(`<p>PSČ ${markerData.zip}</p><p><a href='/find-donor?zip=${markerData.zip}'>Zobrazit místní dárce</a></p>`);
-                        infoWindow.open(map, marker);
-                    })
-                bounds.extend(marker.position);
-                    return marker;
-                });
-                map.fitBounds(bounds);
-            }
-        script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)
+                    const bounds = new google.maps.LatLngBounds();
+                    const markersData = !{ JSON.stringify(templateData.aggregatedRegistrations) };
+                    const infoWindow = new google.maps.InfoWindow({
+                        content: "Test"
+                    });
+                    const markers = markersData.map(markerData => {
+                        var marker = new google.maps.Marker({
+                            position: new google.maps.LatLng(markerData.location[1], markerData.location[0]),
+                            map: map,
+                            label: `${markerData.registrationCount}`
+                        });
+                        marker.addListener('click', function() {
+                            infoWindow.setContent(`<p>PSČ ${markerData.zip}</p><p><a href='/find-donor?zip=${markerData.zip}'>Zobrazit místní dárce</a></p>`);
+                            infoWindow.open(map, marker);
+                        })
+                    bounds.extend(marker.position);
+                        return marker;
+                    });
+                    map.fitBounds(bounds);
+                }
+            script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)
