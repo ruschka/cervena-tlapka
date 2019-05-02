@@ -11,7 +11,7 @@ const donorRegistrationSchema = new mongoose.Schema({
     weight: {
         type: Number,
         required: [true, "Hmotnost je povinná."],
-        min: [1, "Minimální hmotnost je 1 kg."],
+        min: [20, "Minimální hmotnost je 20 kg."],
         max: [150, "Maximální hmotnost je 150 kg."]
     },
     birthYear: {
@@ -50,7 +50,10 @@ const donorRegistrationSchema = new mongoose.Schema({
             default: [0, 0]
         }
     },
-    note: String,
+    note: {
+        type: String,
+        maxlength: [250, "Maximání délka poznámky je 250 znaků."]
+    },
     registerDate: {
         type: Date,
         required: true
