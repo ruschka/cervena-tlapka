@@ -49,7 +49,7 @@ block content
                     th
                 for registration in templateData.registrations
                     tr
-                        td #[a(href="/donor/" + registration.id) #{registration.name}]
+                        td= registration.name
                         td #{registration.weight} kg
                         td= registration.birthYear
                         td= registration.sex
