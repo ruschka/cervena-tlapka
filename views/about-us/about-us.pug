@@ -3,7 +3,7 @@ extends ../main-template
 block content
     div.w3-container.w3-row-padding
         div.w3-half
-            h1 Náš příběh
+            h1(id="story") Náš příběh
             p Zajímá vás, jak to celé začalo a proč to vlastně děláme?
             p Protože nezapomínáme. Říká se, že všechno zlé je pro něco dobré. A to platí i v případě Červené tlapky. Ta vznikla právě „díky“ jedné takové smutné události.
             p Naše úžasná sedmiletá boxerka Jasmína potřebovala akutní operaci a měla to štěstí, že jsme pro ni dárce měli. Její dlouholetý kamarád Lexík a jeho páníček nám obětavě přispěchali na pomoc. Bohužel, i přesto zápas s rakovinou prohrála. Lékaři po otevření konstatovali metastáze, a tak ji místo operace sleziny jen zase zašili a nechali spát napořád. Naštěstí netrpěla a do poslední chvíle byla veselá a statečná. Odešla náhle a zůstala nám po ní velká, smutná prázdnota.
@@ -13,3 +13,33 @@ block content
         div.w3-half
             div.w3-constainer.w3-center
                 img.main-circle-image.w3-circle(src="/static/image/jasmina-snih.jpg", alt="Jasmínka na sněhu")
+    div.w3-container.w3-row-padding
+        h1(id="team") Tým Červené tlapky
+        p Tento projekt by nikdy nevznikl bez obětavé a nezištné práce těchto nadšenců, stejně jako podpory z jejich okolí. Za to vám všem patří velký dík.
+        div.w3-row.w3-hide-medium
+            div.w3-col.l3.w3-center
+                img.image-70pc(src="/static/image/team-alice.jpg")
+                p.img-desc #[b Alice Bílá]#[br]hlava projektu
+            div.w3-col.l3.w3-center
+                img.image-70pc.margin-top-l(src="/static/image/team-vojta.jpg")
+                p.img-desc #[b Vojta Ruschka]#[br]IT guru projektu
+            div.w3-col.l3.w3-center
+                img.image-70pc(src="/static/image/team-betka.jpg")
+                p.img-desc #[b Bětka Ruschka]#[br]PR, mentální kouč (nejen) našeho IT oddělení, editor
+            div.w3-col.l3.w3-center
+                img.image-70pc.margin-top-l(src="/static/image/team-tereza.jpg")
+                p.img-desc #[b Tereza Korbelová]#[br]kreativní duše týmu, web designer amatér
+        div.w3-row.w3-hide-small.w3-hide-large
+            div.w3-col.m6.w3-center
+                img.image-70pc(src="/static/image/team-alice.jpg")
+                p.img-desc #[b Alice Bílá]#[br]hlava projektu
+            div.w3-col.m6.w3-center
+                img.image-70pc(src="/static/image/team-vojta.jpg")
+                p.img-desc #[b Vojta Ruschka]#[br]IT guru projektu
+        div.w3-row.w3-hide-small.w3-hide-large
+            div.w3-col.m6.w3-center
+                img.image-70pc(src="/static/image/team-betka.jpg")
+                p.img-desc #[b Bětka Ruschka]#[br]PR, mentální kouč (nejen) našeho IT oddělení, editor
+            div.w3-col.m6.w3-center
+                img.image-70pc(src="/static/image/team-tereza.jpg")
+                p.img-desc #[b Tereza Korbelová]#[br]kreativní duše týmu, web designer amatér

@@ -115,6 +115,9 @@ p {
     .image-90l {
         width: 90%;
     }
+    .margin-top-l {
+        margin-top: 4em;
+    }
 }
 
 #donor-map {
@@ -135,6 +138,10 @@ p {
     width: 70%;
 }
 
+.image-90pc {
+    width: 90%;
+}
+
 .main-circle-image {
     width: 80%;
     max-width: 600px;
@@ -143,4 +150,9 @@ p {
 .menu {
     font-weight: bold;
     text-transform: lowercase;
+}
+
+.img-desc {
+    text-align: center;
+    color: rgb(39,49,106);
 }
