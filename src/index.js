@@ -28,7 +28,7 @@ app.use(async (ctx, next) => {
     return next();
 });
 
-app.use(KoaStatic(path.join(__dirname, "..", "public")));
+app.use(KoaStatic(path.join(__dirname, "..", "public"), { maxage: 3600000 }));
 
 app.use(
     KoaViews(path.join(__dirname, "..", "views"), {
