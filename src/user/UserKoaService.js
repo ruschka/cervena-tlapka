@@ -163,7 +163,6 @@ export class UserKoaService {
                 }
             );
         });
-        console.info(`Secure: ${config.server.secure}`);
         ctx.cookies.set(tokenCookie, token, {
             overwrite: true,
             secure: config.server.secure,
