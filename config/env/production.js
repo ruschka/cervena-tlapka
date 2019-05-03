@@ -2,7 +2,8 @@ module.exports = {
     server: {
         baseUrl: process.env.SERVER_BASE_URL,
         port: process.env.SERVER_PORT,
-        secure: false
+        secure: false,
+        proxy: true
     },
     user: {
         jwtSecret: process.env.JWT_SECRET,

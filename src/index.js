@@ -15,6 +15,8 @@ import config from "./core/config";
 import { setTemplateData } from "./core/template";
 
 const app = new Koa();
+app.proxy = config.server.proxy;
+
 const mongoProvider = new MongoProvider();
 
 console.log(`Config: ${JSON.stringify(config)}`);
@@ -22,6 +24,13 @@ console.log(`Config: ${JSON.stringify(config)}`);
 const jwtSecret = config.user.jwtSecret;
 
 // middlewares
+
+app.use(async (ctx, next) => {
+    console.info(
+        `${ctx.request.protocol}, ${ctx.request.ip}, ${ctx.request.host}`
+    );
+    return next();
+});
 
 app.use(async (ctx, next) => {
     ctx.state.now = new Date();
