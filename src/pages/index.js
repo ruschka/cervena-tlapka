@@ -22,7 +22,11 @@ pagesRouter.get("/want-to-help", async (ctx, next) => {
 });
 
 pagesRouter.get("/robots.txt", async (ctx, next) => {
-    ctx.response.body = "User-agent: * \n" + "Disallow: /";
+    if (process.env.NODE_ENV === "production") {
+        ctx.response.body = "User-agent: * \n" + "Allow: /";
+    } else {
+        ctx.response.body = "User-agent: * \n" + "Disallow: /";
+    }
 });
 
 pagesRouter.get("/404", async (ctx, next) => {
