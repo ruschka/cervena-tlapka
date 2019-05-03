@@ -2,7 +2,7 @@ module.exports = {
     server: {
         baseUrl: process.env.SERVER_BASE_URL,
         port: process.env.SERVER_PORT,
-        secure: false,
+        secure: true,
         proxy: true
     },
     user: {
