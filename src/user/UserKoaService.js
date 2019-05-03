@@ -163,7 +163,10 @@ export class UserKoaService {
                 }
             );
         });
-        ctx.cookies.set(tokenCookie, token, { overwrite: true });
+        ctx.cookies.set(tokenCookie, token, {
+            overwrite: true,
+            secure: config.server.secure
+        });
     }
 
     logout(ctx) {

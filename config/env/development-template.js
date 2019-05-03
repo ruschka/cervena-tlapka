@@ -1,7 +1,8 @@
 module.exports = {
     server: {
         baseUrl: "http://localhost:3000",
-        port: 3000
+        port: 3000,
+        secure: false
     },
     user: {
         jwtSecret: "changeme",
