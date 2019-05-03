@@ -26,13 +26,6 @@ const jwtSecret = config.user.jwtSecret;
 // middlewares
 
 app.use(async (ctx, next) => {
-    console.info(
-        `${ctx.request.protocol}, ${ctx.request.ip}, ${ctx.request.host}`
-    );
-    return next();
-});
-
-app.use(async (ctx, next) => {
     ctx.state.now = new Date();
     return next();
 });
