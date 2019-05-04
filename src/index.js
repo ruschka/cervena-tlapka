@@ -12,7 +12,7 @@ import { donorRouter } from "./donor";
 import { MongoProvider } from "./core/mongo/MongoProvider";
 import { tokenCookie } from "./user/UserKoaService";
 import config from "./core/config";
-import { setTemplateData } from "./core/template";
+import { renderTemplate, setTemplateData } from "./core/template";
 
 const app = new Koa();
 app.proxy = config.server.proxy;
@@ -41,21 +41,26 @@ app.use(
 );
 
 app.use(async (ctx, next) => {
-    return next().catch(async err => {
-        if (401 === err.status) {
-            ctx.redirect("/login");
-        } else if (404 === err.status) {
-            ctx.status = 404;
-            setTemplateData(ctx, {});
-            await ctx.render("error-page/404.pug");
-        } else if (500 === err.status) {
-            ctx.status = 500;
-            setTemplateData(ctx, {});
-            await ctx.render("error-page/500.pug");
-        } else {
-            throw err;
-        }
-    });
+    return next()
+        .then(async () => {
+            if (404 === ctx.status) {
+                ctx.status = 404;
+                await renderTemplate(ctx, "error-page/404.pug");
+            }
+        })
+        .catch(async err => {
+            if (401 === err.status) {
+                ctx.redirect("/login");
+            } else if (404 === err.status) {
+                ctx.status = 404;
+                await renderTemplate(ctx, "error-page/404.pug");
+            } else if (500 === err.status) {
+                ctx.status = 500;
+                await renderTemplate(ctx, "error-page/500.pug");
+            } else {
+                throw err;
+            }
+        });
 });
 
 app.use(KoaJwt({ secret: jwtSecret, cookie: tokenCookie, passthrough: true }));
