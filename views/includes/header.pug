@@ -31,20 +31,14 @@ div.w3-container
         div#mobile-menu.w3-bar-block.ct-yellow.w3-hide.w3-hide-large.menu
             - var mobileItemClasses = "w3-bar-item w3-button"
             a(class=mobileItemClasses href="/find-donor") Najít dárce
-            div.w3-dropdown-hover.w3-mobile
-                button.w3-button chci pomoct
-                div.w3-dropdown-content.w3-bar-block
-                    a(class=mobileItemClasses class="w3-mobile" href="/register-donor") Přidat psa
-                    a(class=mobileItemClasses class="w3-mobile" href="/want-to-help#flyer") Vytisknout leták
-                    a(class=mobileItemClasses class="w3-mobile" href="/want-to-help#share") Sdílet
-                    a(class=mobileItemClasses class="w3-mobile" href="/want-to-help#financial-help") Finanční podpora
-                    a(class=mobileItemClasses class="w3-mobile" href="/want-to-help#i-have-an-idea") Mám nápad
-            div.w3-dropdown-hover.w3-mobile
-                button.w3-button o nás
-                div.w3-dropdown-content.w3-bar-block
-                    a(class=mobileItemClasses class="w3-mobile" href="/about-us#story") Náš příběh
-                    a(class=mobileItemClasses class="w3-mobile" href="/about-us#team") Tým Červené tlapky
-                    a(class=mobileItemClasses class="w3-mobile" href="/contacts") Kontakt
+            a(class=mobileItemClasses href="/register-donor") Přidat psa
+            a(class=mobileItemClasses href="/want-to-help#flyer") Vytisknout leták
+            a(class=mobileItemClasses href="/want-to-help#share") Sdílet
+            a(class=mobileItemClasses href="/want-to-help#financial-help") Finanční podpora
+            a(class=mobileItemClasses href="/want-to-help#i-have-an-idea") Mám nápad
+            a(class=mobileItemClasses href="/about-us#story") Náš příběh
+            a(class=mobileItemClasses href="/about-us#team") Tým Červené tlapky
+            a(class=mobileItemClasses href="/contacts") Kontakt
             if user
                 a(class=mobileItemClasses href="/profile") #{user.sub.email}
                 a(class=mobileItemClasses href="/logout") Odhlásit
