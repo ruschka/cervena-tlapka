@@ -18,10 +18,10 @@ block content
                     div.w3-third.w3-margin-right.w3-margin-left
                         label(for='maxDistance') Maximální vzdálenost:
                         select#maxDistance.w3-select.w3-border(name='maxDistance')
-                            option(label='50 km', value='50', selected=data ? data.maxDistance === 50 : false)
-                            option(label='100 km', value='100', selected=data ? data.maxDistance === 100 : false)
-                            option(label='200 km', value='200', selected=data ? data.maxDistance === 200 : false)
-                            option(label='500 km', value='500', selected=data ? data.maxDistance === 500 : false)
+                            option(label='50 km', value='50', selected=data ? data.maxDistance === 50 : false) 50 km
+                            option(label='100 km', value='100', selected=data ? data.maxDistance === 100 : false) 100 km
+                            option(label='200 km', value='200', selected=data ? data.maxDistance === 200 : false) 200 km
+                            option(label='500 km', value='500', selected=data ? data.maxDistance === 500 : false) 500 km
                     div.w3-third
                         +submit()
         div.w3-half

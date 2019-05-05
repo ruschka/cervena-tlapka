@@ -20,8 +20,8 @@ div.w3-container
     label(for='sex') Pohlaví:
     select#sex.w3-select.w3-border(name='sex')
         - var selectedSex = data ? data.sex : registration ? registration.sex : ''
-        option(label='Pes', value='M', selected=selectedSex === 'M' : false)
-        option(label='Fena', value='F', selected=selectedSex === 'F' : false)
+        option(label='Pes', value='M', selected=selectedSex === 'M' : false) Pes
+        option(label='Fena', value='F', selected=selectedSex === 'F' : false) Fena
     if errors && errors.sex
         div.w3-panel.w3-red: p= errors.sex
 +input("text", "breed", "Plemeno:", data, errors, { entity: registration })
