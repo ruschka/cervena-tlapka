@@ -37,7 +37,7 @@ export class DonorRegistrationKoaService {
     async createDonorQuery(ctx) {
         let query = {};
         const zipCode = ctx.query.zip
-            ? ctx.query.zip
+            ? ctx.query.zip.replace(/\s/g, "")
             : isUserLogged(ctx)
             ? (await User.findOne({ _id: loggedUserId(ctx) })).zip
             : null;
