@@ -1,8 +1,13 @@
 extends ../main-template
 
+block description
+    title Změnit informace o psovi | Červená tlapka
+    meta(name="description", content="Platforma propojující dobrovolné psí dárce krve s těmi, kteří potřebují jejich laskavou pomoc.")
+
 block content
     div.w3-container.w3-row-padding
         div.w3-half
+            h1 Změnit informace o psovi
             - var registration = templateData.registration
             form(method='post', action='/profile/donor/' + registration.id + '/edit')
                 - const recaptchaAction = "editDonor"

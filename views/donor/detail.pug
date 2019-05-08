@@ -1,5 +1,10 @@
 extends ../main-template
 
+block description
+    - const registration = templateData.registration
+    title Informace o psím dárci | Červená tlapka
+    meta(name="description", content=`${registration.sex === "M" ? "Náš statečný hrdina" : "Naše statečná hrdinka"} ${registration.name} vám, pokud to bude v ${registration.sex === "M" ? "jeho" : "jejích"} silách, jistě ${registration.sex === "M" ? "rád" : "ráda"} pomůže. Kontaktujte ${registration.sex === "M" ? "jeho" : "jejího"} majitele pomocí našeho formuláře!`)
+
 block content
     include ../includes/forms
     include ../includes/recaptcha
@@ -7,7 +12,6 @@ block content
         div.w3-panel.w3-pale-green
             p Vaše žádost byla úspěšně odeslána.
     div.w3-container.w3-row-padding
-        - const registration = templateData.registration
         div.w3-half
             h1 Informace o psím dárci
             ul
