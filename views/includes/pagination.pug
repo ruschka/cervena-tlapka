@@ -9,6 +9,8 @@ mixin pagination(paging)
                 - var classes = "w3-bar-item w3-button"
                 if (paging.activePage === page.number)
                     - classes = classes + " ct-blue"
+                else if (Math.abs(paging.activePage - page.number) > 2)
+                    - classes = classes + " w3-hide-small w3-hide-medium"
                 a(href=page.link, class=classes)= page.number
             if (paging.hasNext)
                 a.w3-bar-item.w3-button(href=paging.next) &raquo;
