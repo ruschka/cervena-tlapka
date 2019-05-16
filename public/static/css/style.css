@@ -78,7 +78,7 @@ p {
 
 @media (max-width:600px) {
     .logo {
-        width: 100%;
+        width: 65%;
         margin: 4px;
     }
     .image-50s {
@@ -155,4 +155,14 @@ p {
 .img-desc {
     text-align: center;
     color: rgb(39,49,106);
+}
+
+.social-icon {
+    width: 3em;
+    min-width: 29px;
+    max-width: 130px;
+    height: 3em;
+    min-height: 29px;
+    max-height: 130px;
+    margin: 0.5em;
 }
