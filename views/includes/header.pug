@@ -61,14 +61,14 @@ div.w3-container
         //- FIXME try to open facebook or instagram application
         case userAgent.os.name
             when "Android"
-                a(href="https://www.facebook.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-facebook.png")
-                a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png")
+                a(href="https://www.facebook.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-facebook.png", alt="Facebook")
+                a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png", alt="Instagram")
             when "iOS"
-                a(href="https://www.facebook.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-facebook.png")
-                a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png")
+                a(href="https://www.facebook.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-facebook.png", alt="Facebook")
+                a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png", alt="Instagram")
             default
-                a(href="https://www.facebook.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-facebook.png")
-                a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png")
+                a(href="https://www.facebook.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-facebook.png", alt="Facebook")
+                a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png", alt="Instagram")
         script(type="application/ld+json").
             {
                 "@context": "https://schema.org",
