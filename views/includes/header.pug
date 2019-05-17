@@ -69,3 +69,14 @@ div.w3-container
             default
                 a(href="https://www.facebook.com/%C4%8Cerven%C3%A1-tlapka-2028476924120279/"): img.social-icon(src="/static/image/logo-facebook.png")
                 a(href="https://www.instagram.com/cervenatlapka/"): img.social-icon(src="/static/image/logo-instagram.png")
+        script(type="application/ld+json").
+            {
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "Červená tlapka",
+              "url": "https://www.cervenatlapka.cz/",
+              "sameAs": [
+                "https://www.facebook.com/cervenatlapka/",
+                "https://www.instagram.com/cervenatlapka/"
+              ]
+            }
