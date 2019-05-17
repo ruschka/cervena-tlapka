@@ -51,7 +51,11 @@ pagesRouter.get("/sitemap.xml", async (ctx, next) => {
     await new Promise((resolve, reject) => {
         const cursor = DonorRegistration.find().cursor();
         cursor.on("data", registration => {
-            sitemap.add(`/donor/${registration.id}`);
+            sitemap.add({
+                url: `/donor/${registration.id}`,
+                changefreq: "monthly",
+                priority: 0.7
+            });
         });
         cursor.on("error", err => reject(err));
         cursor.on("close", () => resolve());
