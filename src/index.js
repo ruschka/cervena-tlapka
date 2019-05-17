@@ -12,7 +12,8 @@ import { donorRouter } from "./donor";
 import { MongoProvider } from "./core/mongo/MongoProvider";
 import { tokenCookie } from "./user/UserKoaService";
 import config from "./core/config";
-import { renderTemplate, setTemplateData } from "./core/template";
+import { renderTemplate } from "./core/template";
+import { detectDevice } from "./core/device";
 
 const app = new Koa();
 app.proxy = config.server.proxy;
@@ -72,6 +73,8 @@ app.use(
         urlencoded: true
     })
 );
+
+app.use(detectDevice);
 
 // routes
 
