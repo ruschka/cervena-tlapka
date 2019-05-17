@@ -4,19 +4,7 @@ import KoaRouter from "koa-router";
 import { renderTemplate } from "../core/template";
 import sm from "sitemap";
 import config from "../core/config";
-
-const sitemap = sm.createSitemap({
-    hostname: config.server.baseUrl,
-    cacheTime: 600000,
-    urls: [
-        { url: "/", changefreq: "weekly", priority: 1 },
-        { url: "/find-donor", changefreq: "hourly", priority: 1 },
-        { url: "/register-donor", changefreq: "monthly", priority: 1 },
-        { url: "/want-to-help", changefreq: "monthly", priority: 0.5 },
-        { url: "/about-us", changefreq: "monthly", priority: 0.5 },
-        { url: "/contacts", changefreq: "monthly", priority: 0.5 }
-    ]
-});
+import { DonorRegistration } from "../donor/DonorRegistration";
 
 export const pagesRouter = new KoaRouter();
 
@@ -48,6 +36,26 @@ pagesRouter.get("/robots.txt", async (ctx, next) => {
 });
 
 pagesRouter.get("/sitemap.xml", async (ctx, next) => {
+    const sitemap = sm.createSitemap({
+        hostname: config.server.baseUrl,
+        cacheTime: 600000,
+        urls: [
+            { url: "/", changefreq: "weekly", priority: 1 },
+            { url: "/find-donor", changefreq: "hourly", priority: 1 },
+            { url: "/register-donor", changefreq: "monthly", priority: 1 },
+            { url: "/want-to-help", changefreq: "monthly", priority: 0.5 },
+            { url: "/about-us", changefreq: "monthly", priority: 0.5 },
+            { url: "/contacts", changefreq: "monthly", priority: 0.5 }
+        ]
+    });
+    await new Promise((resolve, reject) => {
+        const cursor = DonorRegistration.find().cursor();
+        cursor.on("data", registration => {
+            sitemap.add(`/donor/${registration.id}`);
+        });
+        cursor.on("error", err => reject(err));
+        cursor.on("close", () => resolve());
+    });
     ctx.response.body = await new Promise((resolve, reject) => {
         sitemap.toXML((err, xml) => {
             if (err) {
