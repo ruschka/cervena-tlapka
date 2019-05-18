@@ -50,11 +50,11 @@ userRouter.get("/login", async (ctx, next) => {
 });
 
 userRouter.post("/login", async (ctx, next) => {
-    const { success, data } = await userService.login(ctx);
+    const { success, data, errors } = await userService.login(ctx);
     if (success) {
         ctx.redirect("/");
     } else {
-        setTemplateData(ctx, { data: data });
+        setTemplateData(ctx, { data, errors });
         await ctx.render("profile/login.pug");
     }
 });

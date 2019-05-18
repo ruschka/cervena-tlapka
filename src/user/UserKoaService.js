@@ -131,9 +131,11 @@ export class UserKoaService {
             this.normalizeEmail(data.email)
         );
         if (!user) {
-            return unsuccess(data);
+            return unsuccess(data, { user: "not-found" });
         }
-        // FIXME check if profile is activated
+        if (!user.activated) {
+            return unsuccess(data, { user: "not-activated" });
+        }
         const passwordMatch = await bcrypt.compare(
             data.password,
             user.passwordHash
@@ -142,7 +144,7 @@ export class UserKoaService {
             await this.setTokenCookie(ctx, user);
             return success();
         } else {
-            return unsuccess(data);
+            return unsuccess(data, { user: "wrong-password" });
         }
     }
 
