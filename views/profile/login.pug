@@ -19,6 +19,7 @@ block content
                 div.w3-panel.w3-red
                     p Váš účet není aktivovaný. Aktivaci účtu provedete kliknutím na odkaz, který jsme odeslali na vámi zadaný email.
                     p Pokud email nepřišel, zkontrolujte si vaši složku nevyžádané pošty (spam).
+                    p: a(href="/activate-profile/email") Můžete si také nechat aktivační email zaslat znovu.
             form(method='post', action='/login')
                 +input("text", "email", "Email:", data, errors)
                 +input("password", "password", "Heslo:", data, errors)

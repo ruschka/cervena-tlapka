@@ -107,6 +107,30 @@ userRouter.get("/password-reset/success", async (ctx, next) => {
     await renderTemplate(ctx, "password-reset/success.pug");
 });
 
+userRouter.get("/activate-profile/email", async (ctx, next) => {
+    await renderTemplate(ctx, "activate-profile/email-form.pug");
+});
+
+userRouter.post("/activate-profile/email", async (ctx, next) => {
+    const {
+        success,
+        data,
+        errors
+    } = await userService.resendActivateProfileEmail(ctx);
+    if (success) {
+        ctx.redirect("/activate-profile/email-sent");
+    } else {
+        await renderTemplate(ctx, "activate-profile/email-form.pug", {
+            data,
+            errors
+        });
+    }
+});
+
+userRouter.get("/activate-profile/email-sent", async (ctx, next) => {
+    await renderTemplate(ctx, "activate-profile/email-sent.pug");
+});
+
 userRouter.get("/profile", async (ctx, next) => {
     await renderTemplate(ctx, "profile/profile.pug", {
         loggedUser: await userService.loggedUser(ctx),

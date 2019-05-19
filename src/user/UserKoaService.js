@@ -88,16 +88,47 @@ export class UserKoaService {
             return unsuccess(data, validation.errors);
         } else {
             await user.save();
-            await sendMail(
-                "activate-profile",
-                {
-                    email,
-                    activateHash
-                },
-                originalEmail
-            );
+            await this.sendActivateProfileEmail(ctx, user);
             return success();
         }
+    }
+
+    async resendActivateProfileEmail(ctx) {
+        const data = ctx.request.body;
+        const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "resendActivateProfileEmail"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }
+        const originalEmail = data.email;
+        const email = this.normalizeEmail(originalEmail);
+        const existingUser = await this.findUserByEmail(email);
+        if (!existingUser) {
+            return unsuccess(data, {
+                email: "Uživatel nebyl nalezen. Je zadaný email správně?"
+            });
+        }
+        if (existingUser.activated) {
+            return unsuccess(data, {
+                email: "Účet je již aktivovaný. Můžete se přihlásit."
+            });
+        }
+        await this.sendActivateProfileEmail(ctx, existingUser);
+        return success();
+    }
+
+    async sendActivateProfileEmail(ctx, user) {
+        await sendMail(
+            "activate-profile",
+            {
+                email: user.email,
+                activateHash: user.activateHash
+            },
+            user.originalEmail
+        );
     }
 
     async activate(ctx) {
