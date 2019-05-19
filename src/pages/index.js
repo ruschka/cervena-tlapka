@@ -20,6 +20,10 @@ pagesRouter.get("/about-us", async (ctx, next) => {
     await renderTemplate(ctx, "about-us/about-us.pug");
 });
 
+pagesRouter.get("/press", async (ctx, next) => {
+    await renderTemplate(ctx, "about-us/press.pug");
+});
+
 pagesRouter.get("/want-to-help", async (ctx, next) => {
     await renderTemplate(ctx, "donor/want-to-help.pug");
 });
@@ -45,7 +49,8 @@ pagesRouter.get("/sitemap.xml", async (ctx, next) => {
             { url: "/register-donor", changefreq: "monthly", priority: 1 },
             { url: "/want-to-help", changefreq: "monthly", priority: 0.5 },
             { url: "/about-us", changefreq: "monthly", priority: 0.5 },
-            { url: "/contacts", changefreq: "monthly", priority: 0.5 }
+            { url: "/contacts", changefreq: "monthly", priority: 0.5 },
+            { url: "/press", changefreq: "daily", priority: 0.5 }
         ]
     });
     await new Promise((resolve, reject) => {

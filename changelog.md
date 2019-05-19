@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+### Added
+- Section for media
 
 ## [1.1.0] - 2019-05-19
 ### Added
