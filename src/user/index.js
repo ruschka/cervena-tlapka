@@ -1,6 +1,6 @@
 "use strict";
 
-import { renderTemplate, setTemplateData } from "../core/template";
+import { renderTemplate } from "../core/template";
 import KoaRouter from "koa-router";
 import { UserKoaService } from "./UserKoaService";
 import { DonorRegistrationKoaService } from "../donor/DonorRegistrationKoaService";
@@ -12,8 +12,7 @@ const userService = new UserKoaService();
 const donorService = new DonorRegistrationKoaService();
 
 userRouter.get("/register", async (ctx, next) => {
-    setTemplateData(ctx, {});
-    await ctx.render("register/register.pug");
+    await renderTemplate(ctx, "register/register.pug");
 });
 
 userRouter.post("/register", async (ctx, next) => {
@@ -21,14 +20,15 @@ userRouter.post("/register", async (ctx, next) => {
     if (success) {
         ctx.redirect("/register/saved");
     } else {
-        setTemplateData(ctx, { data: data, errors: errors });
-        await ctx.render("register/register.pug");
+        await renderTemplate(ctx, "register/register.pug", {
+            data: data,
+            errors: errors
+        });
     }
 });
 
 userRouter.get("/register/saved", async (ctx, next) => {
-    setTemplateData(ctx, {});
-    await ctx.render("register/saved.pug");
+    await renderTemplate(ctx, "register/saved.pug");
 });
 
 userRouter.get("/register/activate", async (ctx, next) => {
@@ -37,16 +37,16 @@ userRouter.get("/register/activate", async (ctx, next) => {
 });
 
 userRouter.get("/register/thanks", async (ctx, next) => {
-    setTemplateData(ctx, { success: ctx.query.success === "true" });
-    await ctx.render("register/thanks.pug");
+    await renderTemplate(ctx, "register/thanks.pug", {
+        success: ctx.query.success === "true"
+    });
 });
 
 userRouter.get("/login", async (ctx, next) => {
     if (isUserLogged(ctx)) {
         ctx.redirect("/");
     }
-    setTemplateData(ctx, {});
-    await ctx.render("profile/login.pug");
+    await renderTemplate(ctx, "profile/login.pug");
 });
 
 userRouter.post("/login", async (ctx, next) => {
@@ -54,8 +54,7 @@ userRouter.post("/login", async (ctx, next) => {
     if (success) {
         ctx.redirect("/");
     } else {
-        setTemplateData(ctx, { data, errors });
-        await ctx.render("profile/login.pug");
+        await renderTemplate(ctx, "profile/login.pug", { data, errors });
     }
 });
 
@@ -65,8 +64,7 @@ userRouter.get("/logout", async (ctx, next) => {
 });
 
 userRouter.get("/password-reset/email", async (ctx, next) => {
-    setTemplateData(ctx, {});
-    await ctx.render("password-reset/email-form.pug");
+    await renderTemplate(ctx, "password-reset/email-form.pug");
 });
 
 userRouter.post("/password-reset/email", async (ctx, next) => {
@@ -76,21 +74,21 @@ userRouter.post("/password-reset/email", async (ctx, next) => {
     if (success) {
         ctx.redirect("/password-reset/email-sent");
     } else {
-        setTemplateData(ctx, { data, errors });
-        await ctx.render("password-reset/email-form.pug");
+        await renderTemplate(ctx, "password-reset/email-form.pug", {
+            data,
+            errors
+        });
     }
 });
 
 userRouter.get("/password-reset/email-sent", async (ctx, next) => {
-    setTemplateData(ctx, {});
-    await ctx.render("password-reset/email-sent.pug");
+    await renderTemplate(ctx, "password-reset/email-sent.pug");
 });
 
 userRouter.get("/password-reset", async (ctx, next) => {
-    setTemplateData(ctx, {
+    await renderTemplate(ctx, "password-reset/reset-form.pug", {
         data: { passwordResetHash: ctx.query.passwordResetHash }
     });
-    await ctx.render("password-reset/reset-form.pug");
 });
 
 userRouter.post("/password-reset", async (ctx, next) => {
@@ -98,30 +96,29 @@ userRouter.post("/password-reset", async (ctx, next) => {
     if (success) {
         ctx.redirect("/password-reset/success");
     } else {
-        setTemplateData(ctx, { data, errors });
-        await ctx.render("password-reset/reset-form.pug");
+        await renderTemplate(ctx, "password-reset/reset-form.pug", {
+            data,
+            errors
+        });
     }
 });
 
 userRouter.get("/password-reset/success", async (ctx, next) => {
-    setTemplateData(ctx, {});
-    await ctx.render("password-reset/success.pug");
+    await renderTemplate(ctx, "password-reset/success.pug");
 });
 
 userRouter.get("/profile", async (ctx, next) => {
-    setTemplateData(ctx, {
+    await renderTemplate(ctx, "profile/profile.pug", {
         loggedUser: await userService.loggedUser(ctx),
         registrations: await donorService.findLoggedUserRegistrations(ctx)
     });
-    await ctx.render("profile/profile.pug");
 });
 
 userRouter.get("/profile/donor/:id/edit", async (ctx, next) => {
-    setTemplateData(ctx, {
+    await renderTemplate(ctx, "donor/edit.pug", {
         actualYear: ctx.state.now.getFullYear(),
         registration: await donorService.findDonorRegistration(ctx)
     });
-    await ctx.render("donor/edit.pug");
 });
 
 userRouter.post("/profile/donor/:id/edit", async (ctx, next) => {
@@ -134,13 +131,12 @@ userRouter.post("/profile/donor/:id/edit", async (ctx, next) => {
     if (success) {
         ctx.redirect("/profile");
     } else {
-        setTemplateData(ctx, {
+        await renderTemplate(ctx, "donor/edit.pug", {
             actualYear: ctx.state.now.getFullYear(),
             registration: entity,
             data,
             errors
         });
-        await ctx.render("donor/edit.pug");
     }
 });
 
@@ -150,8 +146,9 @@ userRouter.post("/profile/donor/:id/remove", async (ctx, next) => {
 });
 
 userRouter.get("/profile/edit-address", async (ctx, next) => {
-    setTemplateData(ctx, { loggedUser: await userService.loggedUser(ctx) });
-    await ctx.render("profile/edit-address.pug");
+    await renderTemplate(ctx, "profile/edit-address.pug", {
+        loggedUser: await userService.loggedUser(ctx)
+    });
 });
 
 userRouter.post("/profile/edit-address", async (ctx, next) => {
@@ -159,12 +156,11 @@ userRouter.post("/profile/edit-address", async (ctx, next) => {
     if (success) {
         ctx.redirect("/profile");
     } else {
-        setTemplateData(ctx, {
+        await renderTemplate(ctx, "profile/edit-address.pug", {
             loggedUser: await userService.loggedUser(ctx),
             data,
             errors
         });
-        await ctx.render("profile/edit-address.pug");
     }
 });
 

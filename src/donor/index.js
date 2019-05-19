@@ -1,6 +1,6 @@
 "use strict";
 
-import { setTemplateData } from "../core/template";
+import { renderTemplate } from "../core/template";
 import KoaRouter from "koa-router";
 import { DonorRegistrationKoaService } from "./DonorRegistrationKoaService";
 import { pagingFromContext } from "../core/utils/Paging";
@@ -22,18 +22,18 @@ donorRouter.get("/find-donor", async (ctx, next) => {
         zipCode,
         maxDistance
     );
-    setTemplateData(ctx, {
+    await renderTemplate(ctx, "donor/find.pug", {
         registrations,
         aggregatedRegistrations,
         paging,
         data: { zip: zipCode, maxDistance }
     });
-    await ctx.render("donor/find.pug");
 });
 
 donorRouter.get("/register-donor", async (ctx, next) => {
-    setTemplateData(ctx, { actualYear: ctx.state.now.getFullYear() });
-    await ctx.render("register-donor/register-donor.pug");
+    await renderTemplate(ctx, "register-donor/register-donor.pug", {
+        actualYear: ctx.state.now.getFullYear()
+    });
 });
 
 donorRouter.post("/register-donor", async (ctx, next) => {
@@ -41,18 +41,16 @@ donorRouter.post("/register-donor", async (ctx, next) => {
     if (success) {
         ctx.redirect("/register-donor/thanks");
     } else {
-        setTemplateData(ctx, {
+        await renderTemplate(ctx, "register-donor/register-donor.pug", {
             actualYear: ctx.state.now.getFullYear(),
             data: data,
             errors: errors
         });
-        await ctx.render("register-donor/register-donor.pug");
     }
 });
 
 donorRouter.get("/register-donor/thanks", async (ctx, next) => {
-    setTemplateData(ctx, {});
-    await ctx.render("register-donor/thanks.pug");
+    await renderTemplate(ctx, "register-donor/thanks.pug");
 });
 
 donorRouter.get("/donor/:id", async (ctx, next) => {
@@ -60,11 +58,10 @@ donorRouter.get("/donor/:id", async (ctx, next) => {
     if (!registration) {
         ctx.throw(404);
     }
-    setTemplateData(ctx, {
+    await renderTemplate(ctx, "donor/detail.pug", {
         registration,
         applicationSent: ctx.query.applicationSent
     });
-    await ctx.render("donor/detail.pug");
 });
 
 donorRouter.post("/donor/:id/contact", async (ctx, next) => {
@@ -74,7 +71,10 @@ donorRouter.post("/donor/:id/contact", async (ctx, next) => {
     if (success) {
         ctx.redirect(`/donor/${ctx.params.id}?applicationSent=true`);
     } else {
-        setTemplateData(ctx, { data, errors, registration: entity });
-        await ctx.render("donor/detail.pug");
+        await renderTemplate(ctx, "donor/detail.pug", {
+            data,
+            errors,
+            registration: entity
+        });
     }
 });
