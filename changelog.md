@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [1.3.0] - 2019-06-01
+### Added
+- Section in the news
+
 ## [1.2.0] - 2019-05-30
 ### Added
 - Section for media
