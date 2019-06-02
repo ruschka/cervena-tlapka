@@ -21,6 +21,10 @@ export function isNonEmptyString(s) {
     return !isEmptyString(s);
 }
 
+export function trimString(s) {
+    return s ? s.trim() : s;
+}
+
 export function success(data) {
     return { success: true, data };
 }

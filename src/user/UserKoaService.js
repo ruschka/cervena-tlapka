@@ -18,6 +18,7 @@ import {
     isEmptyString,
     isNonEmptyString,
     success,
+    trimString,
     unsuccess
 } from "../core/utils";
 import { DonorRegistration } from "../donor/DonorRegistration";
@@ -33,7 +34,7 @@ export class UserKoaService {
         if (!recaptchaResult.success) {
             return recaptchaResult;
         }
-        const originalEmail = data.email;
+        const originalEmail = trimString(data.email);
         const email = this.normalizeEmail(originalEmail);
         const existingUser = await this.findUserByEmail(email);
         if (existingUser) {
@@ -399,7 +400,7 @@ export class UserKoaService {
         if (!email) {
             return email;
         }
-        return email.toLowerCase().trim();
+        return email.toLowerCase();
     }
 
     checkPassword(data, password, passwordConfirm) {
