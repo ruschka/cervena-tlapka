@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+
+## [1.3.1] - 2019-06-02
 ### Fixed
 - Trim original email during registration.
 
