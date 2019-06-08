@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+
+## [1.4.0] - 2019-06-02
 ### Added
 - Improved meta description.
 
