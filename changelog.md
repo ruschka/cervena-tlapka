@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+### Added
+- Improved meta description.
 
 ## [1.3.1] - 2019-06-02
 ### Fixed
