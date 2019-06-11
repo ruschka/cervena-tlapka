@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+### Added
+- Section partners
 
 ## [1.4.0] - 2019-06-02
 ### Added

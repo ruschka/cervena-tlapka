@@ -1,0 +1,26 @@
+extends ../main-template
+
+block description
+    title Spolupracujeme | Červená tlapka
+    meta(name="description", content="Spolupracujeme s mnoha dalšími organizacemi zaměřenými na podporu zvířat, zejména psů.")
+
+block content
+    div.w3-container.w3-row-padding
+        h1 Spolupracujeme
+        -
+            const partners = [
+                [
+                    { name: "Haf&Mňau", image: "/static/image/partner/haf&mnau.png", link: "http://www.haf-mnau.eu/" },
+                    { name: "Dobrmani v nouzi", image: null, link: "http://www.dobrmanivnouzi.cz/" }
+                ]
+            ]
+        each row in partners
+            div.w3-row
+                each partner in row
+                    div.w3-third
+                        div.partner-img-div.w3-content
+                            if partner.image
+                                a(href=partner.link, target="_blank"): img.partner-img(src=partner.image, alt=partner.name)
+                            else
+                                a(href=partner.link, target="_blank")= partner.name
+

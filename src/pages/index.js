@@ -28,6 +28,10 @@ pagesRouter.get("/in-the-news", async (ctx, next) => {
     await renderTemplate(ctx, "about-us/in-the-news.pug");
 });
 
+pagesRouter.get("/partners", async (ctx, next) => {
+    await renderTemplate(ctx, "about-us/partners.pug");
+});
+
 pagesRouter.get("/want-to-help", async (ctx, next) => {
     await renderTemplate(ctx, "donor/want-to-help.pug");
 });
@@ -55,7 +59,8 @@ pagesRouter.get("/sitemap.xml", async (ctx, next) => {
             { url: "/about-us", changefreq: "monthly", priority: 0.5 },
             { url: "/contacts", changefreq: "monthly", priority: 0.5 },
             { url: "/press", changefreq: "daily", priority: 0.5 },
-            { url: "/in-the-news", changefreq: "weekly", priority: 0.5 }
+            { url: "/in-the-news", changefreq: "weekly", priority: 0.5 },
+            { url: "/partners", changefreq: "weekly", priority: 0.5 }
         ]
     });
     await new Promise((resolve, reject) => {
