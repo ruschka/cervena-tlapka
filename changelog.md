@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+
+## [1.5.0] - 2019-06-12
 ### Added
 - Section partners
 
