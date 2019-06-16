@@ -2,9 +2,15 @@
 
 ## Unreleased
 ### Added
+
+## [1.7.0] - 2019-06-16
+### Added
+- Fullscreen donor map
+
+## [1.6.0] - 2019-06-16
+### Added
 - New partners
 - New articles in media
-- Fullscreen donor map
 
 ## [1.5.0] - 2019-06-12
 ### Added
