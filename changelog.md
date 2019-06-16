@@ -1,6 +1,9 @@
 #Changelog
 
 ## Unreleased
+### Added
+- New partners
+- New articles in media
 
 ## [1.5.0] - 2019-06-12
 ### Added
