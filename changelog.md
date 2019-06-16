@@ -4,6 +4,7 @@
 ### Added
 - New partners
 - New articles in media
+- Fullscreen donor map
 
 ## [1.5.0] - 2019-06-12
 ### Added

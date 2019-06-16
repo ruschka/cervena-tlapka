@@ -78,3 +78,14 @@ donorRouter.post("/donor/:id/contact", async (ctx, next) => {
         });
     }
 });
+
+donorRouter.get("/map-fullscreen", async (ctx, next) => {
+    const aggregatedRegistrations = await donorService.aggregateDonorsByZip(
+        ctx,
+        null,
+        null
+    );
+    await renderTemplate(ctx, "donor/map-fullscreen.pug", {
+        aggregatedRegistrations
+    });
+});
