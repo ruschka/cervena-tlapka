@@ -2,6 +2,7 @@
 
 ## Unreleased
 ### Added
+- Log contact donor
 
 ## [1.7.0] - 2019-06-16
 ### Added

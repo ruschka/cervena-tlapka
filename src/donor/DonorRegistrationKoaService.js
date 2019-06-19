@@ -222,6 +222,11 @@ export class DonorRegistrationKoaService {
         const applicantEmail = data.email;
         const applicantName = data.name;
         const applicantMessage = data.message;
+        console.info(
+            `Try to contact donor. Registration ${
+                registration.id
+            }, applicant ${applicantEmail}, ${applicantName}, ${applicantMessage}.`
+        );
         const errors = {};
         if (!emailRegex.test(applicantEmail)) {
             Object.assign(errors, { email: "Email není validní." });
