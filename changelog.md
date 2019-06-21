@@ -4,6 +4,9 @@
 ### Fixed
 - Contact donor - assign entity to recaptcha result
 
+#Added
+- Log unknown zip 
+
 ## [1.8.0] - 2019-06-19
 ### Added
 - Log contact donor

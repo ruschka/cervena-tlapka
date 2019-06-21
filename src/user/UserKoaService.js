@@ -455,6 +455,7 @@ export class UserKoaService {
         } else {
             const foundZip = await Zip.findOne({ zip });
             if (!foundZip) {
+                console.warn(`Unknown zip ${zip}.`);
                 Object.assign(errors, { zip: "Neznámé PSČ." });
             }
         }

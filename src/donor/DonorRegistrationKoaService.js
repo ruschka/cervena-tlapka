@@ -264,6 +264,7 @@ export class DonorRegistrationKoaService {
     async findZip(ctx, zipCode) {
         const zip = await Zip.findOne({ zip: zipCode });
         if (!zip) {
+            console.warn(`Unknown zip ${zipCode}.`);
             ctx.throw(400, "unknown zip");
         }
         return zip;
