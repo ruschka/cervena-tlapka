@@ -155,10 +155,11 @@ export class UserKoaService {
 
     async login(ctx) {
         const data = ctx.request.body;
-        const recaptchaResult = await validateRecaptcha(ctx, data, "login");
+        // recaptcha v2
+        /*const recaptchaResult = await validateRecaptcha(ctx, data, "login");
         if (!recaptchaResult.success) {
             return recaptchaResult;
-        }
+        }*/
         const user = await this.findUserByEmail(
             this.normalizeEmail(data.email)
         );
@@ -294,14 +295,15 @@ export class UserKoaService {
 
     async changePassword(ctx) {
         const data = ctx.request.body;
-        const recaptchaResult = await validateRecaptcha(
+        // recaptcha v2
+        /*const recaptchaResult = await validateRecaptcha(
             ctx,
             data,
             "changePassword"
         );
         if (!recaptchaResult.success) {
             return recaptchaResult;
-        }
+        }*/
         const user = await this.loggedUser(ctx);
         const passwordMatch = await bcrypt.compare(
             data.oldPassword,
@@ -338,14 +340,15 @@ export class UserKoaService {
             ctx.throw(401);
         }
         const data = ctx.request.body;
-        const recaptchaResult = await validateRecaptcha(
+        // recaptcha v2
+        /*const recaptchaResult = await validateRecaptcha(
             ctx,
             data,
             "editAddress"
         );
         if (!recaptchaResult.success) {
             return recaptchaResult;
-        }
+        }*/
         const validatedAddress = await this.buildAndValidateAddress(ctx);
         if (!validatedAddress.success) {
             return validatedAddress;

@@ -27,7 +27,7 @@ html(lang="cs")
         meta(property="fb:app_id" content="469000200307181")
         meta(name="msvalidate.01" content="CB11F51FD98A5B4610A3795C07A53102")
         block scripts
-            script(src="https://www.google.com/recaptcha/api.js?render=" + templateData.recaptchaKey)
+            script(src="https://www.google.com/recaptcha/api.js", async=true, defer=true)
     body
         include includes/header
         if templateData.errors && templateData.errors.global

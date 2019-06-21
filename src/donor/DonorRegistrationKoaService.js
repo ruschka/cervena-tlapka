@@ -94,14 +94,15 @@ export class DonorRegistrationKoaService {
             ctx.throw(401);
         }
         const data = ctx.request.body;
-        const recaptchaResult = await validateRecaptcha(
+        // recaptcha v2
+        /*const recaptchaResult = await validateRecaptcha(
             ctx,
             data,
             "registerDonor"
         );
         if (!recaptchaResult.success) {
             return recaptchaResult;
-        }
+        }*/
         const user = await User.findOne({ _id: loggedUserId(ctx) });
         const zip = await this.findZip(ctx, user.zip);
         const registration = new DonorRegistration({
@@ -162,14 +163,15 @@ export class DonorRegistrationKoaService {
     editDonorRegistration(ctx) {
         return this.modifyDonorRegistration(ctx, async (ctx, registration) => {
             const data = ctx.request.body;
-            const recaptchaResult = await validateRecaptcha(
+            // recaptcha v2
+            /*const recaptchaResult = await validateRecaptcha(
                 ctx,
                 data,
                 "editDonor"
             );
             if (!recaptchaResult.success) {
                 return recaptchaResult;
-            }
+            }*/
             registration.name = data.name;
             registration.weight = data.weight;
             registration.birthYear = data.birthYear;

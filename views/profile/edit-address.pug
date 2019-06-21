@@ -24,9 +24,9 @@ block content
                 +input("text", "city", "Město:", data, errors, { classes: "smartform-city", entity: loggedUser })
                 +input("text", "zip", "PSČ:", data, errors, { classes: "smartform-zip", entity: loggedUser })
                 div.w3-container.w3-section
-                    +recaptchaInput()
+                    //+recaptchaInput()
                     +submit()
-                +recaptchaScript("editAddress")
+                //+recaptchaScript("editAddress")
         div.w3-half
             p Kvůli fungování registru musí být vyplněno vaše PSČ.
             p: b Ostatní údaje nejsou povinné. Nicméně abychom vám mohli poslat známku pro vašeho psího hrdinu, potřebujeme znát i vaši adresu.

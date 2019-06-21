@@ -5,7 +5,7 @@ import config from "../config";
 import { success, unsuccess } from "../utils";
 
 const secret = config.recaptcha.apiKey;
-const scoreThreshold = Number(config.recaptcha.scoreThreshold);
+//const scoreThreshold = Number(config.recaptcha.scoreThreshold);
 
 export async function validateRecaptcha(ctx, data, actionName) {
     const response = data["g-recaptcha-response"];
@@ -14,14 +14,15 @@ export async function validateRecaptcha(ctx, data, actionName) {
         `https://www.google.com/recaptcha/api/siteverify?secret=${secret}&response=${response}&remoteip${remoteip}`
     );
     const recaptchaResult = result.data;
+    console.log(JSON.stringify(recaptchaResult));
     if (!recaptchaResult.success) {
         console.error(`Recaptcha error: ${JSON.stringify(recaptchaResult)}`);
         return unsuccess(data, {
-            global:
-                "Ochrana proti robotům selhala. Zkuste to prosím později znovu. Omlouváme se za problémy."
+            global: "Ochrana proti robotům selhala. Zkuste to prosím znovu."
         });
     }
-    if (recaptchaResult.action !== actionName) {
+    // recaptcha v3. we use v2 now
+    /*if (recaptchaResult.action !== actionName) {
         return unsuccess(data, {
             global: "Recaptcha actions don't match."
         });
@@ -33,5 +34,6 @@ export async function validateRecaptcha(ctx, data, actionName) {
         });
     } else {
         return success();
-    }
+    }*/
+    return success();
 }

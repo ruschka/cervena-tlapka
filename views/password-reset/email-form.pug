@@ -19,8 +19,8 @@ block content
                     if errors && errors.email
                         div.w3-panel.w3-red: p= errors.email
                 div.w3-container.w3-section
-                    +recaptchaInput
+                    +recaptchaInputv2()
                     input.w3-input(type='submit', value='Odeslat')
-                +recaptchaScript("sendPasswordResetEmail")
+                //+recaptchaScript("sendPasswordResetEmail")
         div.w3-half
             p Pokud nemáte založený účet, #[a(href='/register') zaregistrujte se prosím].

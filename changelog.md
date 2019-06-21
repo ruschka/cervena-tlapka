@@ -1,13 +1,15 @@
 #Changelog
 
 ## Unreleased
+###Added
+- Use recaptcha v2 instead of v3
 
 ## [1.9.0] - 2019-06-21
 ### Fixed
 - Contact donor - assign entity to recaptcha result
 
-#Added
-- Log unknown zip 
+###Added
+- Log unknown zip
 
 ## [1.8.0] - 2019-06-19
 ### Added

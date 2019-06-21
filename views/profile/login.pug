@@ -24,9 +24,9 @@ block content
                 +input("text", "email", "Email:", data, errors)
                 +input("password", "password", "Heslo:", data, errors)
                 div.w3-container.w3-section
-                    +recaptchaInput
+                    //+recaptchaInput()
                     +submit()
-                +recaptchaScript("login")
+                //+recaptchaScript("login")
         div.w3-half
             p Pokud nemáte založený účet, #[a(href='/register') zaregistrujte se prosím].
             p Zapomněli jste své heslo? #[a(href='/password-reset/email') Zde si ho můžete obnovit].

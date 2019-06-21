@@ -23,7 +23,7 @@ block content
                     input#passwordConfirm.w3-input.w3-border(type='password', name='passwordConfirm')
                 div.w3-container.w3-section
                     input(type="hidden", name="passwordResetHash", value=data.passwordResetHash)
-                    +recaptchaInput()
+                    +recaptchaInputv2()
                     input.w3-input(type='submit', value='Odeslat')
-                +recaptchaScript("passwordReset")
+                //+recaptchaScript("passwordReset")
         div.w3-half

@@ -12,3 +12,6 @@ mixin recaptchaScript(recaptchaAction)
 
 mixin recaptchaInput()
     input#g-recaptcha-response(type="hidden", name="g-recaptcha-response")
+
+mixin recaptchaInputv2()
+    div.g-recaptcha(data-sitekey=templateData.recaptchaKey)
