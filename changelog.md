@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+
+## [1.10.0] - 2019-06-21
 ###Added
 - Use recaptcha v2 instead of v3
 
