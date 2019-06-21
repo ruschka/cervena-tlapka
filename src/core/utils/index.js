@@ -32,3 +32,7 @@ export function success(data) {
 export function unsuccess(data, errors, entity) {
     return { success: false, data, errors, entity };
 }
+
+export function assignEntity(unsuccess, entity) {
+    return Object.assign(unsuccess, { entity });
+}

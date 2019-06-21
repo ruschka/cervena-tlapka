@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+### Fixed
+- Contact donor - assign entity to recaptcha result
 
 ## [1.8.0] - 2019-06-19
 ### Added

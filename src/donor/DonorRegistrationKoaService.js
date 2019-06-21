@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import { validateAsync } from "../core/mongo";
 import { emailRegex, sendMail } from "../core/mail";
 import {
+    assignEntity,
     hasAnyOwnProperty,
     isEmptyString,
     isNonEmptyString,
@@ -217,7 +218,7 @@ export class DonorRegistrationKoaService {
             "contactDonor"
         );
         if (!recaptchaResult.success) {
-            return recaptchaResult;
+            return assignEntity(recaptchaResult, registration);
         }
         const applicantEmail = data.email;
         const applicantName = data.name;
