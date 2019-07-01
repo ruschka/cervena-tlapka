@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+###Added
+- Added new articles in media.
 
 ## [1.10.0] - 2019-06-21
 ###Added
