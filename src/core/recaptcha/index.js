@@ -18,7 +18,7 @@ export async function validateRecaptcha(ctx, data, actionName) {
     if (!recaptchaResult.success) {
         console.error(`Recaptcha error: ${JSON.stringify(recaptchaResult)}`);
         return unsuccess(data, {
-            global: "Ochrana proti robotům selhala. Zkuste to prosím znovu."
+            global: "Ochrana proti robotům selhala. Zkuste to prosím znovu a zaškrtněte pole Nejsem robot."
         });
     }
     // recaptcha v3. we use v2 now
