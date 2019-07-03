@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+
+## [1.12.0] - 2019-07-03
 ###Changed
 - Updated dependencies
 
