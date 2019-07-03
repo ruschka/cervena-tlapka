@@ -4,6 +4,10 @@ include ../includes/recaptcha
 - var errors = templateData.errors
 - var actualYear = templateData.actualYear
 - var registration = templateData.registration
+if errors && errors.donorRegistration === "duplicate-registration"
+    div.w3-panel.w3-red
+        p Psa se jménem #{data.name} máte již registrovaného.
+        p: a(href="/profile") Pokud chcete upravit jeho registraci, můžete tak udělat ve svém profilu.
 +input("text", "name", "Jméno:", data, errors, { entity: registration })
 +input("number", "weight", "Hmotnost (kg):", data, errors, { entity: registration, attributes: { step: 1, min: 20 } })
 div.w3-container

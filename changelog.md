@@ -1,6 +1,11 @@
 #Changelog
 
 ## Unreleased
+###Changed
+- Updated dependencies
+
+###Added
+- Check of duplicate donor registrations
 
 ## [1.11.0] - 2019-07-03
 ###Added

@@ -103,6 +103,13 @@ export class DonorRegistrationKoaService {
         if (!recaptchaResult.success) {
             return recaptchaResult;
         }*/
+        const duplicateCheck = await this.checkDuplicateDonorRegistration(
+            ctx,
+            data
+        );
+        if (!duplicateCheck.success) {
+            return duplicateCheck;
+        }
         const user = await User.findOne({ _id: loggedUserId(ctx) });
         const zip = await this.findZip(ctx, user.zip);
         const registration = new DonorRegistration({
@@ -144,6 +151,30 @@ export class DonorRegistrationKoaService {
         }
     }
 
+    async checkDuplicateDonorRegistration(ctx, data, modified) {
+        const registrations = await this.findLoggedUserRegistrations(ctx);
+        const duplicate = registrations.find(
+            // FIXME better check? lower case, without interpunction?
+            registration => {
+                return (
+                    registration.name.toLowerCase() ===
+                        data.name.toLowerCase().trim() &&
+                    (!modified || registration.id !== modified.id)
+                );
+            }
+        );
+        if (duplicate) {
+            console.warn(
+                `Duplicate registration. UserId ${loggedUserId(ctx)}.`
+            );
+            return unsuccess(data, {
+                donorRegistration: "duplicate-registration"
+            });
+        } else {
+            return success();
+        }
+    }
+
     shouldCreateDogTagOrder(user) {
         return (
             isNonEmptyString(user.firstName) &&
@@ -172,6 +203,14 @@ export class DonorRegistrationKoaService {
             if (!recaptchaResult.success) {
                 return recaptchaResult;
             }*/
+            const duplicateCheck = await this.checkDuplicateDonorRegistration(
+                ctx,
+                data,
+                registration
+            );
+            if (!duplicateCheck.success) {
+                return assignEntity(duplicateCheck, registration);
+            }
             registration.name = data.name;
             registration.weight = data.weight;
             registration.birthYear = data.birthYear;
@@ -226,9 +265,7 @@ export class DonorRegistrationKoaService {
         const applicantName = data.name;
         const applicantMessage = data.message;
         console.info(
-            `Try to contact donor. Registration ${
-                registration.id
-            }, applicant ${applicantEmail}, ${applicantName}, ${applicantMessage}.`
+            `Try to contact donor. Registration ${registration.id}, applicant ${applicantEmail}, ${applicantName}, ${applicantMessage}.`
         );
         const errors = {};
         if (!emailRegex.test(applicantEmail)) {
