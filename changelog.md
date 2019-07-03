@@ -1,8 +1,11 @@
 #Changelog
 
 ## Unreleased
+
+## [1.11.0] - 2019-07-03
 ###Added
 - Added new articles in media.
+- Added new partners.
 
 ## [1.10.0] - 2019-06-21
 ###Added
