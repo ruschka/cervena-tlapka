@@ -9,10 +9,10 @@ html {
     height: 100%;
 }
 
-body {
+#ct-page {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .content {
@@ -196,4 +196,15 @@ p {
 .partner-img {
     width: 80%;
     max-width: 500px;
+}
+
+.mm-navbar {
+    --mm-color-background: rgb(255, 237, 60);
+    --mm-color-text-dimmed: rgb(203, 0, 60);
+    --mm-color-button: rgb(203, 0, 60);
+}
+.mm-panel {
+    --mm-color-background: rgb(255, 237, 60);
+    --mm-color-text: rgb(203, 0, 60);
+    --mm-color-button: rgb(203, 0, 60);
 }

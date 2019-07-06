@@ -13,6 +13,7 @@ html(lang="cs")
         meta(name="viewport", content="width=device-width, initial-scale=1")
         link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Chivo:400,700%7CWork+Sans:400,700")
         link(rel="stylesheet", type="text/css", href="https://www.w3schools.com/w3css/4/w3.css")
+        link(rel="stylesheet", type="text/css", href="/static/css/mmenu.css")
         link(rel="stylesheet", type="text/css", href="/static/css/style.css")
         link(rel="icon", type="image/png", sizes="32x32", href="/favicon-32x32.png")
         link(rel="icon", type="image/png", sizes="16x16", href="/favicon-16x16.png")
@@ -29,21 +30,40 @@ html(lang="cs")
         block scripts
             script(src="https://www.google.com/recaptcha/api.js", async=true, defer=true)
     body
-        include includes/header
-        if templateData.errors && templateData.errors.global
-            div.w3-panel.w3-red: p= templateData.errors.global
-        div.content.w3-section
-            block content
-        include includes/footer
-        script(
-            id="cookieinfo",
-            src="//cookieinfoscript.com/js/cookieinfo.min.js",
-            data-message="Tento web používá cookies pro zajištění správné funkčnosti a jeho prohlížením souhlasíte s jejich využitím.",
-            data-linkmsg="<b>Více informací</b>",
-            data-moreinfo="https://cs.wikipedia.org/wiki/HTTP_cookie",
-            data-font-family="Work Sans",
-            data-fg="rgb(203, 0, 60)",
-            data-bg="rgb(255, 237, 60)",
-            data-link="rgb(203, 0, 60)",
-            data-divlink="rgb(256, 256, 256)",
-            data-divlinkbg="rgb(39, 49, 106)")
+        div#ct-page
+            include includes/header
+            if templateData.errors && templateData.errors.global
+                div.w3-panel.w3-red: p= templateData.errors.global
+            div.content.w3-section
+                block content
+            include includes/footer
+            script(
+                id="cookieinfo",
+                src="//cookieinfoscript.com/js/cookieinfo.min.js",
+                data-message="Tento web používá cookies pro zajištění správné funkčnosti a jeho prohlížením souhlasíte s jejich využitím.",
+                data-linkmsg="<b>Více informací</b>",
+                data-moreinfo="https://cs.wikipedia.org/wiki/HTTP_cookie",
+                data-font-family="Work Sans",
+                data-fg="rgb(203, 0, 60)",
+                data-bg="rgb(255, 237, 60)",
+                data-link="rgb(203, 0, 60)",
+                data-divlink="rgb(256, 256, 256)",
+                data-divlinkbg="rgb(39, 49, 106)")
+            script(src="/static/script/mmenu.js")
+            script.
+                Mmenu.configs.offCanvas.page.selector = "#ct-page";
+                Mmenu.configs.openingInterval = 1;
+                Mmenu.configs.transitionDuration = 1;
+                document.addEventListener(
+                    "DOMContentLoaded", () => {
+                        new Mmenu("#mobile-menu", {
+                            "extensions": [
+                                "position-right"
+                            ],
+                            "onClick": {
+                                "close": true,
+                                "setSelected": false
+                            }
+                        });
+                    }
+                );

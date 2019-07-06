@@ -30,37 +30,33 @@ div.w3-container
             else
                 a(class=itemClassesRight href="/login") Přihlásit
                 a(class=itemClassesRight href="/register") Registrovat
-            a.w3-bar-item.w3-button.w3-right.w3-hide-large(href="javascript:void(0)", onclick="handleMobileMenu()") &#9776;
-        div#mobile-menu.w3-bar-block.ct-yellow.w3-hide.w3-hide-large.menu
-            - var mobileItemClasses = "w3-bar-item w3-button"
-            a(class=mobileItemClasses href="/find-donor") Najít dárce
-            a(class=mobileItemClasses href="/register-donor") Přidat psa
-            a(class=mobileItemClasses href="/want-to-help#flyer") Vytisknout leták
-            a(class=mobileItemClasses href="/want-to-help#share") Sdílet
-            a(class=mobileItemClasses href="/want-to-help#financial-help") Finanční podpora
-            a(class=mobileItemClasses href="/want-to-help#i-have-an-idea") Mám nápad
-            a(class=mobileItemClasses href="/about-us#story") Náš příběh
-            a(class=mobileItemClasses href="/about-us#team") Tým Červené tlapky
-            a(class=mobileItemClasses href="/contacts") Kontakt
-            a(class=mobileItemClasses href="/press") Pro média
-            a(class=mobileItemClasses href="/in-the-news") Napsali o nás
-            a(class=mobileItemClasses href="/partners") Spolupracujeme
-            if user
-                a(class=mobileItemClasses href="/profile") #{user.sub.email}
-                a(class=mobileItemClasses href="/logout") Odhlásit
-            else
-                a(class=mobileItemClasses href="/register") Registrovat
-                a(class=mobileItemClasses href="/login") Přihlásit
-
-    script.
-        function handleMobileMenu() {
-            var x = document.getElementById("mobile-menu");
-            if (x.className.indexOf("w3-show") === -1) {
-                x.className += " w3-show";
-            } else {
-                x.className = x.className.replace(" w3-show", "");
-            }
-        }
+            a.w3-bar-item.w3-button.w3-right.w3-hide-large(href="#mobile-menu") &#9776;
+        nav#mobile-menu.w3-hide-large.menu
+            ul
+                li: a(href="/find-donor") Najít dárce
+                li
+                    span Chci pomoct
+                    ul
+                        li: a(href="/register-donor") Přidat psa
+                        li: a(href="/want-to-help#flyer") Vytisknout leták
+                        li: a(href="/want-to-help#share") Sdílet
+                        li: a(href="/want-to-help#financial-help") Finanční podpora
+                        li: a(href="/want-to-help#i-have-an-idea") Mám nápad
+                li
+                    span O nás
+                    ul
+                        li: a(href="/about-us#story") Náš příběh
+                        li: a(href="/about-us#team") Tým Červené tlapky
+                        li: a(href="/contacts") Kontakt
+                        li: a(href="/press") Pro média
+                        li: a(href="/in-the-news") Napsali o nás
+                        li: a(href="/partners") Spolupracujeme
+                if user
+                    li: a(href="/profile")= user.sub.email
+                    li: a(href="/logout") Odhlásit
+                else
+                    li: a(href="/register") Registrovat
+                    li: a(href="/login") Přihlásit
 div.w3-container
     a(href="/"): img.logo(src="/static/image/logo.svg" alt="Červená tlapka")
     div.w3-right
