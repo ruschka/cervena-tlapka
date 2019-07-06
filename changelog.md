@@ -1,6 +1,8 @@
 #Changelog
 
 ## Unreleased
+
+## [1.13.0] - 2019-07-06
 ###Added
 - New mobile menu (mmenu plugin)
 
