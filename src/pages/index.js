@@ -36,6 +36,10 @@ pagesRouter.get("/want-to-help", async (ctx, next) => {
     await renderTemplate(ctx, "donor/want-to-help.pug");
 });
 
+pagesRouter.get("/faq", async (ctx, next) => {
+    await renderTemplate(ctx, "faq/faq.pug");
+});
+
 pagesRouter.get("/robots.txt", async (ctx, next) => {
     if (process.env.NODE_ENV === "production") {
         ctx.response.body =

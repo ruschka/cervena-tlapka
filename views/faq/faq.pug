@@ -1,0 +1,37 @@
+extends ../main-template
+
+block description
+    title Často kladené otázky | Červená tlapka
+    meta(name="description", content="")
+
+block content
+    div.w3-container.w3-row-padding
+        div.w3-half
+            h1 Často kladené otázky
+            -
+                const questions = [
+                    {
+                        id: "test",
+                        q: "Testovaci otazka",
+                        a: "Testovaci odpoved"
+                    },
+                    {
+                        id: "test2",
+                        q: "Testovaci otazka 2",
+                        a: "Testovaci odpoved 2"
+                    }
+                ]
+            each question in questions
+                button.w3-button.w3-block.w3-left-align.ct-yellow(onclick=`handleQuestion('${question.id}')`)= question.q
+                div.w3-container.w3-hide(id=question.id)
+                    p= question.a
+        div.w3-half
+    script.
+        function handleQuestion(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
