@@ -21,7 +21,7 @@ block content
             - var errors = templateData.errors
             h1 Změna mobilu
             form(method="post", action="/profile/edit-phone")
-                +input("tel", "phone", "Mobil:", data, errors, { entity: loggedUser })
+                +input("tel", "phone", "Mobil:", data, errors, { entity: loggedUser, hiddenErrorPanel: true })
                 div.w3-container.w3-section
                     +submit()
                 +phoneInput("#phone")

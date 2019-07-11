@@ -3,6 +3,7 @@ mixin input(type, name, title, data, errors, params)
     - const classes = params && params.classes ? params.classes : []
     - const containerClasses = params && params.containerClasses ? params.containerClasses : []
     - const attrs = params && params.attributes ? params.attributes : {}
+    - const hiddenErrorPanel = params && params.hiddenErrorPanel ? params.hiddenErrorPanel : false
     div(class=["w3-container"], class=containerClasses)
         label(for=name)!= title
         input(
@@ -13,7 +14,9 @@ mixin input(type, name, title, data, errors, params)
             class=classes,
             value=entity ? entity[name] : data ? data[name] : '')&attributes(attrs)
         if errors && errors[name]
-            div.w3-panel.w3-red: p= errors[name]
+            div.w3-panel.w3-red(id=`error-${name}`): p(id=`error-msg-${name}`)= errors[name]
+        else if hiddenErrorPanel
+            div.w3-panel.w3-red.w3-hide(id=`error-${name}`): p(id=`error-msg-${name}`)
 
 mixin textarea(name, title, data, errors, params)
     div.w3-container

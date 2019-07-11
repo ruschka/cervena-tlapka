@@ -31,7 +31,7 @@ block content
                 +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number", containerClasses: "addressContainer" })
                 +input("text", "city", "Město:", data, errors, { classes: "smartform-city", containerClasses: "addressContainer" })
                 +input("text", "zip", "PSČ:", data, errors, { classes: "smartform-zip" })
-                +input("tel", "phone", "Mobil:", data, errors)
+                +input("tel", "phone", "Mobil:", data, errors, { hiddenErrorPanel: true })
                 +checkbox("privacyPolicy", "Souhlasím se <a href='/static/doc/privacy-policy-2019-04-21.pdf' target='_blank'>zásadami ochrany osobních údajů</a>", data, errors, { default: false })
                 +checkbox("newsletter", "Přeji si dostávat informace o novinkách ze světa Červené tlapky", data, errors, { default: false })
                 div.w3-container.w3-section
