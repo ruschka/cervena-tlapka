@@ -384,20 +384,22 @@ export class UserKoaService {
         if (!recaptchaResult.success) {
             return recaptchaResult;
         }*/
-        const userId = loggedUserId(ctx);
-        // FIXME validate phone
-        await User.updateOne(
-            { _id: userId },
-            { phone: isNonEmptyString(data.fullPhone) ? data.fullPhone : null }
-        );
-        await DonorRegistration.updateMany(
-            { userId: userId },
-            {
-                phoneFilledIn: isNonEmptyString(data.fullPhone),
-                modifyDate: ctx.state.now
-            }
-        );
-        return success();
+        const user = await this.loggedUser(ctx);
+        user.phone = isNonEmptyString(data.fullPhone) ? data.fullPhone : null;
+        const validation = await validateAsync(user);
+        if (validation) {
+            return unsuccess(data, validation.errors);
+        } else {
+            await User.replaceOne({ _id: user.id }, user);
+            await DonorRegistration.updateMany(
+                { userId: user.id },
+                {
+                    phoneFilledIn: isNonEmptyString(data.fullPhone),
+                    modifyDate: ctx.state.now
+                }
+            );
+            return success();
+        }
     }
 
     async deleteProfile(ctx) {
