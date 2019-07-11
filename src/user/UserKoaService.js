@@ -80,6 +80,7 @@ export class UserKoaService {
             street: address.street,
             city: address.city,
             zip: address.zip,
+            phone: isNonEmptyString(data.fullPhone) ? data.fullPhone : null,
             activated: false,
             activateHash: activateHash,
             registerDate: ctx.state.now
@@ -355,13 +356,7 @@ export class UserKoaService {
         }
         const address = validatedAddress.data;
         const userId = loggedUserId(ctx);
-        const result = await User.updateOne({ _id: userId }, address);
-        if (result.nModified !== 1) {
-            console.error(`Address wasn't saved. User id ${userId}`);
-            return unsuccess(data, {
-                password: "Adresa nebyla uložena. Kontaktujte nás prosím."
-            });
-        }
+        await User.updateOne({ _id: userId }, address);
         const zip = await Zip.findOne({ zip: address.zip });
         await DonorRegistration.updateMany(
             { userId: userId },
@@ -369,6 +364,36 @@ export class UserKoaService {
                 zip: zip.zip,
                 district: zip.district,
                 location: { type: "Point", coordinates: zip.coordinates },
+                modifyDate: ctx.state.now
+            }
+        );
+        return success();
+    }
+
+    async editPhone(ctx) {
+        if (!isUserLogged(ctx)) {
+            ctx.throw(401);
+        }
+        const data = ctx.request.body;
+        // recaptcha v2
+        /*const recaptchaResult = await validateRecaptcha(
+            ctx,
+            data,
+            "editAddress"
+        );
+        if (!recaptchaResult.success) {
+            return recaptchaResult;
+        }*/
+        const userId = loggedUserId(ctx);
+        // FIXME validate phone
+        await User.updateOne(
+            { _id: userId },
+            { phone: isNonEmptyString(data.fullPhone) ? data.fullPhone : null }
+        );
+        await DonorRegistration.updateMany(
+            { userId: userId },
+            {
+                phoneFilledIn: isNonEmptyString(data.fullPhone),
                 modifyDate: ctx.state.now
             }
         );

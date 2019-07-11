@@ -123,6 +123,7 @@ export class DonorRegistrationKoaService {
             district: zip.district,
             location: { type: "Point", coordinates: zip.coordinates },
             note: data.note,
+            phoneFilledIn: isNonEmptyString(user.phone),
             registerDate: ctx.state.now,
             modifyDate: ctx.state.now
         });

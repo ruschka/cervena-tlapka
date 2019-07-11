@@ -34,6 +34,7 @@ block content
                     table.w3-table-all
                         tr
                             th Jméno
+                            th
                             th: abbr(title="Hmotnost") H.
                             th: abbr(title="Rok narození") R.N.
                             th: abbr(title="Pohlaví") P.
@@ -42,7 +43,10 @@ block content
                             th PSČ
                         for registration in templateData.registrations
                             tr
-                                td #[a(href="/donor/" + registration.id) #{registration.name}]
+                                td: a(href="/donor/" + registration.id) #{registration.name}
+                                td
+                                    if (registration.phoneFilledIn)
+                                        span &#9742
                                 td #{registration.weight}&nbsp;kg
                                 td= registration.birthYear
                                 td= registration.sex === "M" ? "Pes" : "Fena"

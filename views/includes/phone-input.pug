@@ -1,0 +1,11 @@
+mixin phoneInput(inputId)
+    script.
+        const input = document.querySelector(!{"'" + inputId + "'"});
+        window.intlTelInput(input, {
+            initialCountry: "cz",
+            preferredCountries: [],
+            onlyCountries: ["cz"],
+            localizedCountries: { cz: "Česká republika" },
+            hiddenInput: "fullPhone",
+            utilsScript: "/static/script/intl-tel-input/utils.js"
+        });

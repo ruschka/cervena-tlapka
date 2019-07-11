@@ -15,6 +15,7 @@ block append scripts
 block content
     include ../includes/forms
     include ../includes/recaptcha
+    include ../includes/phone-input
     div.w3-container.w3-row-padding
         div.w3-half
             - const data = templateData.data
@@ -53,15 +54,6 @@ block content
                         }
                     }
                     handleDogTagCheckbox();
-                script.
-                    const input = document.querySelector("#phone");
-                    window.intlTelInput(input, {
-                        initialCountry: "cz",
-                        preferredCountries: [],
-                        onlyCountries: ["cz"],
-                        localizedCountries: { cz: "Česká republika" },
-                        hiddenInput: "fullPhone",
-                        utilsScript: "/static/script/intl-tel-input/utils.js"
-                    });
+                +phoneInput("#phone")
         div.w3-half
             p Respektujeme vaše soukromí a snažíme se vám v tomto ohledu vyjít maximálně vstříc. Pro účely registru zveřejňujeme pouze ty nejnutnější údaje, tj. vaše PSČ a email. Pokud si budete přát obdržet pro svého psího hrdinu také známku, vyplňte jméno a adresu, kam vám ji budeme moci zaslat. Tyto údaje nebudou v registru veřejné dostupné.
