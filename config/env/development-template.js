@@ -16,5 +16,11 @@ module.exports = {
         apiKey: "changeme",
         clientKey: "changeme",
         scoreThreshold: 0.5
+    },
+    twilio: {
+        accountSid: "changeme",
+        authToken: "changeme",
+        // test twilio number
+        defaultFrom: "+15005550006"
     }
 };

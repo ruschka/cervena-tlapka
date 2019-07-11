@@ -30,6 +30,7 @@
     "nodemailer-sparkpost-transport": "2.2.0",
     "pug": "2.0.4",
     "sitemap": "3.1.0",
+    "twilio": "3.33.1",
     "ua-parser-js": "0.7.20",
     "zxcvbn": "4.4.2"
   },

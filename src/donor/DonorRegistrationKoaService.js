@@ -18,6 +18,7 @@ import { User } from "../user/User";
 import { DonorApplication } from "./DonorApplication";
 import { validateRecaptcha } from "../core/recaptcha";
 import { DogTagOrder } from "./DogTagOrder";
+import { phoneRegex, sendSms } from "../core/phone";
 
 export class DonorRegistrationKoaService {
     async findDonors(ctx, paging) {
@@ -263,6 +264,9 @@ export class DonorRegistrationKoaService {
             return assignEntity(recaptchaResult, registration);
         }
         const applicantEmail = data.email;
+        const applicantPhone = isNonEmptyString(data.fullPhone)
+            ? data.fullPhone
+            : null;
         const applicantName = data.name;
         const applicantMessage = data.message;
         console.info(
@@ -271,6 +275,12 @@ export class DonorRegistrationKoaService {
         const errors = {};
         if (!emailRegex.test(applicantEmail)) {
             Object.assign(errors, { email: "Email není validní." });
+        }
+        if (
+            isNonEmptyString(applicantPhone) &&
+            !phoneRegex.test(applicantPhone)
+        ) {
+            Object.assign(errors, { phone: "Mobil není validní." });
         }
         if (isEmptyString(applicantName)) {
             Object.assign(errors, { name: "Jméno je povinné." });
@@ -284,6 +294,7 @@ export class DonorRegistrationKoaService {
             const userId = isUserLogged(ctx) ? loggedUserId(ctx) : null;
             const donorApplication = new DonorApplication({
                 applicantEmail: applicantEmail,
+                applicantPhone: applicantPhone,
                 applicantName: applicantName,
                 applicantMessage: applicantMessage,
                 donorRegistrationId: registration.id,
@@ -297,6 +308,12 @@ export class DonorRegistrationKoaService {
                 donor.originalEmail,
                 applicantEmail
             );
+            if (donor.phone && applicantPhone) {
+                await sendSms(
+                    `Dobry den, uzivatel ${applicantName} vas zada o darovani psi krve. Ozvete se prosim na telefonni cislo ${applicantPhone}. Dekujeme Cervena tlapka.`,
+                    donor.phone
+                );
+            }
             return success();
         }
     }
