@@ -304,7 +304,7 @@ export class DonorRegistrationKoaService {
             await donorApplication.save();
             await sendMail(
                 "contact-donor",
-                { applicantMessage, applicantName, registration },
+                { applicantMessage, applicantName, applicantPhone, registration },
                 donor.originalEmail,
                 applicantEmail
             );

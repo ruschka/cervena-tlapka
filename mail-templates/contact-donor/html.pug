@@ -5,5 +5,7 @@ block content
     p #{applicantName} se s Vámi snaží spojit na zakládě Vaší #[a(href=baseUrl + "/donor/" + registration.id) registrace] a potřebuje Vaši pomoc! Napsal/a Vám tuto zprávu:
     p= applicantMessage
     p Budeme Vám moc vděční, pokud mu/jí odpovíte co nejříve. Ať už způsoby, které Vám #{applicantName} napsal/a, nebo můžete odpovedět na tento email.
+    if (applicantPhone)
+        p Telefonní číslo zájemce: #{applicantPhone}
     p Předem děkujeme za Vaši pomoc,
     p Tým Červené Tlapky
