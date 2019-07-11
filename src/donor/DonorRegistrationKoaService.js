@@ -304,13 +304,18 @@ export class DonorRegistrationKoaService {
             await donorApplication.save();
             await sendMail(
                 "contact-donor",
-                { applicantMessage, applicantName, applicantPhone, registration },
+                {
+                    applicantMessage,
+                    applicantName,
+                    applicantPhone,
+                    registration
+                },
                 donor.originalEmail,
                 applicantEmail
             );
             if (donor.phone && applicantPhone) {
                 await sendSms(
-                    `Dobry den, uzivatel ${applicantName} vas zada o darovani psi krve. Ozvete se prosim na telefonni cislo ${applicantPhone}. Dekujeme Cervena tlapka.`,
+                    `Dobry den, ${applicantName} vas zada o darovani psi krve. Ozvete se prosim na telefonni cislo ${applicantPhone}. Dekujeme, Cervena tlapka.`,
                     donor.phone
                 );
             }

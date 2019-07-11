@@ -29,10 +29,12 @@ block content
                 li Plemeno: #{registration.breed}
                 li Místo: #{registration.district} (#{registration.zip})
                 li Poznámka: #{registration.note ? registration.note : "-"}
+            div.w3-panel.ct-yellow
+                p &#9742 Majitel tohoto psího dárce zadal telefonní číslo. Po odeslání kontaktního formuláře mu bude doručena SMS s vašimi kontaktními údaji.
         div.w3-half
             h2 Kontaktní formulář
             p: b Našli jste vhodného dárce pro svého psa? Kontaktujte ho pomocí tohoto formuláře!
-            p Vyplňte svůj email a jméno a napište zprávu pro jeho majitele. Nezapomeňte uvést kontakty (telefonní číslo, Facebook), na kterých vás bude moct zastihnout.
+            p Vyplňte svůj email, mobil a jméno a napište zprávu pro jeho majitele. Případně můžete uvést i další kontakty (Facebook), na kterých vás bude moct zastihnout.
             p Urychlíte tím celý proces darování krve. Hodně štěstí!
             - const data = templateData.data
             - const errors = templateData.errors
