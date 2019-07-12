@@ -20,6 +20,6 @@ module.exports = {
     twilio: {
         accountSid: process.env.TWILIO_ACCOUNT_SID,
         authToken: process.env.TWILIO_AUTH_TOKEN,
-        defaultFrom: "Cer tlapka"
+        defaultFrom: process.env.TWILIO_DEFAULT_FROM
     }
 };
