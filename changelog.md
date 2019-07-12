@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [1.14.0] - 2019-07-12
+###Added
+- Send SMS on contacting donor
+
 ## [1.13.0] - 2019-07-06
 ###Added
 - New mobile menu (mmenu plugin)
