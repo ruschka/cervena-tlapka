@@ -11,6 +11,7 @@ import {
     hasAnyOwnProperty,
     isEmptyString,
     isNonEmptyString,
+    removeAccentsAndDiacritics,
     success,
     unsuccess
 } from "../core/utils";
@@ -314,8 +315,11 @@ export class DonorRegistrationKoaService {
                 applicantEmail
             );
             if (donor.phone && applicantPhone) {
+                const smsApplicantName = removeAccentsAndDiacritics(
+                    applicantName
+                );
                 await sendSms(
-                    `Dobry den, ${applicantName} vas zada o darovani psi krve. Ozvete se prosim na telefonni cislo ${applicantPhone}. Dekujeme, Cervena tlapka.`,
+                    `Dobry den, ${smsApplicantName} vas zada o darovani psi krve. Ozvete se prosim na telefonni cislo ${applicantPhone}. Dekujeme, Cervena tlapka.`,
                     donor.phone
                 );
             }
