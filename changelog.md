@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [1.15.0] - 2019-07-13
+###Added
+- FAQ
+
 ## [1.14.0] - 2019-07-12
 ###Added
 - Send SMS on contacting donor
