@@ -198,6 +198,10 @@ p {
     max-width: 500px;
 }
 
+.faq-button {
+    white-space: normal;
+}
+
 .mm-navbar {
     --mm-color-background: rgb(255, 237, 60);
     --mm-color-text-dimmed: rgb(203, 0, 60);

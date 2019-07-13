@@ -11,27 +11,157 @@ block content
             -
                 const questions = [
                     {
-                        id: "test",
-                        q: "Testovaci otazka",
-                        a: "Testovaci odpoved"
+                        id: "who-needs-a-transfusion",
+                        q: "Kdy pes potřebuje krevní transfuzi?",
+                        a: "Transfuze se většinou využívají k vyřešení akutních problémů a při plánovaných operacích. Dárce je potřeba především při silném krvácení v důsledku poranění břicha a krku, poranění vnitřních orgánů, vnitřním krvácení způsobeným prasklým nádorem, ztrátě krve při operaci či krvácivých chorobách."
                     },
                     {
-                        id: "test2",
-                        q: "Testovaci otazka 2",
-                        a: "Testovaci odpoved 2"
+                        id: "who-can-donate",
+                        q: "Kdo může darovat?",
+                        a: "Do registru je možné zapsat každého dobře ovladatelného psa ve věku od 2 do 8 let, který váží alespoň 20 kg. Zvíře musí být v dobré fyzické kondici, mělo by být pravidelně očkováno, nesmí trpět chronickými chorobami, jako je cukrovka či epilepsie, nebo trvale užívat nějaké léky. Další kritéria omezují možnost darovat krev na určitou dobu. Dárce by neměl být v rekonvalescenci po infekčním onemocnění, operaci či vážnějším úrazu, fena by neměla hárat. Není také vhodné darovat krev během tří týdnů od posledního očkování."
+                    },
+                    {
+                        id: "how-to-register-new-donor",
+                        q: "Chci zaregistrovat dárce, ale nevím, jak na to.",
+                        a: "Nejprve ověřte, že váš pejsek splňuje kritéria pro darování krve. Naleznete je spolu s dalšími potřebnými informacemi <a href='register-donor'>zde</a>. Pokud ano, můžete přistoupit k registraci. Dále už postupujte podle zobrazených pokynů."
+                    },
+                    {
+                        id: "which-personal-information-do-we-need",
+                        q: "Jaké údaje musím při registraci uvést a kde se zobrazují?",
+                        a: "Při registraci na webu Červené tlapky musí každý uživatel uvést svou emailovou adresu a své poštovní směrovací číslo. V případě, že chcete zapsat do registru nového dárce, musíte doplnit také informace o psovi (jméno, váhu, rok narození a plemeno). Po dokončení registrace se údaje o každém psovi a lokalita, ve které se nachází, zobrazí na webových stránkách databáze. Na rozdíl od poštovního směrovacího čísla, které je veřejné, emailová adresa není nikde uvedena. Velice doporučujeme přidat do profilu také telefonní číslo. To zůstane stejně jako emailová adresa neveřejné, v případě žádosti o transfuzi vám ale bude zaslána informační SMS s kontaktem na žadatele. Jméno a adresu musíte uvést, pouze pokud chcete dostat naši známku s logem. Tyto údaje nejsou nicméně pro správné fungování registru nezbytné. Pokud chcete uvést jakékoliv jiné informace (telefonní číslo) veřejně, můžete je také připsat do poznámky v registraci psího dárce."
+                    },
+                    {
+                        id: "do-i-have-to-provide-my-phone-number",
+                        q: "Musím přidat i telefonní číslo?",
+                        a: "Registr funguje i bez telefonního čísla, jeho přidání nicméně velmi doporučujeme. Číslo zůstane neveřejné, bude uložené pouze v našem systému. Pokud číslo neuvedete, případná žádost vám bude zaslána na uvedenou emailovou adresu. V opačném případě obdržíte i SMS s kontaktem na žadatele, což může celý proces velmi urychlit a zachránit psí život. Pokud chcete, aby vás mohl žadatel kontaktovat rovnou na telefonu, a nevadí vám své číslo zveřejnit, přidejte jej do poznámky v detailu zapsaného psa."
+                    },
+                    {
+                        id: "can-i-register-more-than-one-dog",
+                        q: "Je možné zaregistrovat více psích dárců?",
+                        a: "Ano. Další dárce můžete přidat ve svém profilu pomocí tlačítka „Přidat psa“."
+                    },
+                    {
+                        id: "where-should-i-give-my-dogs-blood",
+                        q: "V případě, že zaregistruji pejska, musím hned někam jít darovat krev?",
+                        a: "Registrací dáváte pouze souhlas k tomu, aby Vás kontaktoval někdo ze zájemců o transfuzi. To znamená, že nemusíte hned někam jet a darovat. Červená tlapka odběry přímo nezprostředkovává, zajišťuje pouze kontakt mezi potenciálními dárci a těmi, kdo transfuzi pro pejska potřebují. Pokud Vás někdo požádá o pomoc, je jen na vás dvou, jestli a jak se dohodnete. Odběr většinou probíhá na klinice, kde budou nemocného pejska operovat - proto žadatelé vyhledávají pokud možno dárce v blízkém okolí. Když Vám navrhované místo nebo termín nebudou vyhovovat, můžete odběr samozřejmě odmítnout, registrace Vás k ničemu nezavazuje."
+                    },
+                    {
+                        id: "medical-check-before-registration",
+                        q: "Musím psa při registraci nechat vyšetřit?",
+                        a: "Při registraci do databáze neprochází dárce žádným vyšetřením. Potřebná zdravotní prohlídka probíhá až přímo před případným odběrem. Zapsané zvíře by ale mělo být v dobré fyzické kondici, mělo by být pravidelně očkováno, nesmí trpět chronickými chorobami nebo trvale užívat nějaké léky. Pokud si nejste jisti, zda je váš pes pro dárcovství vhodným kandidátem, poraďte se se svým zvěrolékařem."
+                    },
+                    {
+                        id: "when-will-my-dog-donate-blood",
+                        q: "Když se zaregistruji, budete mě určitě kontaktovat s žádostí o dárcovství?",
+                        a: "Červená tlapka pouze zprostředkovává kontakt mezi potenciálními dárci a lidmi, kteří potřebují psí krev pro svého miláčka. Nemůžeme tedy s určitostí říct, zda zrovna vás někdo kontaktuje s žádostí o pomoc, ani kdy se tak případně stane. Je ale velmi důležité, aby bylo v registru ochotných dárců co nejvíce. Zvýší se tím pravděpodobnost, že když bude někdo psí krev potřebovat, podaří se mu ji v jeho okolí včas sehnat."
+                    },
+                    {
+                        id: "looking-for-a-blood-donor",
+                        q: "Hledám psího dárce krve, jak na to?",
+                        a: "Pokud potřebujete pro svého psa transfuzi, můžete potenciální dárce snadno vyhledat na našich stránkách, a to pomocí interaktivní mapy nebo vyfiltrováním výsledků podle PSČ. Dle své volby můžete hledat kandidáty ve vzdálenosti do 50 km, 100 km, 200 km či 500 km od svého bydliště. Následně můžete jejich majitele oslovit přes jednoduchý kontaktní formulář. Doporučujeme napsat vícero dárcům, zvýšíte tím své šance, že se vám brzy ozve někdo zpět."
+                    },
+                    {
+                        id: "how-does-the-contact-works",
+                        q: "Kontaktoval jsem dárce, co se teď stane?",
+                        a: "Po odeslání kontaktního formuláře bude váš vzkaz automaticky přeposlán na emailovou adresu potenciálního dárce. Pokud se v profilu psa zobrazuje ikona telefonu, znamená to, že uživatel zadal i své telefonní číslo. V takovém případě mu spolu s emailem odešleme i SMS s vašimi kontaktními údaji. Pak nezbývá než čekat, až se vám některý z kontaktovaných dárců ozve zpět. Další komunikace se už odehrává soukromě (přes email či telefonicky) a záleží jen na vás, jak se dohodnete."
+                    },
+                    {
+                        id: "how-much-does-it-cost",
+                        q: "Hledám dárce pro svého psa. Bude mě to něco stát?",
+                        a: "Vyhledávání v registru je zcela bezplatné a dostupné pro všechny (veterináře i jednotlivce). Veterinární kliniky si pak za provedení odběru a následné transfuze účtují poplatky dle svých ceníků."
+                    },
+                    {
+                        id: "how-to-find-a-compatible-donor",
+                        q: "Jak vyberu vhodného dárce? Mají psi krevní skupiny?",
+                        a: "Ano, i psi mají krevní skupiny. Jejich systém je složitější, ale zároveň i jednodušší než u lidí. Nejčastěji se uvádí, že psi mají zhruba šest hlavních krevních skupin a několik podskupin (jejich počet se liší v závislosti na rozdílných klasifikačních systémech). Zatímco u člověka v případě podání nekompatibilní krevní skupiny hrozí závažná reakce, u psů nicméně při první transfuzi k žádné reakci nedochází. V praxi tedy může prvopříjemce dostat krev od kteréhokoliv jiného psa. Při opakované transfuzi je již imunitní systém zvířete vybaven protilátkami, a je proto zapotřebí vyhledat dárce se slučitelnou krevní skupinou. Ta se ověřuje tím, že se před případnou transfuzí oběma psům odebere malý vzorek krve a zkoumá se jejich kompatibilita. Majitelé psů, kteří darují krev pravidelně, také už jejich krevní skupinu znají a v registru ji většinou uvádějí přímo v detailu dárce."
+                    },
+                    {
+                        id: "do-i-have-to-donate",
+                        q: "Přišla mi žádost o pomoc, musím jet darovat?",
+                        a: "Nemusíte. Tím, že se člověk rozhodne zapsat svého psa do registru Červená tlapka, dává pouze souhlas, aby ho někdo, kdo potřebuje pro svého chlupatého miláčka transfuzi, mohl kontaktovat. Dále už je jen a jen na něm, zda žádosti vyhoví, či ne."
+                    },
+                    {
+                        id: "donation-process",
+                        q: "Jak probíhá odběr?",
+                        a: "Odběr probíhá podobně jako u lidí: pes je nejprve vyšetřen, zvěrolékař se zajímá především o jeho aktuální zdravotní stav a prodělané choroby. Také mu vezme malý vzorek krve, který je podroben dalším testům. Pokud je vše v pořádku, lékař následně psovi odebere dle jeho váhy a potřeby cca 250-450 ml krve. Krev se odebírá z přední packy, nebo z krční žíly. Důležité je, aby zvíře vydrželo být po celou dobu v klidu, jinak odběr nelze provést. Celý zákrok trvá kolem čtvrt hodiny a pes po něm zvládne odejít domů po svých. Po odběru by měl několik dní dodržovat klidovější režim a doplňovat tekutiny."
+                    },
+                    {
+                        id: "blood-donation-and-its-risks",
+                        q: "Představuje dárcovství pro mého psa nějaké riziko?",
+                        a: "Podobně jako u lidí se bezprostředně po odběru u psa může projevit lehká únava. Pokud je odběr správně technicky proveden a zvíře je před jeho zahájením řádně vyšetřeno, nehrozí zdravému psovi žádná fyzická rizika. V opačném případě může darování provázet vznik hematomů či celková slabost. Je proto vždy vhodné vybírat kliniku, kde mají s dárcovstvím krve předchozí zkušenosti."
+                    },
+                    {
+                        id: "how-often-can-my-dog-donate-blood",
+                        q: "Jak často může pes krev darovat?",
+                        a: "Podle některých zvěrolékařů může pes darovat i každé tři týdny. Vzhledem k zátěži, kterou odběr pro zvíře představuje, se ale doporučuje dodržovat podobný interval jako u lidí – tedy alespoň tři měsíce."
+                    },
+                    {
+                        id: "bitch-with-youngs",
+                        q: "Může krev darovat fena, která už byla březí?",
+                        a: "Záleží na veterináři a akutnosti situace. Někteří veterináři fenám, které byly březí, krev odebírat nechtějí, pokud nemají opravdu nouzi. Jako dárce fenu akceptují, jen když odběr opravdu spěchá a nedaří se jim sehnat jiného dárce. Jiní veterináři proběhlou březost za překážku pro darování nepovažují. Vždy je lepší před případným odběrem danému veterináři zavolat a zeptat se, zda fenu po štěňatech přijme, abyste se vyhnuli případnému zdržení celého procesu i zbytečné cestě na veterinu. V každém případě je zvíře před samotným odběrem vždy ještě pečlivě vyšetřeno doktorem, aby se zjistilo, zda je vše v pořádku a zda darování nepředstavuje pro dárce či příjemce nějaké riziko. Po dobu březosti a kojení fena rozhodně darovat nemůže."
+                    },
+                    {
+                        id: "can-small-dogs-donate-blood",
+                        q: "Může darovat i pes, který váží míň než 20 kg?",
+                        a: "Bohužel nemůže. Obecně platí, že čím větší pes, tím menší zátěž pro něj případný odběr znamená. Menšího pejska tedy veterináři pro jistotu nepřijmou."
+                    },
+                    {
+                        id: "younger-dog",
+                        q: "Mohu zaregistrovat psa, kterému ještě nebyly dva roky?",
+                        a: "Obecně se uvádí, že krev může darovat pouze zdravý, dospělý jedinec. Někteří veterináři akceptují psy po dovršení jednoho roku věku, další přijímají pouze psy starší dvou let. Pokud máte psa v tomto věkovém rozmezí a chcete darovat krev, poraďte se před odběrem s veterinářem, který bude transfuzi provádět. Při případném odmítnutí by totiž mohlo dojít k časové prodlevě, která by ohrozila čekatele na transfuzi. Psi do jednoho roku by darovat neměli vůbec."
+                    },
+                    {
+                        id: "older-dog",
+                        q: "Mohu zaregistrovat psa staršího osmi let, když je zcela zdravý?",
+                        a: "Odběr u starších psů je spojen s vyššími riziky než u mladých jedinců. I když je váš pes zcela zdravý, darování může představovat značnou zátěž pro jeho organismus a způsobit mu nejrůznější komplikace. Většina zvěrolékařů navíc psy starší osmi let jako dárce neakceptuje a odběr z důvodu věku nechtějí provést. Případné odmítnutí spojené s hledáním jiného dárce pak může – zvláště v akutních případech – ohrozit pejska, který na transfuzi čeká."
+                    },
+                    {
+                        id: "donation-and-smaller-health-problems",
+                        q: "Můj pes trpí alergií, kožním onemocněním, užívá kloubní výživu nebo má jiný menší zdravotní problém. Může i tak darovat?",
+                        a: "V takovém případě je nejlepší situaci prokonzultovat přímo s vaším veterinárním lékařem. Někdy tento problém opravdu může být kontraindikací pro darování, jiný zase vadit nemusí. U alergií záleží i třeba na jejich intenzitě. Váš zvěrolékař zdravotní stav vašeho mazlíčka zná, proto může situaci posoudit nejlépe."
+                    },
+                    {
+                        id: "preventive-blood-donation",
+                        q: "Mohu darovat krev svého pejska i preventivně?",
+                        a: "Červená tlapka zprostředkovává pouze kontakt mezi dárci a příjemci. Většinou se přes náš registr hledají právě dárci pro akutní případy. Pokud chcete darovat krev svého pejska tzv. do zásoby, zkuste se obrátit na některou z krevních bank (např. Vetcentrum Stodůlky v Praze). I další větší kliniky odebírají psí krev preventivně, aby měly v případě potřeby alespoň jednu dávku k dispozici. Situaci jim komplikuje fakt, že psí krev lze skladovat pouze měsíc a následně je třeba nalézt nového dárce. I proto jsou za každého dobrovolníka velmi vděční a často jim nabízejí i nejrůznější odměny ve formě slev a vyšetření. Někteří další veterináři mají také svůj vlastní seznam dárců, kterým volají v případě potřeby. Zkuste se proto poradit se svým zvěrolékařem."
+                    },
+                    {
+                        id: "benefits-of-donation",
+                        q: "Co z dárcovství budu mít?",
+                        a: "V první řadě náš neskonalý dík a dobrý pocit, že jste se svým miláčkem pomohli jinému tvorovi v nouzi. Každý registrovaný dárce od nás také dostane známku s logem Červené tlapky a nápisem „Pomáhám“. Dárcovství má ale i praktické výhody. Váš pes bude před každým odběrem zdarma důkladně vyšetřen. Ověříte si tedy, že je v dobré kondici a nemá žádné zdravotní problémy. Některé kliniky pak také nabízejí pravidelným dárcům různé benefity ve formě slev a odměn."
+                    },
+                    {
+                        id: "how-to-get-a-dog-tag",
+                        q: "Jak získám známku s logem Červené tlapky?",
+                        a: "Známku s naším logem dostanete zdarma po zaregistrování nového hrdiny. Stačí, když v registračním formuláři zaškrtnete políčko „Chci známku“ a vyplníte své jméno a svou adresu. Známky posíláme hromadně vždy více hrdinům naráz. Proto může nějakou dobu trvat, než vám známka dorazí."
+                    },
+                    {
+                        id: "cats-blood-donors",
+                        q: "Budete zakládat i registr kočičích dárců krve?",
+                        a: "Tuto otázku slýcháme poslední dobou čím dál tím častěji. Zatím se soustředíme na to, aby registr psích dárců krve Červená tlapka fungoval, jak má, a aby se o něm dozvědělo co nejvíce lidí. S kočičím dárcovstvím také, na rozdíl od darování u psů, nemáme zatím žádné zkušenosti a nevíme, jak přesně funguje. Pokud to bude v našich silách a možnostech, určitě ale do budoucna rádi pomůžeme i dalším tvorům. "
+                    },
+                    {
+                        id: "want-to-know-more",
+                        q: "Chci se zeptat na něco jiného.",
+                        a: "Nenašli jste odpověď na svoji otázku? Neváhejte nás kontaktovat na info@cervenatlapka.cz nebo pomocí zprávy na našem facebooku."
                     }
                 ]
-            each question in questions
-                button.w3-button.w3-block.w3-left-align.ct-yellow(onclick=`handleQuestion('${question.id}')`)= question.q
-                div.w3-container.w3-hide(id=question.id)
-                    p= question.a
+            each question, index in questions
+                button.w3-button.w3-block.w3-left-align.faq-button(id=question.id, class=index % 2 === 0 ? "ct-yellow":"ct-blue", onclick=`handleQuestion('${question.id}')`)
+                    a(href=`#${question.id}`)= question.q
+                div.w3-container.w3-hide(id=`a-${question.id}`)
+                    p!= question.a
         div.w3-half
     script.
         function handleQuestion(id) {
-            var x = document.getElementById(id);
+            console.log(id);
+            var x = document.getElementById("a-" + id);
             if (x.className.indexOf("w3-show") == -1) {
                 x.className += " w3-show";
             } else {
                 x.className = x.className.replace(" w3-show", "");
             }
+        }
+        if (window.location.hash) {
+            handleQuestion(window.location.hash.substring(1))
         }

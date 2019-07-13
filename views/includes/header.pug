@@ -24,6 +24,7 @@ div.w3-container
                     a(class=itemClasses href="/press") Pro média
                     a(class=itemClasses href="/in-the-news") Napsali o nás
                     a(class=itemClasses href="/partners") Spolupracujeme
+            a(class=itemClasses href="/faq") FAQ
             if user
                 a(class=itemClassesRight href="/logout") Odhlásit
                 a(class=itemClassesRight href="/profile") #{user.sub.email}
@@ -51,6 +52,7 @@ div.w3-container
                         li: a(href="/press") Pro média
                         li: a(href="/in-the-news") Napsali o nás
                         li: a(href="/partners") Spolupracujeme
+                li: a(href="/faq") FAQ
                 if user
                     li: a(href="/profile")= user.sub.email
                     li: a(href="/logout") Odhlásit

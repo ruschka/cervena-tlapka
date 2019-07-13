@@ -64,7 +64,8 @@ pagesRouter.get("/sitemap.xml", async (ctx, next) => {
             { url: "/contacts", changefreq: "monthly", priority: 0.5 },
             { url: "/press", changefreq: "daily", priority: 0.5 },
             { url: "/in-the-news", changefreq: "weekly", priority: 0.5 },
-            { url: "/partners", changefreq: "weekly", priority: 0.5 }
+            { url: "/partners", changefreq: "weekly", priority: 0.5 },
+            { url: "/faq", changefreq: "weekly", priority: 0.5 }
         ]
     });
     await new Promise((resolve, reject) => {
