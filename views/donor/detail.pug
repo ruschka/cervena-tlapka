@@ -29,8 +29,9 @@ block content
                 li Plemeno: #{registration.breed}
                 li Místo: #{registration.district} (#{registration.zip})
                 li Poznámka: #{registration.note ? registration.note : "-"}
-            div.w3-panel.ct-yellow
-                p &#9742 Majitel tohoto psího dárce zadal telefonní číslo. Po odeslání kontaktního formuláře mu bude doručena SMS s vašimi kontaktními údaji.
+            if (registration.phoneFilledIn)
+                div.w3-panel.ct-yellow
+                    p &#9742 Majitel tohoto psího dárce zadal telefonní číslo. Po odeslání kontaktního formuláře mu bude doručena SMS s vašimi kontaktními údaji.
         div.w3-half
             h2 Kontaktní formulář
             p: b Našli jste vhodného dárce pro svého psa? Kontaktujte ho pomocí tohoto formuláře!
