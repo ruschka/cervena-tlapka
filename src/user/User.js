@@ -2,6 +2,8 @@
 
 import mongoose from "mongoose";
 import { emailRegex } from "../core/mail";
+import { phoneRegex } from "../core/phone";
+import { isEmptyString } from "../core/utils";
 
 const userSchema = new mongoose.Schema({
     // lower case email
@@ -42,6 +44,18 @@ const userSchema = new mongoose.Schema({
     zip: {
         type: String,
         required: [true, "PSČ je povinné."]
+    },
+    phone: {
+        type: String,
+        validate: {
+            validator: function(v) {
+                if (isEmptyString(v)) {
+                    return true;
+                }
+                return phoneRegex.test(v);
+            },
+            message: props => "Mobil není validní."
+        }
     },
     registerDate: {
         type: Date,

@@ -188,6 +188,25 @@ userRouter.post("/profile/edit-address", async (ctx, next) => {
     }
 });
 
+userRouter.get("/profile/edit-phone", async (ctx, next) => {
+    await renderTemplate(ctx, "profile/edit-phone.pug", {
+        loggedUser: await userService.loggedUser(ctx)
+    });
+});
+
+userRouter.post("/profile/edit-phone", async (ctx, next) => {
+    const { success, data, errors } = await userService.editPhone(ctx);
+    if (success) {
+        ctx.redirect("/profile");
+    } else {
+        await renderTemplate(ctx, "profile/edit-phone.pug", {
+            loggedUser: await userService.loggedUser(ctx),
+            data,
+            errors
+        });
+    }
+});
+
 userRouter.get("/profile/change-password", async (ctx, next) => {
     await renderTemplate(ctx, "profile/change-password.pug");
 });

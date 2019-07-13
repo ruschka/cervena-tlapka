@@ -3,6 +3,7 @@ mixin input(type, name, title, data, errors, params)
     - const classes = params && params.classes ? params.classes : []
     - const containerClasses = params && params.containerClasses ? params.containerClasses : []
     - const attrs = params && params.attributes ? params.attributes : {}
+    - const hiddenErrorPanel = params && params.hiddenErrorPanel ? params.hiddenErrorPanel : false
     div(class=["w3-container"], class=containerClasses)
         label(for=name)!= title
         input(
@@ -11,9 +12,11 @@ mixin input(type, name, title, data, errors, params)
             name=name,
             class=["w3-input", "w3-border"],
             class=classes,
-            value=entity ? entity[name] : data ? data[name] : '')&attributes(attrs)
+            value=data ? data[name] : entity ? entity[name] : '')&attributes(attrs)
         if errors && errors[name]
-            div.w3-panel.w3-red: p= errors[name]
+            div.w3-panel.w3-red(id=`error-${name}`): p(id=`error-msg-${name}`)= errors[name]
+        else if hiddenErrorPanel
+            div.w3-panel.w3-red.w3-hide(id=`error-${name}`): p(id=`error-msg-${name}`)
 
 mixin textarea(name, title, data, errors, params)
     div.w3-container
@@ -26,7 +29,7 @@ mixin textarea(name, title, data, errors, params)
             name=name,
             placeholder=placeholder,
             class=["w3-input", "w3-border"],
-            class=classes) #{entity ? entity[name] : data ? data[name] : ""}
+            class=classes) #{data ? data[name] : entity ? entity[name] : ""}
         if errors && errors[name]
             div.w3-panel.w3-red: p= errors[name]
 
@@ -42,7 +45,7 @@ mixin checkbox(name, title, data, errors, params)
             name=name,
             class=["w3-check"],
             class=classes,
-            checked=entity ? entity[name] : data ? data[name] : defaultValue
+            checked=data ? data[name] : entity ? entity[name] : defaultValue
         )&attributes(attrs)
         label(for=name)!= title
         if errors && errors[name]

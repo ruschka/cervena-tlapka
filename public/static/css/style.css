@@ -208,3 +208,8 @@ p {
     --mm-color-text: rgb(203, 0, 60);
     --mm-color-button: rgb(203, 0, 60);
 }
+
+.iti {
+    width: 100%;
+    display: block;
+}

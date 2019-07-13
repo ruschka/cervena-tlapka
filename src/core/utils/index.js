@@ -25,6 +25,12 @@ export function trimString(s) {
     return s ? s.trim() : s;
 }
 
+export function removeAccentsAndDiacritics(s) {
+    return isEmptyString(s)
+        ? s
+        : s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 export function success(data) {
     return { success: true, data };
 }

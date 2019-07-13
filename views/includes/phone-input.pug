@@ -1,0 +1,30 @@
+mixin phoneInput(inputId)
+    script.
+        var input = document.querySelector(!{"'" + inputId + "'"});
+        var errorPanel = document.querySelector("#error-phone");
+        var errorMsg = document.querySelector("#error-msg-phone");
+        var iti = window.intlTelInput(input, {
+            initialCountry: "cz",
+            preferredCountries: [],
+            onlyCountries: ["cz"],
+            localizedCountries: { cz: "Česká republika" },
+            hiddenInput: "fullPhone",
+            utilsScript: "/static/script/intl-tel-input/utils.js"
+        });
+        var errorMap = ["Mobil není validní.", "Neznámá telefonní předvolba.", "Mobil je příliš krátký.", "Mobil je příliš dlouhý.", "Mobil není validní."];
+        var reset = function() {
+            errorMsg.innerHTML = "";
+            errorPanel.classList.add("w3-hide");
+        };
+        input.addEventListener('blur', function() {
+            reset();
+            if (input.value.trim()) {
+                if (!iti.isValidNumber()) {
+                    var errorCode = iti.getValidationError();
+                    errorMsg.innerHTML = errorMap[errorCode];
+                    errorPanel.classList.remove("w3-hide");
+                }
+            }
+        });
+        input.addEventListener('change', reset);
+        input.addEventListener('keyup', reset);

@@ -33,11 +33,15 @@ block content
                         td PSČ
                         td= loggedUser.zip
                     tr
+                        td Mobil
+                        td= loggedUser.phone
+                    tr
                         td Newsletter
                         td= loggedUser.agreements.newsletter ? "Ano" : "Ne"
             div.w3-half
                 div.w3-bar
                     a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/edit-address") Upravit adresu
+                    a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/edit-phone") Upravit mobil
                     a.w3-button.w3-bar-item.ct-blue.w3-margin-left.w3-margin-bottom(href="/profile/change-password") Změnit heslo
         div.w3-responsive.w3-section
             h2 Vaši psí hrdinové

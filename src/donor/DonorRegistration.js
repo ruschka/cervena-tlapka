@@ -54,6 +54,7 @@ const donorRegistrationSchema = new mongoose.Schema({
         type: String,
         maxlength: [250, "Maximání délka poznámky je 250 znaků."]
     },
+    phoneFilledIn: Boolean,
     registerDate: {
         type: Date,
         required: true

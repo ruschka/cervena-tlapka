@@ -7,6 +7,7 @@ const donorApplicationSchema = new mongoose.Schema({
         type: String,
         required: [true, "Email je povinný."]
     },
+    applicantPhone: String,
     applicantName: {
         type: String,
         required: [true, "Jméno je povinné."]

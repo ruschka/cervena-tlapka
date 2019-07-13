@@ -4,13 +4,18 @@ block description
     title Registrace majitele | Červená tlapka
     meta(name="description", content="Vytvořte si účet v našem dobrovolném registru a přidejte své psí hrdiny.")
 
+block prepend css
+    link(rel="stylesheet", type="text/css", href="/static/css/intlTelInput.min.css")
+
 block append scripts
     include ../includes/smartform
     +smartformScript()
+    script(src="/static/script/intl-tel-input/intlTelInput.min.js")
 
 block content
     include ../includes/forms
     include ../includes/recaptcha
+    include ../includes/phone-input
     div.w3-container.w3-row-padding
         div.w3-half
             - const data = templateData.data
@@ -26,6 +31,7 @@ block content
                 +input("text", "street", "Ulice a číslo domu:", data, errors, { classes: "smartform-street-and-number", containerClasses: "addressContainer" })
                 +input("text", "city", "Město:", data, errors, { classes: "smartform-city", containerClasses: "addressContainer" })
                 +input("text", "zip", "PSČ:", data, errors, { classes: "smartform-zip" })
+                +input("tel", "phone", "Mobil:", data, errors, { hiddenErrorPanel: true })
                 +checkbox("privacyPolicy", "Souhlasím se <a href='/static/doc/privacy-policy-2019-04-21.pdf' target='_blank'>zásadami ochrany osobních údajů</a>", data, errors, { default: false })
                 +checkbox("newsletter", "Přeji si dostávat informace o novinkách ze světa Červené tlapky", data, errors, { default: false })
                 div.w3-container.w3-section
@@ -48,5 +54,8 @@ block content
                         }
                     }
                     handleDogTagCheckbox();
+                +phoneInput("#phone")
         div.w3-half
-            p Respektujeme vaše soukromí a snažíme se vám v tomto ohledu vyjít maximálně vstříc. Pro účely registru zveřejňujeme pouze ty nejnutnější údaje, tj. vaše PSČ a email. Pokud si budete přát obdržet pro svého psího hrdinu také známku, vyplňte jméno a adresu, kam vám ji budeme moci zaslat. Tyto údaje nebudou v registru veřejné dostupné.
+            p Respektujeme vaše soukromí a snažíme se vám v tomto ohledu vyjít maximálně vstříc. Při registraci vyžadujeme pouze ty nejnutnější údaje, tj. vaše PSČ a email. Pokud si budete přát obdržet pro svého psího hrdinu také známku, zadejte jméno a adresu, kam vám ji budeme moci zaslat.
+            p: b Vyplníte-li své mobilní číslo, dostanete při žádosti o dárcovství krve informační SMS s kontaktem na žadatele. Tím můžete celý proces zásadně urychlit.
+            p Vaše údaje nebudou v registru veřejné dostupné.
