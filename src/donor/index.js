@@ -10,23 +10,65 @@ export const donorRouter = new KoaRouter();
 const donorService = new DonorRegistrationKoaService();
 
 donorRouter.get("/find-donor", async (ctx, next) => {
-    const totalCount = await donorService.countDonors(ctx);
-    const paging = pagingFromContext(ctx, 10, totalCount);
-    const {
+    async function renderFindDonors(
         registrations,
-        zipCode,
-        maxDistance
-    } = await donorService.findDonors(ctx, paging);
-    const aggregatedRegistrations = await donorService.aggregateDonorsByZip(
+        aggregatedRegistrations,
+        paging,
+        params,
+        errors
+    ) {
+        await renderTemplate(ctx, "donor/find.pug", {
+            registrations,
+            aggregatedRegistrations,
+            paging,
+            params,
+            errors
+        });
+    }
+    const { success, data, errors } = await donorService.countDonors(ctx);
+    const { totalCount, zipCode, maxDistance } = data;
+    if (!success) {
+        await renderFindDonors(
+            [],
+            [],
+            null,
+            { zip: zipCode, maxDistance },
+            errors
+        );
+        return;
+    }
+    const paging = pagingFromContext(ctx, 10, totalCount);
+    const registrationsResult = await donorService.findDonors(ctx, paging);
+    if (!registrationsResult.success) {
+        await renderFindDonors(
+            [],
+            [],
+            null,
+            { zip: zipCode, maxDistance },
+            errors
+        );
+        return;
+    }
+    const { registrations } = registrationsResult.data;
+    const aggregatedRegistrationsResult = await donorService.aggregateDonorsByZip(
         ctx,
         zipCode,
         maxDistance
     );
-    await renderTemplate(ctx, "donor/find.pug", {
-        registrations,
-        aggregatedRegistrations,
-        paging,
-        data: { zip: zipCode, maxDistance }
+    if (!aggregatedRegistrationsResult.success) {
+        await renderFindDonors(
+            [],
+            [],
+            null,
+            { zip: zipCode, maxDistance },
+            errors
+        );
+        return;
+    }
+    const aggregatedRegistrations = aggregatedRegistrationsResult.data;
+    await renderFindDonors(registrations, aggregatedRegistrations, paging, {
+        zip: zipCode,
+        maxDistance
     });
 });
 

@@ -23,18 +23,25 @@ import { phoneRegex, sendSms } from "../core/phone";
 
 export class DonorRegistrationKoaService {
     async findDonors(ctx, paging) {
-        const { query, zipCode, maxDistance } = await this.createDonorQuery(
-            ctx
-        );
+        const queryResult = await this.createDonorQuery(ctx);
+        if (!queryResult.success) {
+            return queryResult;
+        }
+        const { query, zipCode, maxDistance } = queryResult.data;
         const registrations = await DonorRegistration.find(query)
             .skip(paging.offset)
             .limit(paging.limit);
-        return { registrations, zipCode, maxDistance };
+        return success({ registrations, zipCode, maxDistance });
     }
 
     async countDonors(ctx) {
-        const { query } = await this.createDonorQuery(ctx);
-        return await DonorRegistration.count(query);
+        const queryResult = await this.createDonorQuery(ctx);
+        if (!queryResult.success) {
+            return queryResult;
+        }
+        const { query, zipCode, maxDistance } = queryResult.data;
+        const count = await DonorRegistration.count(query);
+        return success({ count, zipCode, maxDistance });
     }
 
     async createDonorQuery(ctx) {
@@ -48,8 +55,11 @@ export class DonorRegistrationKoaService {
             ? Number(ctx.query.maxDistance)
             : 50; // default 50km
         if (zipCode) {
-            // FIXME unknown zip?
-            const zip = await this.findZip(ctx, zipCode);
+            const zipResult = await this.findZip(ctx, zipCode);
+            if (!zipResult.success) {
+                return unsuccess({ zipCode, maxDistance }, zipResult.errors);
+            }
+            const zip = zipResult.data;
             Object.assign(query, {
                 location: {
                     $near: {
@@ -62,13 +72,17 @@ export class DonorRegistrationKoaService {
                 }
             });
         }
-        return { query, zipCode, maxDistance };
+        return success({ query, zipCode, maxDistance });
     }
 
     async aggregateDonorsByZip(ctx, zipCode, maxDistance) {
         let aggregate = DonorRegistration.aggregate();
         if (zipCode) {
-            const zip = await this.findZip(ctx, zipCode);
+            const zipResult = await this.findZip(ctx, zipCode);
+            if (!zipResult.success) {
+                return zipResult;
+            }
+            const zip = zipResult.data;
             aggregate = aggregate.near({
                 near: { type: "Point", coordinates: zip.coordinates },
                 distanceField: "distance",
@@ -76,19 +90,21 @@ export class DonorRegistrationKoaService {
                 num: 1000000
             });
         }
-        return aggregate
-            .group({
-                _id: "$zip",
-                registrationCount: { $sum: 1 },
-                location: { $first: "$location.coordinates" }
-            })
-            .project({
-                zip: "$_id",
-                registrationCount: 1,
-                location: 1,
-                _id: 0
-            })
-            .exec();
+        return success(
+            await aggregate
+                .group({
+                    _id: "$zip",
+                    registrationCount: { $sum: 1 },
+                    location: { $first: "$location.coordinates" }
+                })
+                .project({
+                    zip: "$_id",
+                    registrationCount: 1,
+                    location: 1,
+                    _id: 0
+                })
+                .exec()
+        );
     }
 
     async registerDonor(ctx) {
@@ -113,7 +129,14 @@ export class DonorRegistrationKoaService {
             return duplicateCheck;
         }
         const user = await User.findOne({ _id: loggedUserId(ctx) });
-        const zip = await this.findZip(ctx, user.zip);
+        const zipResult = await this.findZip(ctx, user.zip);
+        if (!zipResult.success) {
+            console.error(
+                `Unknown zip ${user.zip} during registering donor. This should never happen.`
+            );
+            return zipResult;
+        }
+        const zip = zipResult.data;
         const registration = new DonorRegistration({
             name: data.name,
             weight: data.weight,
@@ -331,9 +354,9 @@ export class DonorRegistrationKoaService {
         const zip = await Zip.findOne({ zip: zipCode });
         if (!zip) {
             console.warn(`Unknown zip ${zipCode}.`);
-            ctx.throw(400, "unknown zip");
+            return unsuccess(null, { zip: "unknown-zip" });
         }
-        return zip;
+        return success(zip);
     }
 
     async findLoggedUserRegistrations(ctx) {

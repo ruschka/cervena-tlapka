@@ -13,23 +13,29 @@ block content
             p Na této stránce najdete všechny zaregistrované psí hrdiny. Pro snadnější vyhledání toho vhodného použijte filtr. Stačí zadat vaše PSČ a maximální vzdálenost, ve které chcete potenciálního dárce hledat.
             p: b Chtěli byste zaregistrovat nového psího hrdinu? Výborně! #[a(href='/register-donor') Přečtěte si, co to obnáší a jak na to].
 
-            - var data = templateData.data
+            - const errors = templateData.errors
+            if errors && errors.zip === "unknown-zip"
+                div.w3-panel.w3-red
+                    p Toto PSČ neznáme. Zkontrolujte, zda zadáváte PSČ ve formátu pětimístného čísla.
+                    p: a(href="/contacts") Pokud si myslíte, že nám vaše PSČ v databázi chybí, neváhejte nás kontaktovat.
+
+            - const params = templateData.params
             form(method='get', action='/find-donor')
                 div.align-bottom
                     div.w3-third
                         label(for='zip') Vaše PSČ:
-                        input#zip.w3-input.w3-border(type='text', name='zip', value=data ? data.zip : '')
+                        input#zip.w3-input.w3-border(type='text', name='zip', value=params ? params.zip : '')
                     div.w3-third.w3-margin-right.w3-margin-left
                         label(for='maxDistance') Maximální vzdálenost:
                         select#maxDistance.w3-select.w3-border(name='maxDistance')
-                            option(label='50 km', value='50', selected=data ? data.maxDistance === 50 : false) 50 km
-                            option(label='100 km', value='100', selected=data ? data.maxDistance === 100 : false) 100 km
-                            option(label='200 km', value='200', selected=data ? data.maxDistance === 200 : false) 200 km
-                            option(label='500 km', value='500', selected=data ? data.maxDistance === 500 : false) 500 km
+                            option(label='50 km', value='50', selected=params ? params.maxDistance === 50 : false) 50 km
+                            option(label='100 km', value='100', selected=params ? params.maxDistance === 100 : false) 100 km
+                            option(label='200 km', value='200', selected=params ? params.maxDistance === 200 : false) 200 km
+                            option(label='500 km', value='500', selected=params ? params.maxDistance === 500 : false) 500 km
                     div.w3-third
                         +submit()
         div.w3-half
-            if (templateData.registrations.length)
+            if (templateData.registrations && templateData.registrations.length)
                 div.w3-responsive.w3-section
                     table.w3-table-all
                         tr
@@ -58,7 +64,7 @@ block content
                 div.w3-panel.ct-blue
                     p Pro zadaný filtr nebyli nalezeni žádní dárci.
                     p Můžete zkusit zadat jiné PSČ nebo zvětšit maximální vzdálenost.
-    if (templateData.registrations.length)
+    if (templateData.registrations && templateData.registrations.length)
         div.w3-container.w3-section
             div#donor-map
             script.
