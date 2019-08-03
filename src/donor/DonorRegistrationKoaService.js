@@ -40,8 +40,8 @@ export class DonorRegistrationKoaService {
             return queryResult;
         }
         const { query, zipCode, maxDistance } = queryResult.data;
-        const count = await DonorRegistration.count(query);
-        return success({ count, zipCode, maxDistance });
+        const totalCount = await DonorRegistration.count(query);
+        return success({ totalCount, zipCode, maxDistance });
     }
 
     async createDonorQuery(ctx) {
