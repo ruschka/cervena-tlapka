@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [1.16.1] - 2019-08-03
+###Fixed
+- Fixed paging on donor find page.
+
 ## [1.16.0] - 2019-08-03
 ###Added
 - Show user message on unknown zip.
