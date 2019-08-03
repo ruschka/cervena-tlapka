@@ -28,9 +28,8 @@ block content
                 each partner in row
                     div.w3-third
                         div.partner-img-div.w3-content
-                            div.partner-img-div-wrapper
-                                if partner.image
-                                    a(href=partner.link, target="_blank"): img.partner-img(src=partner.image, alt=partner.name)
-                                else
-                                    a(href=partner.link, target="_blank")= partner.name
+                            if partner.image
+                                a(href=partner.link, target="_blank"): img.partner-img(src=partner.image, alt=partner.name)
+                            else
+                                a(href=partner.link, target="_blank")= partner.name
 
