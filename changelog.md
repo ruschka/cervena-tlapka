@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [1.16.0] - 2019-08-03
+###Added
+- Show user message on unknown zip.
+
 ## [1.15.0] - 2019-07-13
 ###Added
 - FAQ
