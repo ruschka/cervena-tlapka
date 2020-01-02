@@ -75,7 +75,7 @@ export class DonorRegistrationKoaService {
         return success({ query, zipCode, maxDistance });
     }
 
-    async aggregateDonorsByZip(ctx, zipCode, maxDistance) {
+    async aggregateDonorsByZip(ctx, zipCode, maxDistance, maxDate) {
         let aggregate = DonorRegistration.aggregate();
         if (zipCode) {
             const zipResult = await this.findZip(ctx, zipCode);
@@ -89,6 +89,9 @@ export class DonorRegistrationKoaService {
                 maxDistance: maxDistance * 1000, // meters
                 num: 1000000
             });
+        }
+        if (maxDate) {
+            aggregate = aggregate.match({ registerDate: { $lte: maxDate } });
         }
         return success(
             await aggregate

@@ -8,16 +8,24 @@ html(lang="cs")
         link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Chivo:400,700%7CWork+Sans:400,700")
         link(rel="stylesheet", type="text/css", href="https://www.w3schools.com/w3css/4/w3.css")
         link(rel="stylesheet", type="text/css", href="/static/css/style.css")
+        link(rel="stylesheet", type="text/css", href="/static/css/map-fullscreen.css")
         link(rel="icon", type="image/png", sizes="32x32", href="/favicon-32x32.png")
         link(rel="icon", type="image/png", sizes="16x16", href="/favicon-16x16.png")
         link(rel="apple-touch-icon", sizes="180x180", href="/apple-touch-icon.png")
     body
+        div#actualDate
+            span #{templateData.actualDate.getDate()}. #{templateData.actualDate.getMonth() + 1}. #{templateData.actualDate.getFullYear()}
+        div#logo
+            img(src="/static/image/logo.svg" alt="Červená tlapka")
         div#donor-map-fullscreen
         script.
             let map;
             function initMap() {
                 map = new google.maps.Map(document.getElementById('donor-map-fullscreen'), {
-                    mapTypeId: 'roadmap'
+                    mapTypeId: 'roadmap',
+                    center: { lat: 49.8, lng: 15.5 },
+                    zoom: 9,
+                    disableDefaultUI: true
                 });
                 const bounds = new google.maps.LatLngBounds();
                 const markersData = !{ JSON.stringify(templateData.aggregatedRegistrations) };
@@ -27,9 +35,8 @@ html(lang="cs")
                         map: map,
                         label: `${markerData.registrationCount}`
                     });
-                bounds.extend(marker.position);
+                    bounds.extend(marker.position);
                     return marker;
                 });
-                map.fitBounds(bounds);
             }
         script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBla_Xe4qxStCxH04yzWZ90I4JpiUy6Tr4&callback=initMap' async=true defer=true)

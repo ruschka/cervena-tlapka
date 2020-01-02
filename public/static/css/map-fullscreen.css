@@ -1,0 +1,21 @@
+#donor-map-fullscreen {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+#actualDate {
+    position: absolute;
+    top: 100px;
+    right: 100px;
+    z-index: 100;
+    font-size: 5vh;
+}
+
+#logo {
+    position: absolute;
+    bottom: 3vh;
+    left: 2vw;
+    z-index: 100;
+    width: 25vw;
+}

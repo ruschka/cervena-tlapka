@@ -122,12 +122,15 @@ donorRouter.post("/donor/:id/contact", async (ctx, next) => {
 });
 
 donorRouter.get("/map-fullscreen", async (ctx, next) => {
+    const maxDate = ctx.query.maxDate;
     const aggregatedRegistrations = await donorService.aggregateDonorsByZip(
         ctx,
         null,
-        null
+        null,
+        maxDate ? new Date(maxDate) : null
     );
     await renderTemplate(ctx, "donor/map-fullscreen.pug", {
-        aggregatedRegistrations
+        aggregatedRegistrations: aggregatedRegistrations.data,
+        actualDate: maxDate ? new Date(maxDate) : new Date()
     });
 });

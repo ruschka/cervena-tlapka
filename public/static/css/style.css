@@ -149,11 +149,6 @@ p {
     width: 100%;
 }
 
-#donor-map-fullscreen {
-    height: 100%;
-    width: 100%;
-}
-
 .align-bottom {
     display: flex;
     align-items: flex-end;
